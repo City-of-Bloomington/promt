@@ -36,16 +36,17 @@ public class TopServlet extends HttpServlet {
 	    str = context.getInitParameter("cookieValue");
 	    if(str != null)
 		cookieValue = str;
-	    String username = context.getInitParameter("username");
+	    String username = context.getInitParameter("adfs_username");
 	    String auth_end_point = context.getInitParameter("auth_end_point");
 	    String token_end_point = context.getInitParameter("token_end_point");
 	    String callback_uri = context.getInitParameter("callback_uri");
 	    String client_id = context.getInitParameter("client_id");
 	    String client_secret = context.getInitParameter("client_secret");
-	    String scope=conf.getInitParameter("scope");
+	    String scope = context.getInitParameter("scope");
 	    String discovery_uri = context.getInitParameter("discovery_uri");
 	    config = new
 		Configuration(auth_end_point, token_end_point, callback_uri, client_id, client_secret, scope, discovery_uri, username);
+	    // System.err.println(config.toString());
 	}catch(Exception ex){
 	    System.err.println(" top init "+ex);
 	    logger.error(" "+ex);
