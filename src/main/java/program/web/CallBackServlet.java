@@ -29,38 +29,45 @@ public class CallBackServlet extends TopServlet {
 	Enumeration values = request.getParameterNames();
 	String name= "";
 	String value = "";
+	boolean error_flag = false;
 	while (values.hasMoreElements()) {
 	    name = ((String)values.nextElement()).trim();
 	    value = request.getParameter(name).trim();
 	    if (name.equals("id"))
-		id = value;	
-	}					
-	String code = request.getParameter("code");
-	String state = request.getParameter("state");
-	String original_state = (String)request.getSession().getAttribute("state");
-	System.err.println(" state "+state);
-	boolean error_flag = false;
-	if(state == null || !original_state.equals(state)){
-	    System.err.println(" invalid state "+state);
-	    error_flag = true;
-	    // 
+		id = value;
+	    if(name.equals("error")){
+		error_flag = true;
+		System.err.println(" Error : "+value);		
+	    }
 	}
 	if(!error_flag){
-	    User user = CityClient.getInstance().endAuthentication(code, config);
-	    if(user != null){
-		request.getSession().setAttribute("user", user);
-		String str ="<head><title></title><META HTTP-EQUIV=\""+
-		    "refresh\" CONTENT=\"0; URL=" + url +
-		    "Starter?";
+	    String code = request.getParameter("code");
+	    String state = request.getParameter("state");
+	    String original_state = (String)request.getSession().getAttribute("state");
+	    System.err.println(" state "+state);
+	    System.err.println(" code "+code);	
+	    if(state == null || !original_state.equals(state)){
+		System.err.println(" invalid state "+state);
+		error_flag = true;
+		// 
+	    }
+	    if(!error_flag){
+		User user = CityClient.getInstance().endAuthentication(code, config);
+		if(user != null){
+		    request.getSession().setAttribute("user", user);
+		    String str ="<head><title></title><META HTTP-EQUIV=\""+
+			"refresh\" CONTENT=\"0; URL=" + url +
+			"Framer?";
 		if(!id.equals("")) str += "&id="+id;
 		str += "\">";
 		out.println(str);				
 		out.println("<body>");
 		out.println("</body>");
 		out.println("</html>");
-	    }
-	    else{
-		error_flag = true;
+		}
+		else{
+		    error_flag = true;
+		}
 	    }
 	}
 	if(error_flag){
