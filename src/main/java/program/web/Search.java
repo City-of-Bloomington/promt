@@ -193,7 +193,6 @@ public class Search extends TopServlet{
 	}
 	String today = Helper.getToday();
 		
-	//if(!lastUpdate.equals(today)){
 	if(true){	
 	    leads = new LeadList(debug);
 	    String back = leads.find();
@@ -229,9 +228,6 @@ public class Search extends TopServlet{
 		taxonomies = taxos;
 	    }						
 	}
-	String log_out = 
-	    "<a href=\""+url+"PLogout?\"" +
-	    " target=_parent>Log Out </a>";
 	//
 	// Browsing the records
 	//
@@ -384,6 +380,7 @@ public class Search extends TopServlet{
 	out.println("/*]]>*/\n");							
 	out.println(" </script>                          ");
 	out.println("</head><body>");
+	Helper.writeTopMenu(out, url);
 	out.println("<center><h2>Programs Search</h2>");
 
 	if(!message.equals("")){
@@ -688,8 +685,8 @@ public class Search extends TopServlet{
 	//
 	if(needDuplication.equals("") && !advanceSearch.equals("")){
 	    out.println("<form name=\"myForm2\" method=\"post\" action=\""+url+
-			"ProgramsTable\" target=\"leftFrame\" "+
-			"onSubmit=\"return validateForm2()\">");
+			"ProgramResult\" "+
+			"onsubmit=\"return validateForm2()\">");
 	    out.println("<input type=\"hidden\" name=\"sortby\" value=\"\">");
 	    if(!plan_id.equals(""))
 		out.println("<input type=\"hidden\" name=\"plan_id\" value=\""+plan_id+"\" />");
@@ -744,8 +741,6 @@ public class Search extends TopServlet{
 			" /></td></tr>");
 	    out.println("</table><br />");				
 	    out.println("</form>");
-						
-	    out.println(log_out);
 	    Helper.writeWebFooter(out, url);
 	}
 	out.println("</center>");

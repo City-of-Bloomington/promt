@@ -203,6 +203,7 @@ public class SponsorServ extends TopServlet{
 	out.println("</head><body>");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\">");
 	out.println("<input type=\"hidden\" name=\"pid\" value=\"" + pid + "\" />");
 	if(firstTime){

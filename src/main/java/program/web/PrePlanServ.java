@@ -11,7 +11,7 @@ import program.list.*;
 import program.model.*;
 import program.util.*;
 
-@WebServlet(urlPatterns = {"/PrePlan.do","/PrePlan"})
+@WebServlet(urlPatterns = {"/PrePlan"})
 public class PrePlanServ extends TopServlet{
 
     static Logger logger = LogManager.getLogger(PrePlanServ.class);
@@ -233,6 +233,7 @@ public class PrePlanServ extends TopServlet{
 	out.println("</head><body onLoad=\"showStatus();\">");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	if(id.equals("")){
 	    out.println("<h2>Add New Pre Plan</h2>");
 	}

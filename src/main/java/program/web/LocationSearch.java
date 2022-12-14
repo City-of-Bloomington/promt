@@ -106,12 +106,14 @@ public class LocationSearch extends TopServlet{
 	}
 	//
 	// This script validates textareas and facility
-	// 
+	//
+	Helper.writeWebCss(out, url);
 	out.println("<script type=\"text/javascript\">");
 	out.println("	</script>                          ");   
 	out.println("</head><body>");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);		
 	out.println("<h2>Locations Search</h2>");
 	if(!message.equals("")){
 	    if(success)

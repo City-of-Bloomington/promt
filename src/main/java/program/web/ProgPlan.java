@@ -352,6 +352,7 @@ public class ProgPlan extends TopServlet{
 	out.println("</head><body>");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	String tdWidth=" width=\"20%\" ";
 	if(pp.isNew()){
 	    out.println("<h2>Add New Plan</h2>");

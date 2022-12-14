@@ -227,8 +227,10 @@ public class SessionResult extends TopServlet{
 		maxRecords = temp;
 	    }
 	    os.println("<head><title>Browsing Sessions" + 
-		       "</title></head>");
-	    os.println("<body>");
+		       "</title>");
+	    Helper.writeWebCss(os, url);
+	    os.println("</head><body>");
+	    Helper.writeTopMenu(os, url);
 	    os.println("<form name=anyform>");
 	    String back_to_browse = 
 		"<a href="+url+"SessionsBrowse?"+

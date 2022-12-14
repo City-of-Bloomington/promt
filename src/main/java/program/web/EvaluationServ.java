@@ -230,7 +230,8 @@ public class EvaluationServ extends TopServlet{
 	out.println("/*]]>*/\n");			
 	out.println(" </script>                         ");   
 	out.println("</head><body  onLoad=\"showStatus();\">");
-	out.println("<center>");
+	out.println("<center>");	
+	Helper.writeTopMenu(out, url);	
 	if(!eval.hasRecord()){
 	    out.println("<h3>Add Evaluation</h3>");
 	}
@@ -289,7 +290,7 @@ public class EvaluationServ extends TopServlet{
 		    objSet.add(one.getObjective().getObjective());
 		    out.println("<tr><td valign=\"top\">"+jj+" - "+one.getObjective().getObjective()+"</td><td>");
 		    out.print("<textarea name=\"update-outcome_"+one.getId()+"\" rows=\"5\" cols=\"50\" "+ 
-			      "wrap onChange=\"validateTextarea(this,1000);\">");
+			      "wrap onchange=\"validateTextarea(this,1000);\">");
 		    out.print(one.getOutcome());
 		    out.println("</textarea></td></tr>");
 		    jj++;

@@ -346,14 +346,16 @@ public class ProgramResult extends TopServlet{
 	}
 
 	os.println("<head><title>Programs " + 
-		   "</title></head>");
-	os.println("<body>");
+		   "</title>");
+	Helper.writeWebCss(os, url);
+	os.println("</head><body>");
+	Helper.writeTopMenu(os, url);
 	if(!message.equals("")){
 	    os.println("<h4>Error: "+message+"</h4>");
 	}
+	os.println("<center>");
 	os.println("<form name=anyform>");
 	os.println("<h2>Programs </h2>");
-	os.println("<br>");
 	//
 	os.println("Matching total records :"+total+"<br>");
 	if(total < maxRecords && minRecords == 0){ 
@@ -376,14 +378,7 @@ public class ProgramResult extends TopServlet{
 	    rangeFlag = false;
 	}
 	if(rangeFlag){
-	    if(showAll){
-		os.println("<center><Font size=+1>Park and Recreation"+
-			   "</Font><br>");
-		os.println("<Font size=+1>Programs "+
-			   "Report</Font><br>"+
-			   "<br><br>");
-	    }
-	    os.println("<hr></center>");
+	    os.println("<hr /></center>");
 	    String id2 = "";
 	    for(int row =0; row < total; row++){
 		if(row >= minRecords && row <= maxRecords){

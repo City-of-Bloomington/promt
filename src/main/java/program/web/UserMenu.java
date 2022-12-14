@@ -272,21 +272,6 @@ public class UserMenu extends TopServlet{
 		    "alt=\"Events Calendar\" /></a>");
 	out.println("</td></tr>");
 	// media
-	/**
-	if(user.isAdmin()){
-	    out.println("<tr><td width=\"100\" height=\"20\">");
-	    out.println("<a href=\""+url+"MediaUpload?obj_type=Default&obj_id=0\""+
-			" target=\"rightFrame\" ");
-	    out.println(" onmouseover=\"movepic('media','"+url2+
-			"media2.jpg');\" " ); 
-	    out.println(" onmouseout=\"movepic('media','"+url2+
-			"media.jpg');\">");
-	    out.println("<img src=\""+url2+"media.jpg\" name=\"media\" "+
-			"width=\"100\" height=\"20\" border=\"0\" "+
-			"alt=\"Default Media Files\" /></a>");
-	    out.println("</td></tr>");
-	}
-	*/
 	//
 	// logout
 	out.println("<tr><td valign=bottom width=\"100\" height=\"20\">");

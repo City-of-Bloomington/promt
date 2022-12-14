@@ -215,6 +215,7 @@ public class EvalBudgetServ extends TopServlet{
 	out.println(" </script>                          ");   
 	out.println("</head><body>");
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);	
 	//
 	if(!budget.hasRecord()){
 	    out.println("<h3>New Evaluation Budget </h3>");

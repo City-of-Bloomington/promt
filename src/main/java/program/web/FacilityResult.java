@@ -92,15 +92,16 @@ public class FacilityResult extends TopServlet{
 	    }
 	}
 		
-	os.println("<head><title>Browsing Records" + 
-		   "</title></head>");
-	os.println("<body>");
+	os.println("<head><title>Facilities" + 
+		   "</title>");
+	Helper.writeWebCss(os, url);	
+	os.println("</head><body>");
+	Helper.writeTopMenu(os, url);	
 		
 	//
 	// check where clause, it is common for table and report
 	//
-	os.println("<center><Font size=+2>Parks and Recreation"+
-		   "</Font><br>");
+	os.println("<br /><center>");
 	String back = fl.lookFor();
 	String that = "";
 	if(!back.equals("")){

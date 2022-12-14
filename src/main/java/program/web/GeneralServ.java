@@ -341,6 +341,7 @@ public class GeneralServ extends TopServlet{
 	out.println("</head><body>");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);		
 	if(id.equals("")){
 	    out.println("<h2>General Listing</h2>");
 	    out.println("* Required field <br />");

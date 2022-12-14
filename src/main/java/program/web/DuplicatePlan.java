@@ -127,6 +127,7 @@ public class DuplicatePlan extends TopServlet{
 	}
 	out.println("<html>");
 	out.println("<head><title>Promt </title>");
+	Helper.writeWebCss(out, url);	
 	//
 	// This script validate 
 	//
@@ -209,8 +210,10 @@ public class DuplicatePlan extends TopServlet{
 	out.println("    }	                               ");
 	out.println("   return true;                           ");
 	out.println("  }	                               ");
-	out.println(" </script>                                ");   
-	out.println("</head><body onLoad=\"showStatus();\">    ");
+	out.println(" </script>                                ");
+	out.println("</head>   ");	
+	out.println("<body onLoad=\"showStatus();\">    ");
+	Helper.writeTopMenu(out, url);		
 	if(!success){
 	    out.println("<p><font color=red>"+message+"</font></p>");
 	}

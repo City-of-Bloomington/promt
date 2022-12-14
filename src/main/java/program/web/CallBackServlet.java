@@ -57,7 +57,7 @@ public class CallBackServlet extends TopServlet {
 		    request.getSession().setAttribute("user", user);
 		    String str ="<head><title></title><META HTTP-EQUIV=\""+
 			"refresh\" CONTENT=\"0; URL=" + url +
-			"Framer?";
+			"IntroPage?";
 		if(!id.equals("")) str += "&id="+id;
 		str += "\">";
 		out.println(str);				

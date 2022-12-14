@@ -117,7 +117,10 @@ public class ReportManager extends TopServlet{
 	}
 	out.println("<html>");
 	out.println("<head><title>City of Bloomington Parks and "+
-		    "Recreation</title></head><body>");
+		    "Recreation</title>");
+	Helper.writeWebCss(out, url);
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);
 	int progCount = 0;
 	//
 	// first count the number of programs for this (season, year)

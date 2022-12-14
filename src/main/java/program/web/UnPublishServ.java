@@ -132,6 +132,7 @@ public class UnPublishServ extends TopServlet {
 	    }
 	}
 	out.println("<html><head><title>Program Selection for Unpublishing</title>");
+	Helper.writeWebCss(out, url);
 	out.println("<script type='text/javascript'>");
 	out.println("/*<![CDATA[*/");
 	out.println(" function selectAll(source) { ");
@@ -150,6 +151,7 @@ public class UnPublishServ extends TopServlet {
 	out.println("</script> ");
 	out.println("</head><body>");
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<h3>Programs Selection for Web Unpublishing</h3>");
 	if(!message.equals("")){
 	    out.println("<h4>"+message+"</h4>");

@@ -128,6 +128,7 @@ public class VolunteerSearch extends TopServlet{
 	out.println(" </script>                         ");   
 	out.println("</head><body>");
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<h2>Volunteer Search  </h2>");
 	if(!message.equals("")){
 	    if(success)

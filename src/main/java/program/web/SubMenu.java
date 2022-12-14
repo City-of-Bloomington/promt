@@ -144,6 +144,7 @@ public class SubMenu extends TopServlet{
 	// check for the user
 	//
 	out.println("<html><head><title>Promt Menu </title>");
+	Helper.writeWebCss(out, url);
 	out.println(" <script>");
 	out.println("  function validateForm(){            ");    
 	out.println("  var x=\"\" ;                        ");
@@ -161,9 +162,9 @@ public class SubMenu extends TopServlet{
 	out.println("   return true;                       ");
 	out.println("  }                                   ");
 	out.println(" </script>                            ");
-	out.println("</HEAD><BODY>");
-
-	out.println("<center><h3> "+title+" </h3>");
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);
+	out.println("<h3> "+title+" </h3>");
 	out.println("<table border=\"1\">");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td>");				
 	if(choice.equals("report")){

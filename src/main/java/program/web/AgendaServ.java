@@ -158,6 +158,7 @@ public class AgendaServ extends TopServlet {
 	int first_day_of_month = Helper.get_first_day_of_month(month, year);
 
 	out.println("<html><head><title>Agenda</title>");
+	out.println("<link rel=\"stylesheet\" href=\""+url+"css/menu_style.css\" />");	
 	out.println("<style type=\"text/css\"><!--");
 	out.println("a:link     {text-decoration: none; color:"+calColor+";}");
 	out.println("a:visited  {text-decoration: none; color:"+calColor+";}"); 
@@ -167,7 +168,9 @@ public class AgendaServ extends TopServlet {
 	out.println("<script type=\"text/javascript\"> ");
 
 	out.println("</script> ");
-	out.println("</head><body >");	
+	out.println("</head><body >");
+	//
+	Helper.writeTopMenu(out, url);
 	if(!success){
 	    if(!message.equals(""))
 		out.println("<font color=red>"+message+"</font><br />");

@@ -1107,7 +1107,7 @@ public class ProgramServ extends TopServlet{
 	out.println(" </script>                                 ");   
 	out.println("</head><body>");
         out.println("<center>");
-
+	Helper.writeTopMenu(out, url);
 	String tdWidth = "width=\"20%\"";
 	if(id.equals("")){
 	    out.println("<h2>New Program</h2>");

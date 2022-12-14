@@ -154,6 +154,7 @@ public class Duplicate extends TopServlet{
 	out.println("<html>");
 	out.println("<head><title>City of Bloomington Parks and "+
 		    "Recreation</title>");
+	Helper.writeWebCss(out, url);	
 	//
 	// This script validate 
 	//
@@ -203,6 +204,7 @@ public class Duplicate extends TopServlet{
 	out.println("  }	                                     ");
 	out.println(" </script>                                ");   
 	out.println("</head><body><center>    ");
+	Helper.writeTopMenu(out, url);		
 	if(!success){
 	    out.println("<p><font color=red>"+message+"</font></p>");
 	}

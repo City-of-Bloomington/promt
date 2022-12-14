@@ -113,7 +113,10 @@ public class ReportBrochure extends TopServlet{
 	message += gens.find();
 	out.println("<html>");
 	out.println("<head><title>City of Bloomington Parks and "+
-		    "Recreation</title></head><body><center>");
+		    "Recreation</title>");
+	Helper.writeWebCss(out, url);
+	out.println("</head><body>");
+	Helper.writeTopMenu(out, url);	
 	if(!message.equals("")){
 	    out.println("<h3>Error "+message+"</h3>");
 	    out.println("</center></body></html>");

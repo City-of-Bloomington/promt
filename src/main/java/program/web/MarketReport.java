@@ -97,9 +97,12 @@ public class MarketReport extends TopServlet{
 	    res.sendRedirect(str);
 	    return;
 	}
-	os.println("<head><title>Browsing Marketing" + 
-		   "</title></head>");
-	os.println("<body><center>");
+	os.println("<head><title>Marketing Report" + 
+		   "</title>");
+	Helper.writeWebCss(os, url);
+	os.println("</head>");
+	os.println("<body>");
+	Helper.writeTopMenu(os, url);
 	//
 	// check where clause 
 	//
@@ -119,12 +122,7 @@ public class MarketReport extends TopServlet{
 			       "make sure you select the right year and season");
 	}
 	else{
-	    os.println("<h2>Parks and Recreation"+
-		       "</h2>");
-	    os.println("<Font size=+1>Marketing Report ");
-	    if(!season.equals("") && !year.equals("")){
-		os.println(" ("+season+"/"+year+")");
-	    }
+	    Helper.writeFirstPage(os,"Marketing Report",year, season);
 	    os.println("</font><br />");
 	    if(glist.size() > 0){
 		os.println(" Total General Listings :"+ glist.size() + "<br />");

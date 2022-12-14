@@ -165,6 +165,7 @@ public class LocationServ extends TopServlet{
 	}
 		
 	//
+	Helper.writeWebCss(out, url);
 	out.println("<script type=\"text/javascript\">");
 	out.println("  function validateForm(){                          "); 
 	out.println("	     return true;	           ");
@@ -173,6 +174,7 @@ public class LocationServ extends TopServlet{
 	out.println("</head><body>");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);		
 	if(id.equals("")){
 	    out.println("<h2>New Location</h2>");
 	}

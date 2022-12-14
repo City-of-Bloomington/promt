@@ -123,8 +123,9 @@ public class PlanSearch extends TopServlet{
 	// This script validate 
 	//
 	Helper.writeWebCss(out, url);
-	out.println("</head><body>");
-	out.println("<center><h2>Plans/Pre Plans Search</h2>");
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);
+	out.println("<h2>Plan/Pre Plan Search</h2>");
 	out.println("<form name=\"myForm\" method=\"post\">");
 	out.println("<input type=\"hidden\" name=\"minRecords\" value=\"0\" />");
 	out.println("<table align=\"center\" border=\"1\" width=\"90%\">");
@@ -357,8 +358,10 @@ public class PlanSearch extends TopServlet{
 	    maxRecords = temp;
 	}
 	os.println("<head><title>Browsing Records" + 
-		   "</title></head>");
-	os.println("<body><center>");
+		   "</title>");
+	Helper.writeWebCss(os, url);
+	os.println("</head><body><center>");
+	Helper.writeTopMenu(os, url);
 	//
 	String str="";
 	//

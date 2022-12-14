@@ -113,7 +113,10 @@ public class ReportCode extends TopServlet{
 	}
 	out.println("<html>");
 	out.println("<head><title>City of Bloomington Parks and "+
-		    "Recreation</title></head><body><center>");		
+		    "Recreation</title>");
+	Helper.writeWebCss(out, url);
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);	
 	message = pcList.find();
 	if(!message.isEmpty()){
 	    out.println("<h3>Error "+message+"</h3>");

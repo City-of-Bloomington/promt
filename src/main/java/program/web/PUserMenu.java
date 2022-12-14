@@ -143,6 +143,7 @@ public class PUserMenu extends TopServlet{
 	// check for the user
 	//
 	out.println("<HTML><HEAD><TITLE>Programs Management Menu </TITLE>");
+	Helper.writeWebCss(out,url);
 	out.println(" <script language=javascript>");
 	out.println("  function validateForm(){            ");    
 	out.println("  var x=\"\" ;                        ");
@@ -160,8 +161,8 @@ public class PUserMenu extends TopServlet{
 	out.println("   return true;                       ");
 	out.println("  }                                   ");
 	out.println(" </script>                            ");
-	out.println("</HEAD><BODY>");
-
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<center><h1> "+title+" </h1>");
 	out.println("<table border><tr><td>");
 	if(choice.equals("report")){

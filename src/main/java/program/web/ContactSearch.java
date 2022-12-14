@@ -114,11 +114,13 @@ public class ContactSearch extends TopServlet{
 	}
 	//
 	// This script validates textareas and facility
-	// 
+	//
+	Helper.writeWebCss(out, url);	
 	out.println("<script type=\"text/javascript\">");
 	out.println("	</script>                          ");   
 	out.println("</head><body>");
 	//
+	Helper.writeTopMenu(out, url);	
 	out.println("<center>");
 	out.println("<h2>Instructors Search</h2>");
 	if(!message.equals("")){

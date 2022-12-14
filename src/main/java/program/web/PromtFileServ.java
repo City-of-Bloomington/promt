@@ -295,16 +295,18 @@ public class PromtFileServ extends TopServlet{
 		}
 	    }
 	}
+	Helper.writeWebCss(out, url);
 	out.println("<html><head><title>Promt Attachments</title>");
-	out.println("<h3 class=\"titleBar\">File Upload "+id+"</h3>");
+	// out.println("<h3 class=\"titleBar\">File Upload "+id+"</h3>");
 	out.println("<div id=\"mainContent\">");
 	out.println("<script type=\"text/javascript\">");
 	out.println("  function validateForm(){		         ");
        	out.println("     return true;				         ");
 	out.println("	}	         			             ");
 	out.println(" </script>		                         ");
-	out.println(" </head><body>                          ");
-	out.println(" <center><h3>File Attachments</h3>");
+	out.println(" </head><body><center>                          ");
+	Helper.writeTopMenu(out, url);
+	out.println(" <h3>File Attachments</h3>");
 	if(success){
 	    if(!message.equals(""))
 		out.println("<h3>"+message+"</h3>");

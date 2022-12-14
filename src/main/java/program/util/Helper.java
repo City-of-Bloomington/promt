@@ -1241,9 +1241,10 @@ public class Helper{
 				     String reportTitle,
 				     String pyear,
 				     String season){
-	out.println("<center><font size=+2>Parks and Recreation</font><br>");
-	out.println("<font size=\"+1\">"+reportTitle+"</font> ");
-	out.println("<b> ("+season+"/"+pyear+")</b><br />");
+	out.println("<br /><center><font size=\"+1\">"+reportTitle+"</font> ");
+	if(season != null && !season.isEmpty()){
+	    out.println("<b> ("+season+"/"+pyear+")</b><br />");
+	}
 	out.println("<hr width=\"75%\"><br /></center>");
     }
     public final static void writeFirstPage(PrintWriter out,
@@ -1265,8 +1266,9 @@ public class Helper{
      * @param message
      */
     public final static void sendMessage(PrintWriter out, String titl, String message){
-	out.println("<center><b>"+titl+"</b>");
-	out.println("<br><br>"+message);
+	out.println("<br /><center><b>"+titl+"</b>");
+	out.println("<br /><br/>"+message);
+	out.println("</center>");	
     }
     /**
      *
@@ -2166,8 +2168,38 @@ public class Helper{
 					    String url
 					    ){
 	if(out != null && !url.isEmpty()){    
-	    out.println("<link rel=\"stylesheet\" href=\""+url+"js/jquery-ui.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n");
-	    out.println("<link rel=\"stylesheet\" href=\""+url+"js/jquery.ui.theme.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n");
+	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/jquery-ui.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n");
+	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/jquery.ui.theme.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n");
+	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/menu_style.css\" />");		    
+	    
+	}
+    }
+    public final static void writeTopMenu(PrintWriter out,
+					  String url
+					  ){
+	if(out != null && !url.isEmpty()){
+	    out.println("<center>");
+	    out.println("<h3>Parks & Recreation Dept - Promt</h3>");	    	    
+	    out.println("<div id=\"div_top\">");
+	    out.println("<ul id=\"ul_top\">");
+	    out.println("<li><a href=\""+url+"PrePlan\">New Plan</a></li>");
+	    out.println("<li><a href=\""+url+"PlanSearch\">Pans</a></li>");
+	    out.println("<li><a href=\""+url+"Search\">Programs</a></li>");	    
+	    out.println("<li><a href=\""+url+"Facility\">New Facility</a></li>");
+	    out.println("<li><a href=\""+url+"FacilitySearch\">Facilities</a></li>");
+	    out.println("<li><a href=\""+url+"MarketSearch\">Marketings</a></li>");
+	    out.println("<li><a href=\""+url+"VolunteerSearch\">Volunteers</a></li>");
+	    out.println("<li><a href=\""+url+"GeneralSearch\">Gen. Listings</a></li>");
+	    out.println("<li><a href=\""+url+"SubMenu?choice=code\">Code Entry</a></li>");
+	    out.println("<li><a href=\""+url+"SubMenu?choice=toPublish\">Publishing</a></li>");
+	    out.println("<li><a href=\""+url+"SubMenu?choice=unPublish\">Unpublishing</a></li>");
+	    out.println("<li><a href=\""+url+"ContactBrowse\">Contacts</a></li>");
+	    out.println("<li><a href=\""+url+"SubMenu?choice=report\">Reports</a></li>");
+	    out.println("<li><a href=\""+url+"SubMenu?choice=calendar\">Calendar</a></li>");
+	    out.println("<li><a href=\""+url+"logout\">Logout</a></li>");	    
+	    out.println("</ul>");
+	    out.println("</div><br />");
+	    out.println("</center>");	    
 	}
     }
     public final static void writeWebFooter(PrintWriter out,

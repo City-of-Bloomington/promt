@@ -203,6 +203,7 @@ public class ContactServ extends TopServlet{
 	out.println("</head><body>");
 	//
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);		
 	if(id.equals("")){
 	    out.println("<h2>New Instructor</h2>");
 	}

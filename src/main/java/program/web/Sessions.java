@@ -536,6 +536,7 @@ public class Sessions extends TopServlet{
 	out.println(" </script>                         ");   
     
 	out.println("</head><body  onLoad=\"showStatus();\">");
+	Helper.writeTopMenu(out, url);
 	if(action.equals("") || action.startsWith("Start") || 
 	   action.equals("Delete"))
 	    out.println("<h2><center>New Session</h2>");

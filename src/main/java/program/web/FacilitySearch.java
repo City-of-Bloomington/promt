@@ -40,7 +40,10 @@ public class FacilitySearch extends TopServlet{
 	out = res.getWriter();
 	Enumeration values = req.getParameterNames();
 	String name, value, message="", lead_id="";
-	out.println("<html>");
+	out.println("<html><head>");
+	Helper.writeWebCss(out, url);
+	out.println("</head><body>");
+	Helper.writeTopMenu(out, url);		
 	FacilityList facils = null;
 	allFacility = "";
 	while (values.hasMoreElements()){

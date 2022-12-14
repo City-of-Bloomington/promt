@@ -120,6 +120,7 @@ public class MarketItemServ extends TopServlet {
 	    out.println("</head><body>");
 	}
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<h3>Edit Marketing Piece</h3>");
 	if(!message.equals("")){
 	    out.println("<h4>"+message+"</h4>");

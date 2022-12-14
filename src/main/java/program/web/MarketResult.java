@@ -101,10 +101,12 @@ public class MarketResult extends TopServlet{
 	}
 
 	out.println("<head><title> Programs Marketing " + 
-		    "</title></head>");
-	out.println("<body>");
-	out.println("<center><font size=+2>Parks and Recreation"+
-		    "</font><br>");
+		    "</title>");
+	Helper.writeWebCss(out, url);
+	out.println("</head><body><center>");
+	out.println("<font size=+2>Parks and Recreation"+
+		    "</font><br>");	
+	Helper.writeTopMenu(out, url);
 	out.println("<h2>Marketing Search Results</h2>");
 	if(!success){		
 	    if(!message.equals("")){

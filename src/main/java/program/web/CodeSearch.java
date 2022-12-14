@@ -108,10 +108,11 @@ public class CodeSearch extends TopServlet{
 	message = programs.findAbraviatedList();
 	// Setting the browsing query
 	//
-	out.println("<html><head><title>Code Browse</title>");
+	out.println("<html><head><title>Code Search</title>");
 	Helper.writeWebCss(out, url);
-	out.println("</head><body>");
-	out.println("<center><h2>Code Search Options</h2>");
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);	
+	out.println("<h2>Code Search</h2>");
 	if(!success){
 	    if(!message.equals(""))
 		out.println("<font color=\"red\">"+message+"</font><br />");

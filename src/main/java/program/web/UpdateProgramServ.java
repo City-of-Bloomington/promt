@@ -95,10 +95,12 @@ public class UpdateProgramServ extends TopServlet {
 	    }
 	}
 	out.println("<html><head><title>Change Program Season & Year</title>");
+	Helper.writeWebCss(out, url);
 	out.println("<script type='text/javascript'>");
 	out.println("</script> ");
 	out.println("</head><body>");
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<h3>Edit Marketing Ad</h3>");
 	if(!message.equals("")){
 	    out.println("<h4>"+message+"</h4>");

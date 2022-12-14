@@ -107,10 +107,12 @@ public class MarketSearch extends TopServlet{
 	// This script validate 
 	//
 	out.println(" <script type=text/javascript>");
-	out.println(" </script>                    ");   
-	out.println("</head><body>");
+	out.println(" </script>                    ");
+	Helper.writeWebCss(out, url);
+	out.println("</head><body><center>");
+	Helper.writeTopMenu(out, url);
 	//
-	out.println("<center><h2>Marketing Search</h2>");
+	out.println("<h2>Marketing Search</h2>");
 	if(!message.equals("")){
 	    if(!success)
 		out.println("<font color=\"red\">"+message+"</font><br />");

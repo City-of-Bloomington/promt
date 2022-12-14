@@ -201,8 +201,10 @@ public class ReportMenu extends TopServlet{
 	out.println("   return true;                       ");
 	out.println("  }                                   ");
 	out.println(" </script>                            ");
+	Helper.writeWebCss(out, url);
 	out.println("</head><body>");
-	out.println("<center><br />");		
+	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	out.println("<form name=\"cForm\" method=\"get\">");
 	out.println("<h2>Reports Menu</h2>");
 	out.println("<b>Reports for "+season+" - "+year);

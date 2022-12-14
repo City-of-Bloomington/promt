@@ -120,8 +120,10 @@ public class DeadLineReport extends TopServlet{
 	String today = Helper.getToday2();
 	pl.setDeadLineFrom(today);
 	os.println("<head><title>Browsing Programs " + 
-		   "</title></head>");
-	os.println("<body><center>");
+		   "</title>");
+	Helper.writeWebCss(os, url);
+	os.println("</head><body><center>");
+	Helper.writeTopMenu(os, url);		
 	message = pl.find();
 	if(!message.equals("")){
 	    os.println("<font color=\"red\"> Error "+message+"</font><br />");

@@ -279,6 +279,7 @@ public class VolTrainServ extends TopServlet{
 	out.println("/*]]>*/\n");							
 	out.println("</head><body>");
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	if(id.equals("")){
 	    out.println("<h2>New Volunteer Training</h2>");
 	}

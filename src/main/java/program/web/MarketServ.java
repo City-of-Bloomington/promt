@@ -249,19 +249,6 @@ public class MarketServ extends TopServlet{
 		message += market.getMessage();
 	    }
 	}
-	else if (action.equals("Delete")){
-	    //
-	    /*
-	      String back = market.doDelete();
-	      if(!back.equals("")){
-	      message += " Could not delete "+market.getMessage();
-	      success = false;
-	      }
-	      else{
-	      message += market.getMessage();
-	      }
-	    */
-	}
 	else if (!id.equals("")){
 	    String back = market.doSelect();
 	    if(!back.equals("")){
@@ -318,7 +305,7 @@ public class MarketServ extends TopServlet{
 	}
 	//
 	out.println("<html><head><title>Marketing</title>");
-	Helper.writeWebFooter(out, url);
+	Helper.writeWebCss(out, url);
 	out.println("<script type='text/javascript'>");
 	out.println("/*<![CDATA[*/");				
 	out.println("  function validateInteger(x) {    ");            
@@ -378,13 +365,14 @@ public class MarketServ extends TopServlet{
 	out.println(" </script>                         ");   
 	out.println("</head><body>");
 	out.println("<center>");
+	Helper.writeTopMenu(out, url);
 	if(id.equals("")){
 	    out.println("<h2>Add Marketing </h2>");
 	}
 	else {
 	    out.println("<h2>Edit Marketing "+id+"</h2>");
 	}
-	out.println("<br>");
+	out.println("<br />");
 	if(!message.equals("")){
 	    if(success)
 		out.println("<font color=green>"+message+"</font><br>");

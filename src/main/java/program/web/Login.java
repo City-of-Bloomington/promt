@@ -71,7 +71,7 @@ public class Login extends TopServlet{
 		session.setAttribute("user",user);
 		String url2 = "";
 		if(source.equals("")){
-		    url2 = url+"Framer?";
+		    url2 = url+"IntroPage?";
 		    if(!id.equals("")){
 			url2 += "id="+id;
 		    }

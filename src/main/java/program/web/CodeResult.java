@@ -169,8 +169,11 @@ public class CodeResult extends TopServlet{
 	    res.sendRedirect(str);
 	    return;
 	}
-	out.println("<head><title>Browsing Records</title></head>");
+	out.println("<head><title>Browsing Records</title>");
+	out.println("<link rel=\"stylesheet\" href=\""+url+"css/menu_style.css\" />");		
+	out.println("</head>");
 	out.println("<body>");
+	Helper.writeTopMenu(out, url);	
 	out.println("<form name=\"anyform\">");
 	out.println("<input type=\"hidden\"  name=\"year\" value=\"" + year + 
 		    "\"></input>");
