@@ -395,11 +395,11 @@ public class ProgramResult extends TopServlet{
 		    os.println("</strong></right></td><td align=\"left\">");
 		    if(needDuplication.equals("")){
 			os.println("<a href=\""+url+"Program.do?id="+pr.getId()+
-				   "&action=zoom\" target=\"rightFrame\">"+
+				   "&action=zoom\">"+
 				   pr.getId()+"</a>");
 		    }
 		    else{
-			os.println("<a href=\""+url+"Duplicate.do?id="+pr.getId()+"&plan_id="+dup_plan_id+"\" target=\"rightFrame\">Duplicate This Program </a>");
+			os.println("<a href=\""+url+"Duplicate.do?id="+pr.getId()+"&plan_id="+dup_plan_id+"\">Duplicate This Program </a>");
 		    }
 		    os.println("</td></tr>");
 		    if(showAll || show[1]){
