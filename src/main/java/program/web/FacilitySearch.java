@@ -68,9 +68,6 @@ public class FacilitySearch extends TopServlet{
 		success = false;
 	    }			
 	}				
-	String log_out = 
-	    "<a href="+url+"Logout?" +
-	    " target=_parent>Log Out </a>";
 	//
 	// get the options for the select widgets
 	//
@@ -125,8 +122,10 @@ public class FacilitySearch extends TopServlet{
 	//
 	out.println("<tr><td>");
 	out.println("<table width=\"100%\">");
-	out.println("<tr><td align=\"right\">");
-	out.println("<input type=\"submit\" value=\"Search\" />");
+	out.println("<tr><td align=\"left\">");
+	out.println("<input type=\"submit\" value=\"Search\" /></td>");
+	out.println("<td align=\"right\">");
+	out.println("<input type=\"button\" onclick=\"window.location='"+url+"Facility'\" value=\"New Facility\" /></td>");	
 	out.println("</td></tr></table>");
 	out.println("</td></tr>");
 	out.println("</table>");

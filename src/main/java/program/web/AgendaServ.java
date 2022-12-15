@@ -339,9 +339,7 @@ public class AgendaServ extends TopServlet {
 	    }
 	}
 	out.println("</table>");
-	out.println("<hr>");
-	out.println("<li><a href="+url+"Logout?"+
-		    " target=_parent>Log Out </a></li>");
+	out.println("<hr />");
 	out.println("</body></html>");
 	out.flush();
 	out.close();

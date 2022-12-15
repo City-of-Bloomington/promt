@@ -523,9 +523,6 @@ public class EvaluationServ extends TopServlet{
 	out.println("</table>");
 	out.println("<hr />");
 	out.println("<hr />");
-	out.println("<LI><a href=\""+url+"Logout\""+
-		    " target=\"_parent\" >Log Out </a>");
-
 	Helper.writeWebFooter(out, url);
 	out.println("</center>");
 	out.print("</body></html>");

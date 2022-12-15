@@ -241,6 +241,8 @@ public class FacilityServ extends TopServlet{
 	    else
 		out.println("<font color=\"red\" size=\"+1\">"+message+"</font><br>");
 	}
+	out.println("<b>* indicates required field</b><br />");
+
 	// box it in 
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onSubmit=\"return "+
@@ -250,9 +252,10 @@ public class FacilityServ extends TopServlet{
 	// facility
 	out.println("<center><table border align=\"center\" width=\"90%\">");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<h3>Facility Name </h3>");
+	out.println("<h3>Facility Name* </h3>");
 	out.println("<input type=\"text\" name=\"name\" "+
-		    "value=\""+fc.getName()+"\" maxlength=\"80\" size=\"80\" />"); 
+		    "value=\""+fc.getName()+"\" maxlength=\"80\" size=\"80\" "+
+		    " required=\"required\" />"); 
 	out.println("</td></tr>");
 	//
 	// statement

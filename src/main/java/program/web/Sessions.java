@@ -890,8 +890,6 @@ public class Sessions extends TopServlet{
 	out.println("<LI><A href="+url+
 		    "Program.do?id="+se.getId()+
 		    "&action=zoom>Go to the Related Program </A>");
-	out.println("<LI><A href="+url+"Logout?"+
-		    " target=_parent>Log Out </A>");
 	Helper.writeWebFooter(out, url);
 	String dateStr = "{ nextText: \"Next\",prevText:\"Prev\", buttonText: \"Pick Date\", showOn: \"both\", navigationAsDateFormat: true, buttonImage: \""+url+"js/calendar.gif\"}";
 	out.println("<script>");

@@ -324,13 +324,9 @@ public class PUserMenu extends TopServlet{
 	//
 	out.println("</form>");
 
-	out.println("<center><table>");
-	out.println("<tr><td><A href="+url+
-		    "Logout?"+
-		    " target=_parent>Log Out </a>");
-	out.println("</td></tr></table></center>");
+	out.println("</center>");
 
-	out.println("</BODY></HTML>");
+	out.println("</body></html>");
 	out.close();
 
     }				   

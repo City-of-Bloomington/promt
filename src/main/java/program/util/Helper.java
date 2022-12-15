@@ -2183,19 +2183,23 @@ public class Helper{
 	    out.println("<div id=\"div_top\">");
 	    out.println("<ul id=\"ul_top\">");
 	    out.println("<li><a href=\""+url+"PrePlan\">New Plan</a></li>");
-	    out.println("<li><a href=\""+url+"PlanSearch\">Pans</a></li>");
-	    out.println("<li><a href=\""+url+"Search\">Programs</a></li>");	    
-	    out.println("<li><a href=\""+url+"Facility\">New Facility</a></li>");
-	    out.println("<li><a href=\""+url+"FacilitySearch\">Facilities</a></li>");
+
+	    out.println("<li><a href=\""+url+"PlanSearch\">Plans</a></li>");
+	    out.println("<li><a href=\""+url+"Search\">Programs</a></li>");
 	    out.println("<li><a href=\""+url+"MarketSearch\">Marketings</a></li>");
 	    out.println("<li><a href=\""+url+"VolunteerSearch\">Volunteers</a></li>");
 	    out.println("<li><a href=\""+url+"GeneralSearch\">Gen. Listings</a></li>");
 	    out.println("<li><a href=\""+url+"SubMenu?choice=code\">Code Entry</a></li>");
 	    out.println("<li><a href=\""+url+"SubMenu?choice=toPublish\">Publishing</a></li>");
 	    out.println("<li><a href=\""+url+"SubMenu?choice=unPublish\">Unpublishing</a></li>");
-	    out.println("<li><a href=\""+url+"ContactBrowse\">Contacts</a></li>");
+
 	    out.println("<li><a href=\""+url+"SubMenu?choice=report\">Reports</a></li>");
+	    
 	    out.println("<li><a href=\""+url+"SubMenu?choice=calendar\">Calendar</a></li>");
+	    out.println("<li><a href=\""+url+"ContactBrowse\">Instructors</a></li>");
+	    out.println("<li><a href=\""+url+"LocationSearch\">Locations</a></li>");
+	    out.println("<li><a href=\""+url+"FacilitySearch\">Facilities</a></li>");
+
 	    out.println("<li><a href=\""+url+"logout\">Logout</a></li>");	    
 	    out.println("</ul>");
 	    out.println("</div><br />");

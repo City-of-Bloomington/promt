@@ -586,11 +586,6 @@ public class DayItems extends TopServlet{
 		    "&month="+ month +
 		    "> Go to the Related Agenda </A>");
 
-
-	out.println("<LI><A href="+url+"PLogout?"+
-		    " target=_top>Log Out </A>");
-
-
 	out.print("</ul></body></html>");
 	out.close();
 	Helper.databaseDisconnect(con, stmt, rs);

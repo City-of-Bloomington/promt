@@ -277,7 +277,6 @@ public class DuplicatePlan extends TopServlet{
 	out.println("</table></td></tr></table>");
 	out.println("<HR>");
 	out.println("<HR>");
-	out.println("<LI><A href="+url+"Logout?>Log Out </A>");
 	out.println("</center>");
 	out.print("</body></html>");
 	out.flush();

@@ -235,14 +235,8 @@ public class SessionResult extends TopServlet{
 	    String back_to_browse = 
 		"<a href="+url+"SessionsBrowse?"+
 		"Back to Query Session</a>";
-	    String log_out = "<a href="+url+
-		"Logout? target=_top>Log Out </a>";
 
-	    os.println("<h2>Browsing Sessions Records </h2>");
-	    os.println("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-		       "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-		       "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+log_out);
-	    os.println("<br>");
+	    os.println("<h2>Sessions Records </h2>");
 	    //
 	    // check where clause 
 	    //
@@ -569,8 +563,7 @@ public class SessionResult extends TopServlet{
 		}
 	    }
 	    os.println("</form>");
-	    os.println(back_to_browse +"<br>"+"<br>"+ 
-		       log_out);
+	    os.println(back_to_browse +"<br/>"+"<br/>");
 	    os.println("</body>");
 	    os.println("</html>");
 	}

@@ -11,7 +11,7 @@ import program.list.*;
 import program.model.*;
 import program.util.*;
 
-@WebServlet(urlPatterns = {"/LocationBrowse","/LocationSerch"})
+@WebServlet(urlPatterns = {"/LocationBrowse","/LocationSearch"})
 public class LocationSearch extends TopServlet{
 
     static Logger logger = LogManager.getLogger(LocationSearch.class);

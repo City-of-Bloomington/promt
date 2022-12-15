@@ -110,9 +110,6 @@ public class PlanSearch extends TopServlet{
 		success = false;
 	    }			
 	}
-	String log_out = 
-	    "<a href="+url+"PLogout?" +
-	    " target=_parent>Log Out </a>";
 	//
 	// Browsing the records
 	//

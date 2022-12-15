@@ -304,9 +304,8 @@ public class Duplicate extends TopServlet{
 			"&action=zoom"+
 			">Go to the New Program </A><br>");
 	}
-	out.println("<HR>");
-	out.println("<HR>");
-	out.println("<LI><A href="+url+"Logout?>Log Out </A>");
+	out.println("<hr />");
+	out.println("<hr />");
 	out.println("</center>");
 	out.print("</body></html>");
 	out.flush();
