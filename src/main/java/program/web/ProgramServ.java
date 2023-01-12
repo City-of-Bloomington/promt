@@ -1831,7 +1831,7 @@ public class ProgramServ extends TopServlet{
 		out.println("<input type=\"button\" value=\"Sponsorship\" "+
 			    " onclick=\"document.location='"+url+
 			    "Sponsor.do?pid="+pr.getId()+ 
-			    "';\" />");
+			    "';\" /></td>");
 	    }
 	    else{
 		jj++;
@@ -1839,9 +1839,10 @@ public class ProgramServ extends TopServlet{
 		    jj=1;
 		    out.println("</tr>");
 		    out.println("<tr>");
-		}			
+		}
+		out.println("<td valign=\"top\" align=\"center\">");		
 		out.println("<input type=\"button\" value=\"Sponsorship\" "+
-			    " onclick=\"window.alert('You need to finish marketing first')\"></input>");
+			    " onclick=\"window.alert('You need to finish marketing first')\"></input></td>");
 	    }
 	    if(user.isAdmin()){
 		jj++;

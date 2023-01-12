@@ -22,8 +22,9 @@
       <filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
     </filter>
     <!--
-      change this filter to something other than /Login if you want to
-      use ADFS for login
+      change this filter to /Login if you want to use CAS
+      or /CasLogin if you want to use ADFS
+      make sure to update Login.java and LoginServlet.java accordingly
     -->     
   <filter-mapping>
     <filter-name>CAS Authentication Filter</filter-name>
