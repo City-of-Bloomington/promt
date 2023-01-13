@@ -13,7 +13,7 @@ import program.list.*;
 import program.model.*;
 import program.util.*;
 
-@WebServlet(urlPatterns = {"/CasLogin"})
+@WebServlet(urlPatterns = {"/Login"})
 public class Login extends TopServlet{
 
     //
