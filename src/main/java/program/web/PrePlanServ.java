@@ -11,7 +11,7 @@ import program.list.*;
 import program.model.*;
 import program.util.*;
 
-@WebServlet(urlPatterns = {"/PrePlan"})
+@WebServlet(urlPatterns = {"/PrePlan","/PrePlan.do"})
 public class PrePlanServ extends TopServlet{
 
     static Logger logger = LogManager.getLogger(PrePlanServ.class);

@@ -392,7 +392,7 @@ public class ProgPlan extends TopServlet{
 	    prePlan = pp.getPrePlan();
 	    out.println("<tr><td align=\"right\"><b>Program Season/Year: </b></td><td>");
 	    out.println(prePlan.getSeason()+"/"+prePlan.getYear());
-	    out.println("&nbsp;&nbsp;<a href=\""+url+"PrePlan.do?action=zoom&id="+id+"\">Related Pre Plan</a>");
+	    out.println("&nbsp;&nbsp;<a href=\""+url+"PrePlan?action=zoom&id="+id+"\">Related Pre Plan</a>");
 	    out.println("</td></tr>");
 	}
 	else{
