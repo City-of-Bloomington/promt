@@ -150,7 +150,7 @@ public class MarketAdServ extends TopServlet {
 	out.println("</td></tr>");
 	out.println("<tr><th>Due Date:</th>");
 	out.println("<td align=\"left\">");
-	out.println("<input type=\"text\" name=\"due_date\" value=\""+ad.getDue_date()+"\" size=\"10\" id=\"due_date\" />");
+	out.println("<input type=\"text\" name=\"due_date\" value=\""+ad.getDue_date()+"\" size=\"10\" id=\"due_date\" class=\"date\" />");
 	out.println("</td></tr>");
 	out.println("<tr><th>Details:</th>");
 	out.println("<td align=\"left\">");
