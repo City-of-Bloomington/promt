@@ -103,7 +103,7 @@ public class MarketItemServ extends TopServlet {
 		}					
 	    }			
 	}
-	out.println("<html><head><title>Marketing piece</title>");
+	out.println("<html><head><title>Marketing Piece(s)</title>");
 	Helper.writeWebCss(out, url);
 	out.println("<script type='text/javascript'>");
 	out.println("/*<![CDATA[*/");								
@@ -120,7 +120,7 @@ public class MarketItemServ extends TopServlet {
 	    out.println("</head><body>");
 	}
 	out.println("<center>");
-	Helper.writeTopMenu(out, url);
+	// Helper.writeTopMenu(out, url);
 	out.println("<h3>Edit Marketing Piece</h3>");
 	if(!message.equals("")){
 	    out.println("<h4>"+message+"</h4>");
@@ -161,7 +161,7 @@ public class MarketItemServ extends TopServlet {
 	out.println("</td></tr>");
 	out.println("<tr><th>Due Date:</th>");
 	out.println("<td align=\"left\">");
-	out.println("<input type=\"text\" name=\"due_date\" value=\""+item.getDue_date()+"\" size=\"10\" id=\"due_date\" />");
+	out.println("<input type=\"text\" name=\"due_date\" value=\""+item.getDue_date()+"\" size=\"10\" id=\"due_date\" class=\"date\" />");
 
 	out.println("</td></tr>");
 	out.println("<tr><th>Details:</th>");
