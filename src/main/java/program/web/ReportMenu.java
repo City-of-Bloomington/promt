@@ -338,7 +338,9 @@ public class ReportMenu extends TopServlet{
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
 	out.println("<table width=\"75%\">");		
-	out.println("<tr><td align=\"left\"><li><b>Marketing:</li></b></td>");
+	out.println("<tr><td align=\"left\"><li><b>Marketing: </b> ");
+	out.println("<input type=\"checkbox\" name=\"csvOutput\" value=\"y\" />CSV Output");
+	out.println("</li></td>");
 	out.println("<td align=\"left\" width=\"50%\">");		
 	out.println("<input type=\"submit\" value=\"Click here\" />");
 	out.println("</td></tr>");

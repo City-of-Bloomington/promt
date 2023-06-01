@@ -8,6 +8,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.sql.*;
 import java.nio.file.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.naming.*;
 import javax.naming.directory.*;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +31,7 @@ public class Helper{
     final static String fallWinterEndDate = "12/31/";  
     final static String winterSpringStartDate = "01/01/"; // 
     final static String winterSpringEndDate = "04/30/"; //  real 6/21
+    private static final Pattern REMOVE_TAGS = Pattern.compile("<.+?>");    
     final static Map<String, String> cutUpSeasons = createMap();
     final static Map<String, String> cutUpDates = createMap2();		
     static int c_con = 0;
@@ -1755,6 +1758,113 @@ public class Helper{
 	out.println("</table>");
 
     }
+    public static String cleanText2(String str){
+	String str3 = "";
+	if(str != null && !str.isEmpty()){
+	    String str2 = removeTags(str);	    
+	    str3 = cleanText(str2);
+	}
+	return str3;
+    }
+    public static String removeTags(String string) {
+
+	if (string == null || string.length() == 0) {
+	    return string;
+	}
+
+	Matcher m = REMOVE_TAGS.matcher(string);
+	return m.replaceAll("");
+    }    
+    public final static String writeMarketCsv(Market market, String type, String name, String lead){
+	//
+	
+	String all = "",line="";
+	if(name == null) name = "";
+	if(lead == null) lead = "";
+	//
+	// Program Ad
+	//
+	List<MarketAd> ads = market.getAds();
+	Set<String> adSet = new HashSet<String>();
+	if(ads != null && ads.size() > 0){
+	    int jj=1;
+	    for(MarketAd one:ads){
+		line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
+		line += one.getType().getName()+"\",\"";
+		line += "\",\""; // quantity
+		line += one.getDue_date()+"\",\"";
+		line += cleanText2(one.getDetails())+"\"\n";
+		all += line;
+		jj++;
+	    }
+	    if(!market.getOther_ad().isEmpty()){
+		line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
+		line += "Other Ad\",\"\",\"\",\"";
+		line += cleanText2(market.getOther_ad())+"\"\n";
+		all += line;
+	    }
+	}
+	//
+	//
+	// table with 3 columns
+	List<MarketItem> items = market.getItems();
+	Set<String> hashSet = new HashSet<String>();
+	int jj=1;	
+	if(items != null && items.size() > 0){
+	    for(MarketItem one:items){
+		hashSet.add(one.getType_id());
+		line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
+		line += one.getType().getName()+"\",\"";
+		line += one.getQuantity()+"\",\"";
+		line += one.getDue_date()+"\",\"";
+		line += cleanText2(one.getDetails())+"\"\n";
+		all += line;
+		jj++;		
+	    }
+	}
+	/**
+	jj=1;
+	if(!market.getOther_market().isEmpty()){
+	    line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
+	    line += "Other Market\",\"\",\"\",\"";
+	    line += cleanText2(market.getOther_market())+"\"\n";
+	    all += line;
+	}
+	*/
+	//
+	// Announcement
+	//
+	/**
+	List<Type> announces = market.getAnnounces();
+	jj=1;
+	if(announces != null && announces.size() > 0){
+	    boolean inn = false;
+	    line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
+	    line += "Announcements\",\"\",\"\",\"";	    
+	    for(Type one:announces){
+		if(inn) line += " ";
+		line += one;
+		inn = true;
+	    }
+	    line += "\"\n";
+	    all += line;
+	    jj++;
+	}
+	*/
+	
+	//		
+	// Special Instruction
+	/**
+	if(!market.getSpInstructions().equals("")){
+	    jj=1;
+	    line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
+	    line += "Special instruction\",\"\",\"\",\"";	    	    
+	    line += cleanText2(market.getSpInstructions())+"\"\n";
+	    all += line;
+	}
+	*/
+	return all;
+    }    
     public final static void writeFacilities(PrintWriter out, List<Facility> ones, String url){
 	if(ones == null || ones.size() < 1) return;
 	String[] titles = { "ID ","Name","Type",
