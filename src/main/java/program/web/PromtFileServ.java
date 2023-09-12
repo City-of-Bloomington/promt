@@ -296,8 +296,7 @@ public class PromtFileServ extends TopServlet{
 	    }
 	}
 	Helper.writeWebCss(out, url);
-	out.println("<html><head><title>Promt Attachments</title>");
-	// out.println("<h3 class=\"titleBar\">File Upload "+id+"</h3>");
+	out.println("<html><head><title>Promt Files</title>");
 	out.println("<div id=\"mainContent\">");
 	out.println("<script type=\"text/javascript\">");
 	out.println("  function validateForm(){		         ");

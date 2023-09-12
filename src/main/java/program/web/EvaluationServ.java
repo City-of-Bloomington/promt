@@ -503,6 +503,11 @@ public class EvaluationServ extends TopServlet{
 			" onClick=\"document.location='"+url+
 			"Market.do?prog_id="+id+
 			"'\"; /></td>");
+	    out.println("<td align=\"center\" valign=\"top\">");
+	    out.println("<input type=\"button\" value=\"Upload File\""+
+			" onclick=\"document.location='"+url+
+			"PromtFile.do?type=Evaluation&related_id="+id+
+			"';\" /></td>");	    
 	    //
 	    out.println("</form>");
 	    //
@@ -519,8 +524,12 @@ public class EvaluationServ extends TopServlet{
 	    }
 	    out.println("</tr></table>");
 	    out.println("</td></tr>");
-	}	    
+	}
+	
 	out.println("</table>");
+	if(!id.isEmpty() && eval.hasFiles()){
+	    Helper.printFiles(out, url, eval.getFiles());
+	}
 	out.println("<hr />");
 	out.println("<hr />");
 	Helper.writeWebFooter(out, url);

@@ -77,8 +77,11 @@ public class RelatedUtil{
 	else if(type.equals("Marketing")){
 	    link = "<a href=\""+url+"Market.do?id="+id+"\">"+id+"</a>";
 	}
+	else if(type.equals("Evaluation")){
+	    link = "<a href=\""+url+"Evaluation.do?id="+id+"\">"+id+"</a>";
+	}	
 	else{
-	    back = "Unknown type "+type;
+	    back = " Related Util: Unknown type "+type;
 	    System.err.println(back);
 	}
 	return back;

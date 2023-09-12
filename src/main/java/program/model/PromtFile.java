@@ -430,7 +430,13 @@ public class PromtFile{
     }	
 
 }
+/**
 
+alter table promt_files modify type  enum('Program','Plan','Marketing','Facility','Other','Evaluation'); 
+   
+
+
+ */
 
 
 

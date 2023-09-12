@@ -30,7 +30,7 @@ public class Evaluation extends CommonInc{
     List<EvalStaff> addEvalStaffs = null;
     List<Outcome> updateOutcomes = null;
     List<EvalStaff> updateEvalStaffs = null;
-		
+    List<PromtFile> files = null;		
     Program program = null;
     public Evaluation(boolean deb){
 	//
@@ -129,6 +129,23 @@ public class Evaluation extends CommonInc{
 	}
 	return program;
     }
+    public boolean hasFiles(){
+	getFiles();
+	return files != null && files.size() > 0;
+    }
+    public List<PromtFile> getFiles(){
+	if(files == null && !id.equals("")){
+	    PromtFileList tsl = new PromtFileList(debug, id, "Evaluation");
+	    String back = tsl.find();
+	    if(back.equals("")){
+		List<PromtFile> ones = tsl.getFiles();
+		if(ones != null && ones.size() > 0){
+		    files = ones;
+		}
+	    }
+	}
+	return files;
+    }    
     //
     public void setId(String val){
 	if(val != null)
