@@ -108,15 +108,16 @@ public class DuplicatePlan extends TopServlet{
 	    success = false;
 	}		
 	if(action.startsWith("Dup") && user.canEdit()){
-	    pp.setYear_season(year+" "+season);
-	    pp.setYear(year);
-	    pp.setLead_id(lead_id);
-	    pp.setSeason(season);
-	    back = pp.doDuplicate();
+	    Plan pp2 = new Plan();
+	    pp2.setSeason(season);
+	    pp2.setYear(year);
+	    pp2.setLead_id(lead_id);
+	    pp2.setProgram_title(pp.getProgram_title());
+	    back = pp2.doSave(); // duplication of the old plan
 	    if(back.equals("")){
-		id_dup = pp.getId();
+		id_dup = pp2.getId();
 		String msg="Plan+duplicated+successfully";
-		String str = url+"PrePlan.do?action=zoom&id="+id_dup+"&msg="+msg;
+		String str = url+"Plan.do?id="+id_dup+"&msg="+msg;
 		res.sendRedirect(str);
 		return;				
 	    }
@@ -232,8 +233,8 @@ public class DuplicatePlan extends TopServlet{
 		    "Select the new year, season and lead for the new plan "+
 		    "<br> and then click on Duplicate "+
 		    "<br>You will get a message about the duplication<br>"+
-		    "process is successful you will be forwarded to the pre plan page "+
-		    "and newly duplicated plan where you can make<br>"+
+		    "If the duplication is successful you will be forwarded to the plan page "+
+		    " where you can make <br />"+
 		    " additional changes.</font>");
 	out.println("</td></tr>");
 	out.println("<tr><td align=right><b>Plan ID:");

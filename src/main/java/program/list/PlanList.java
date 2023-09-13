@@ -18,7 +18,7 @@ public class PlanList extends ArrayList<Plan>{
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     List<String> errors = null;
     String message = "";
-    String id = "", lead_id="", program="",objective="",
+    String id = "", lead_id="", program_title="",objective="",
 	profit_obj = "", market="", 
 	instructor="", sortby="pl.id DESC ", con_id="";// instructor id
     // pre plan related
@@ -49,9 +49,9 @@ public class PlanList extends ArrayList<Plan>{
 	if(val != null)
 	    id = val;
     }
-    public void setProgram(String val){
+    public void setProgram_title(String val){
 	if(val != null)
-	    program = val;
+	    program_title = val;
     }	
     public void setCon_id(String val){
 	if(val != null)
@@ -105,7 +105,7 @@ public class PlanList extends ArrayList<Plan>{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	Connection con = Helper.getConnection();
-	String qq = "select pl.id,pl.program from plans pl ";
+	String qq = "select pl.id,pl.program_title from plans pl ";
 	String qw = "";
 	boolean instrTbl = false, objTbl = false, preTbl = false;
 	if(con == null){
@@ -128,9 +128,9 @@ public class PlanList extends ArrayList<Plan>{
 		    if(!qw.equals("")) qw += " and ";
 		    qw += " pl.lead_id = ? ";
 		}
-		if(!program.equals("")){
+		if(!program_title.equals("")){
 		    if(!qw.equals("")) qw += " and ";
-		    qw += " pl.program like ? ";
+		    qw += " pl.program_title like ? ";
 		}				
 		if(!profit_obj.equals("")){
 		    if(!qw.equals("")) qw += " and ";
@@ -146,24 +146,22 @@ public class PlanList extends ArrayList<Plan>{
 		    qw += " pl.market like ? ";
 		}
 		if(!season.equals("")){
-		    preTbl = true;
 		    if(!qw.equals("")) qw += " and ";
-		    qw += " prl.season = ? ";
+		    qw += " pl.season = ? ";
 		}
 		if(!year.equals("")){
-		    preTbl = true;
 		    if(!qw.equals("")) qw += " and ";
-		    qw += " prl.year = ? ";
+		    qw += " pl.year = ? ";
 		}
 		if(!date_from.equals("")){
 		    preTbl = true;
 		    if(!qw.equals("")) qw += " and ";
-		    qw += " prl.date >= ? ";
+		    qw += " pl.program_date >= ? ";
 		}
 		if(!date_to.equals("")){
 		    preTbl = true;
 		    if(!qw.equals("")) qw += " and ";
-		    qw += " prl.date <= ? ";
+		    qw += " pl.program_date <= ? ";
 		}
 		if(!con_id.equals("")){
 		    instrTbl = true;
@@ -207,8 +205,8 @@ public class PlanList extends ArrayList<Plan>{
 		if(!lead_id.equals("")){
 		    pstmt.setString(j++, lead_id);
 		}
-		if(!program.equals("")){
-		    pstmt.setString(j++, "%"+program+"%");
+		if(!program_title.equals("")){
+		    pstmt.setString(j++, "%"+program_title+"%");
 		}								
 		if(!profit_obj.equals("")){
 		    pstmt.setString(j++, "%"+profit_obj+"%");

@@ -79,7 +79,7 @@ public class ProgPlan extends TopServlet{
 	    value = vals[vals.length-1].trim();
 
 	    if(name.equals("program")){
-		pp.setName(value);
+		pp.setProgram_title(value);
 	    }
 	    else if(name.equals("id")){ // change to id
 		id = value;
@@ -280,26 +280,10 @@ public class ProgPlan extends TopServlet{
 		success = false;
 	    }						
 	}
-	else {
-	    if(pp.isNew()){
-		prePlan = pp.getPrePlan();
-		if(prePlan != null){
-		    pp.setName(prePlan.getName());
-		    pp.setLead_id(prePlan.getLead_id());
-		}
-	    }
-	    else{
-		pp.doSelect();
-	    }
-	}
-	if(!id.equals("") && action.equals("zoom")){
+	else if(!id.isEmpty()){
+	    pp.doSelect();
 	    if(pp.hasPrePlan()){
 		prePlan = pp.getPrePlan();
-		if(!prePlan.isFulfilled()){
-		    String str = url+"PrePlan.do?action=zoom&id="+id;
-		    res.sendRedirect(str);
-		    return;	
-		}
 	    }
 	}
 	//
@@ -385,23 +369,26 @@ public class ProgPlan extends TopServlet{
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table width=\"100%\">");
 	out.println("<tr><td "+tdWidth+" align=\"right\"><b>*Program Title: </b></td><td>");
-	out.println("<input type=\"text\" name=\"program\" "+
-		    "value=\""+pp.getName()+"\" maxlength=\"128\" size=\"70\" /></td></tr>");
-
-	if(!id.equals("") && pp.hasPrePlan()){
-	    prePlan = pp.getPrePlan();
-	    out.println("<tr><td align=\"right\"><b>Program Season/Year: </b></td><td>");
-	    out.println(prePlan.getSeason()+"/"+prePlan.getYear());
-	    out.println("&nbsp;&nbsp;<a href=\""+url+"PrePlan?action=zoom&id="+id+"\">Related Pre Plan</a>");
-	    out.println("</td></tr>");
+	out.println("<input type=\"text\" name=\"program_title\" "+
+		    "value=\""+pp.getProgram_title()+"\" maxlength=\"128\" size=\"70\" /></td></tr>");
+	
+	out.println("<tr><td align=\"right\">Program Season </td><td>");
+	out.println("<select name=\"season\">");
+	out.println("<option value=\""+pp.getSeason()+"\" selected>"+
+		    pp.getSeason()+"\n");
+	out.println(Helper.allSeasons);
+	out.println("</select> ");	
+	out.println(" <b>Year:</b>");
+	out.println("<select name=\"year\">");
+	out.println("<option value=\"\">\n");
+	int[] years = Helper.getFutureYears();
+	for(int yy:years){
+	    String selected="";
+	    if(pp.getYear().equals(""+yy))
+		selected="selected=\"selected\"";
+	    out.println("<option "+selected+">"+yy+"</option>");
 	}
-	else{
-	    out.println("<tr><td align=\"right\">This is the </td><td>");
-	    out.println("<input type=\"text\" name=\"year_season\" "+
-			"value=\""+pp.getYear_season()+
-			"\" maxlength=\"30\" size=\"30\" /> (year/season) for this program. ");
-	    out.println("</td></tr>");
-	}
+	out.println("</select>&nbsp;&nbsp;");
 	//
 	// lead
 	out.println("<tr><td align=\"right\"><b>Program Lead: </b></td><td>");

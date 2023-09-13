@@ -318,8 +318,8 @@ public class PlanSearch extends TopServlet{
 	    else if (name.equals("year")){
 		pl.setYear(value);
 	    }
-	    else if (name.equals("program")){
-		pl.setProgram(value);
+	    else if (name.equals("program_title")){
+		pl.setProgram_title(value);
 	    }						
 	    else if (name.equals("date_from")){
 		pl.setDate_from(value);
@@ -389,7 +389,7 @@ public class PlanSearch extends TopServlet{
 		os.println("<a href=\""+url+"ProgPlan?id="+
 			   that+"&action=zoom\">"+that+"</a>");
 		os.println("</td></tr>");
-		that = plan.getName();
+		that = plan.getProgram_title();
 		if(that != null)
 		    writeItem(that, titles[1], os);
 		that = plan.getYear_season();

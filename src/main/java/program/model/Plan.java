@@ -1,5 +1,6 @@
 package program.model;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
@@ -9,11 +10,12 @@ import program.list.*;
 
 public class Plan extends CommonInc{
 
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     static Logger logger = LogManager.getLogger(Plan.class);
     String id="", name =""; 
     // other fields will be added later
     final static String life_cycle_options[] ={"Intro","Growth","Maturity","Saturation","Decline"}; 
-    String brStatement="", facility="", schedule="";
+    String brStatement="", facility="", schedule="", date="", program_title="";
     String closings="", other="", message = "", finalMessage="";
     String stat="", stat2="",stat3="",stat4="",stat5="",
 	shedule2="",statement="",schedule2="", lead_id="",p_duration="";
@@ -53,7 +55,7 @@ public class Plan extends CommonInc{
 	//
 	super(deb);
 	setId(val);
-	setName(val2);
+	setProgram_title(val2);
     }
     public Plan(boolean deb, String val){
 	//
@@ -90,8 +92,8 @@ public class Plan extends CommonInc{
     public String getId(){
 	return id;
     }
-    public String getName(){
-	return name;
+    public String getProgram_title(){
+	return program_title; // name
     }
     public String getProfit_obj(){
 	return profit_obj;
@@ -118,10 +120,14 @@ public class Plan extends CommonInc{
 	return est_time;
     }
     public String getYear_season(){
-	String ret = year_season;
-	if(ret.equals("") && hasPrePlan()){
-	    ret =  prePlan.getYear()+"/"+prePlan.getSeason();
+	String ret = "";
+	if(year.isEmpty() && season.isEmpty()){
+	    if(hasPrePlan()){
+		year = prePlan.getYear();
+		season = prePlan.getSeason();
+	    }
 	}
+	ret =  year+"/"+season;
 	return ret;
     }
     public String getYear(){
@@ -168,9 +174,16 @@ public class Plan extends CommonInc{
 	return life_cycle;
     }	
     public String toString(){
-	String ret = name;
-	if(!year_season.equals("")){
-	    ret += "/"+year_season;
+	String ret = program_title;
+	if(!year.isEmpty() || !season.isEmpty()){
+	    if(!year.isEmpty()){
+		if(!ret.isEmpty()) ret += " ";	    
+		ret += year;
+	    }
+	    if(!season.isEmpty()){
+		if(!ret.isEmpty()) ret += "/";
+		ret += season;
+	    }
 	}
 	else{
 	    if(hasPrePlan()){
@@ -191,16 +204,10 @@ public class Plan extends CommonInc{
 	return prePlan;
     }
     public boolean hasPrePlan(){
-	if(prePlan != null) return true;
 	if(!id.equals("") && prePlan == null){
-	    PrePlan one = new PrePlan(debug, id);
-	    String back = one.doSelect();
-	    if(back.equals("")){
-		prePlan = one;
-		return true;
-	    }
+	    getPrePlan();
 	}
-	return false;
+	return prePlan != null;
     }
     public List<Objective> getObjectives(){
 	if(objectives == null && !id.equals("")){
@@ -315,9 +322,9 @@ public class Plan extends CommonInc{
 	if(val != null)
 	    life_cycle = val;
     }	
-    public void setName(String val){
+    public void setProgram_title(String val){
 	if(val != null)
-	    name = val.trim();
+	    program_title = val.trim();
     }
     public void setIdeas(String val){
 	if(val != null)
@@ -446,6 +453,10 @@ public class Plan extends CommonInc{
 	}
 	return lastProgram;
     }
+    /**
+     * TODO
+     */
+    /**
     public String doDuplicate(){
 	String back = "";
 	String old_id = id;
@@ -462,6 +473,7 @@ public class Plan extends CommonInc{
 	}
 	return back;
     }
+    */
     public boolean hasHistory(){
 	getHistorys();
 	return historys != null;
@@ -541,20 +553,11 @@ public class Plan extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-				
-	if(name.equals("")){
-	    getPrePlan();
-	    if(prePlan != null){
-		name = prePlan.getName();
-		if(lead_id.equals(""))
-		    lead_id = prePlan.getLead_id();
-	    }
-	    if(name.equals("")){								
-		back = "name not set ";
-		logger.error(back);
-		addError(back);
-		return back;
-	    }
+	if(program_title.equals("")){
+	    back = "Program title not set ";
+	    logger.error(back);
+	    addError(back);
+	    return back;
 	}
 	con = Helper.getConnection();
 	if(con == null){
@@ -562,22 +565,30 @@ public class Plan extends CommonInc{
 	    addError(back);
 	    return back;
 	}
-	String qq = "insert into plans (id,"+
-	    "program,goals,attendCount,ideas,"+ // 5 
+	String qq = "insert into plans (id,plan_year,season,"+
+	    "program_title,goals,attendCount,ideas,"+ // 5 
 	    "profit_obj,partner,sponsor,lead_id,p_duration,"+ // 10
 	    "market,frequency,min_max,event_time,est_time,"+ // 15
-	    "year_season,history,supply,timeline,life_cycle) "+ // 20
-	    "values(?,"+
-	    "?,?,?,?,?,?,?,?,?,?,"+
-	    "?,?,?,?,?,?,?,?,?)";
+	    "year_season,history,supply,timeline,life_cycle,program_date)"+
+	    " values(0,?,"+
+	    "?,?,?,?,?,?,?,?,?,?,?"+
+	    "?,?,?,?,?,?,?,?,?,?,?)";
 	try{
 	    if(debug){
 		logger.debug(qq);
 	    }
 	    pstmt = con.prepareStatement(qq);
-	    pstmt.setString(1, id);
-	    setParams(pstmt, 2);
+	    setParams(pstmt, 1);
 	    pstmt.executeUpdate();
+	    qq = "select LAST_INSERT_ID() ";
+	    if(debug){
+		logger.debug(qq);
+	    }
+	    pstmt = con.prepareStatement(qq);
+	    rs = pstmt.executeQuery();
+	    if(rs.next()){
+		id = rs.getString(1);
+	    }	    
 	    doAddsAndUpdates();
 	    message="Saved Successfully";
 	}
@@ -594,8 +605,8 @@ public class Plan extends CommonInc{
     public String doUpdate(){
 		
 	String back = "";
-	if(name.equals("")){
-	    back = "name not set ";
+	if(program_title.equals("")){
+	    back = "program title not set ";
 	    logger.error(back);
 	    addError(back);
 	    return back;
@@ -610,13 +621,13 @@ public class Plan extends CommonInc{
 	    addError(back);
 	    return back;
 	}
-	String qq = "update plans set "+
-	    "program=?,goals=?,"+
+	String qq = "update plans set plan_year,season,"+
+	    "program_title=?,goals=?,"+
 	    "attendCount=?,"+
 	    "ideas=?,profit_obj=?,partner=?,sponsor=?,lead_id=?,"+
 	    "p_duration=?,market=?,frequency=?,min_max=?,event_time=?,"+
 	    "est_time=?,year_season=?,"+
-	    "history=?,supply=?,timeline=?,life_cycle=? "+
+	    "history=?,supply=?,timeline=?,life_cycle=?,program_date=? "+
 	    "where id = ? ";
 	try{
 	    if(debug){
@@ -625,7 +636,7 @@ public class Plan extends CommonInc{
 	    pstmt = con.prepareStatement(qq);
 	    //
 	    back += setParams(pstmt, 1);
-	    pstmt.setString(20, id);
+	    pstmt.setString(23, id);
 	    pstmt.executeUpdate();
 	    doAddsAndUpdates();
 	    message="Updated Successfully";
@@ -644,7 +655,9 @@ public class Plan extends CommonInc{
     String setParams(PreparedStatement pstmt, int jj){
 	String back = "";
 	try{
-	    pstmt.setString(jj++, name);
+	    pstmt.setString(jj++, year);
+	    pstmt.setString(jj++, season);	    
+	    pstmt.setString(jj++, program_title);
 	    if(goals.equals(""))
 		pstmt.setNull(jj++, Types.VARCHAR);
 	    else
@@ -717,6 +730,11 @@ public class Plan extends CommonInc{
 		pstmt.setNull(jj++,Types.VARCHAR);
 	    else
 		pstmt.setString(jj++,life_cycle);
+	    if(date.equals(""))
+		pstmt.setString(jj++,null);
+	    else
+		pstmt.setDate(jj++,new java.sql.Date(dateFormat.parse(date).getTime()));
+	    
 	}
 	catch(Exception ex){
 	    back += ex;
@@ -766,7 +784,7 @@ public class Plan extends CommonInc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 		
-	String qq = "select program,"+
+	String qq = "select plan_year,season,program_title,"+
 	    "ideas,profit_obj,"+ // 10
 	    "partner,market,frequency,min_max,event_time,est_time,"+
 	    "year_season,"+
@@ -775,7 +793,8 @@ public class Plan extends CommonInc{
 	    "timeline,"+
 	    "sponsor,lead_id,p_duration, "+                     
 	    "goals,"+                  
-	    " attendCount,life_cycle "+                                 
+	    " attendCount,life_cycle, "+
+	    " date_format(program_date,'%m/%d/%Y'), "+ 
 	    " from plans where id=? ";
 	con = Helper.getConnection();
 	if(con == null){
@@ -792,45 +811,51 @@ public class Plan extends CommonInc{
 	    rs = pstmt.executeQuery();
 	    if(rs.next()){
 		String str = rs.getString(1);
-		if(str != null) name = str; // program
+		if(str != null) year = str; // program
 		str = rs.getString(2);
-		if(str != null) ideas = str;
+		if(str != null) season = str; // program		
 		str = rs.getString(3);
-		if(str != null) profit_obj = str;
+		if(str != null) program_title = str; // program
 		str = rs.getString(4);
-		if(str != null) partner = str;
+		if(str != null) ideas = str;
 		str = rs.getString(5);
-		if(str != null) market = str;
+		if(str != null) profit_obj = str;
 		str = rs.getString(6);
-		if(str != null) frequency = str;
+		if(str != null) partner = str;
 		str = rs.getString(7);
-		if(str != null) min_max = str;
+		if(str != null) market = str;
 		str = rs.getString(8);
-		if(str != null) event_time = str;
+		if(str != null) frequency = str;
 		str = rs.getString(9);
-		if(str != null) est_time = str;
+		if(str != null) min_max = str;
 		str = rs.getString(10);
+		if(str != null) event_time = str;
+		str = rs.getString(11);
+		if(str != null) est_time = str;
+		str = rs.getString(12);
 		if(str != null) year_season = str;
 		//
-		str = rs.getString(11);
-		if(str != null) history += str;
-		str = rs.getString(12);
-		if(str != null) supply += str;
 		str = rs.getString(13);
-		if(str != null) timeline += str;
+		if(str != null) history += str;
 		str = rs.getString(14);
-		if(str != null) sponsor = str;
+		if(str != null) supply += str;
 		str = rs.getString(15);
-		if(str != null) lead_id = str;
+		if(str != null) timeline += str;
 		str = rs.getString(16);
-		if(str != null) p_duration = str;
+		if(str != null) sponsor = str;
 		str = rs.getString(17);
-		if(str != null) goals = str;
+		if(str != null) lead_id = str;
 		str = rs.getString(18);
+		if(str != null) p_duration = str;
+		str = rs.getString(19);
+		if(str != null) goals = str;
+		str = rs.getString(20);
 		if(str != null && !str.equals("0")) 
 		    attendCount = str;
-		str = rs.getString(19);
-		if(str != null) life_cycle = str;				
+		str = rs.getString(21);
+		if(str != null) life_cycle = str;
+		str = rs.getString(22);
+		if(str != null) date = str;		
 		message = "";
 	    }
 	}
@@ -871,7 +896,7 @@ public class Plan extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String qq = "select program "+
+	String qq = "select program_title "+
 	    "from plans where id=?";
 	con = Helper.getConnection();
 	if(con == null){
@@ -887,7 +912,7 @@ public class Plan extends CommonInc{
 	    pstmt.setString(1,id);
 	    rs = pstmt.executeQuery();
 	    if(rs.next()){
-		setName(rs.getString(1));
+		setProgram_title(rs.getString(1));
 	    }
 	    else{
 		message= "Record "+id+" not found";
@@ -1007,3 +1032,21 @@ public class Plan extends CommonInc{
 	return back;
     }
 }
+/**
+   alter table plans add plan_year int after id;
+   alter table plans add season enum('Fall/Winter','Winter/Spring','Summer','Ongoing') after plan_year;
+   alter table plans add program_date date;
+   ALTER TABLE plans RENAME COLUMN program TO program_title;
+   update plans p,pre_plans pre set p.plan_year=pre.year,p.season=pre.season where pre.id=p.id;
+   update plans p,pre_plans pre set p.program_date=pre.date where pre.id=p.id;
+   alter table programs drop constraint programs_ibfk_5;
+   alter table plans modify id int auto_increment;
+   update programs set regDeadLine=null where regDeadLine like '0000%';
+   update programs set regDeadLine=null where regDeadLine like '%-00';   
+   alter table programs add foreign key(plan_id) references plans(id);
+
+   ALTER TABLE plans RENAME COLUMN program_name TO program_title;
+
+
+
+ */

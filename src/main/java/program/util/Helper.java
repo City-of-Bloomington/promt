@@ -1917,19 +1917,11 @@ public class Helper{
 	out.println("<tr><td><table>");
 	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Program Plan</b></td></tr>");
 	out.println("<tr><td><b>Program: </b></td><td>");
-	out.println(pp.getName()+"</td></tr>");
-
-	if(pp.hasPrePlan()){
-	    PrePlan	prePlan = pp.getPrePlan();
-	    out.println("<tr><td><b>Program Season/Year: </b></td><td>");
-	    out.println(prePlan.getSeason()+"/"+prePlan.getYear());
-	    out.println("</td></tr>");
-	}
-	else{
-	    out.println("<tr><td align=\"right\">This is the </td><td>");
-	    out.println(pp.getYear_season()+" (year/season) for this program. ");
-	    out.println("</td></tr>");
-	}
+	out.println(pp.getProgram_title()+"</td></tr>");
+	
+	out.println("<tr><td><b>Program Season/Year: </b></td><td>");
+	out.println(pp.getSeason()+"/"+pp.getYear());
+	out.println("</td></tr>");
 	Contact instructor = pp.getInstructor();
 	//
 	if(instructor != null && instructor.hasInfo()){
@@ -2297,7 +2289,7 @@ public class Helper{
 	    out.println("<h3>Parks & Recreation Dept - Promt</h3>");	    	    
 	    out.println("<div id=\"div_top\">");
 	    out.println("<ul id=\"ul_top\">");
-	    out.println("<li><a href=\""+url+"PrePlan\">New Plan</a></li>");
+	    out.println("<li><a href=\""+url+"Plan\">New Plan</a></li>");
 
 	    out.println("<li><a href=\""+url+"PlanSearch\">Plans</a></li>");
 	    out.println("<li><a href=\""+url+"Search\">Programs</a></li>");

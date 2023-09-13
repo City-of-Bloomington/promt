@@ -807,7 +807,7 @@ public class ProgramServ extends TopServlet{
 	    if(id.equals("") && ptitle.equals("")){
 		plan = pr.getPlan();
 		if(plan != null){
-		    ptitle = plan.getName();
+		    ptitle = plan.getProgram_title();
 		    if(pr.getSeason().equals("")){
 			pr.setSeason(plan.getSeason());
 		    }
@@ -847,7 +847,7 @@ public class ProgramServ extends TopServlet{
 		    oldProg.setRegDeadLine("");
 		    oldProg.setCode("");
 		    oldProg.setLead_id(plan.getLead_id());
-		    oldProg.setTitle(plan.getName());
+		    oldProg.setTitle(plan.getProgram_title());
 		    oldProg.setPlan_id(plan.getId());
 		    oldProg.setInstructor(plan.getInstructor().getName());
 		    if(prePlan != null){
@@ -867,7 +867,7 @@ public class ProgramServ extends TopServlet{
 		}
 		else{ // no old program to copy from
 		    pr.setLead_id(plan.getLead_id());
-		    pr.setTitle(plan.getName());
+		    pr.setTitle(plan.getProgram_title());
 		    pr.setPlan_id(plan.getId());
 		    pr.setInstructor(plan.getInstructor().getName());
 		    if(prePlan != null){

@@ -188,32 +188,6 @@ public class PrePlan extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	/*
-	  if(id.equals("")){
-	  //
-	  // this means this is a new plan
-	  // we use what we have so far
-	  //
-	  plan = new Plan(debug);
-	  if(!name.equals("")){
-	  plan.setName(name);
-	  }
-	  String str = year;
-	  if(!season.equals("")){
-	  if(!str.equals("")) str += " ";
-	  str += season;
-	  }
-	  plan.setYear_season(str);
-	  plan.setLead(lead);
-	  str = plan.doSave();
-	  if(!str.equals("")){
-	  back += str;
-	  addError(back);
-	  return back;
-	  }
-	  id = plan.getId();
-	  }
-	*/
 	//
 	// check if all data are entered
 	//
