@@ -812,7 +812,7 @@ public class ProgramServ extends TopServlet{
 			pr.setSeason(plan.getSeason());
 		    }
 		    if(pr.getYear().equals("")){
-			pr.setYear(plan.getYear());
+			pr.setYear(plan.getProgram_year());
 		    }										
 		}
 	    }

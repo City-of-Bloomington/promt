@@ -1920,7 +1920,7 @@ public class Helper{
 	out.println(pp.getProgram_title()+"</td></tr>");
 	
 	out.println("<tr><td><b>Program Season/Year: </b></td><td>");
-	out.println(pp.getSeason()+"/"+pp.getYear());
+	out.println(pp.getSeason()+"/"+pp.getProgram_year());
 	out.println("</td></tr>");
 	Contact instructor = pp.getInstructor();
 	//
@@ -2289,7 +2289,7 @@ public class Helper{
 	    out.println("<h3>Parks & Recreation Dept - Promt</h3>");	    	    
 	    out.println("<div id=\"div_top\">");
 	    out.println("<ul id=\"ul_top\">");
-	    out.println("<li><a href=\""+url+"Plan\">New Plan</a></li>");
+	    out.println("<li><a href=\""+url+"ProgPlan\">New Plan</a></li>");
 
 	    out.println("<li><a href=\""+url+"PlanSearch\">Plans</a></li>");
 	    out.println("<li><a href=\""+url+"Search\">Programs</a></li>");

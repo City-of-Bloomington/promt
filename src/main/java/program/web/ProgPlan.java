@@ -78,9 +78,12 @@ public class ProgPlan extends TopServlet{
 	    vals = req.getParameterValues(name);
 	    value = vals[vals.length-1].trim();
 
-	    if(name.equals("program")){
+	    if(name.equals("program_title")){
 		pp.setProgram_title(value);
 	    }
+	    else if(name.equals("program_date")){
+		pp.setProgram_date(value);
+	    }	    
 	    else if(name.equals("id")){ // change to id
 		id = value;
 		pp.setId(value);
@@ -169,6 +172,12 @@ public class ProgPlan extends TopServlet{
 	    else if(name.equals("year_season")){
 		pp.setYear_season (value);
 	    }
+	    else if(name.equals("program_year")){
+		pp.setProgram_year (value);
+	    }
+	    else if(name.equals("season")){
+		pp.setSeason (value);
+	    }	    
 	    else if(name.equals("history")){ // 10k
 		pp.setHistory (value);
 	    }
@@ -370,21 +379,21 @@ public class ProgPlan extends TopServlet{
 	out.println("<table width=\"100%\">");
 	out.println("<tr><td "+tdWidth+" align=\"right\"><b>*Program Title: </b></td><td>");
 	out.println("<input type=\"text\" name=\"program_title\" "+
-		    "value=\""+pp.getProgram_title()+"\" maxlength=\"128\" size=\"70\" /></td></tr>");
+		    "value=\""+pp.getProgram_title()+"\" maxlength=\"128\" size=\"70\" required=\"required\" /></td></tr>");
 	
-	out.println("<tr><td align=\"right\">Program Season </td><td>");
+	out.println("<tr><td align=\"right\"><b>Program Season:</b> </td><td>");
 	out.println("<select name=\"season\">");
 	out.println("<option value=\""+pp.getSeason()+"\" selected>"+
 		    pp.getSeason()+"\n");
 	out.println(Helper.allSeasons);
 	out.println("</select> ");	
 	out.println(" <b>Year:</b>");
-	out.println("<select name=\"year\">");
+	out.println("<select name=\"program_year\">");
 	out.println("<option value=\"\">\n");
 	int[] years = Helper.getFutureYears();
 	for(int yy:years){
 	    String selected="";
-	    if(pp.getYear().equals(""+yy))
+	    if(pp.getProgram_year().equals(""+yy))
 		selected="selected=\"selected\"";
 	    out.println("<option "+selected+">"+yy+"</option>");
 	}
@@ -477,7 +486,7 @@ public class ProgPlan extends TopServlet{
 	out.println("<tr><td valign=\"top\" align=\"right\"><b>*Program Goals: </b></td><td>");
 	out.println("<font color=\"green\" size=\"-1\">goal is defined as one that is specific, measurable, achievable, results-focused, and time-bound 'S.M.A.R.T.'</font><br />");
 	out.println("<textarea name=\"goals\" cols=\"50\" rows=\"4\" "+
-		    " onChange=\"checkTextLen(this,1000)\" wrap>");
+		    " onChange=\"checkTextLen(this,1000)\" wrap required=\"required\">");
 	out.println(pp.getGoals());
 	out.println("</textarea></td></tr>");
 	out.println("<tr><td valign=\"top\" colspan=\"2\" align=\"center\"><b>*Program Objectives </b></td></tr>");
@@ -545,6 +554,9 @@ public class ProgPlan extends TopServlet{
 		    "</font></td></tr>");
 	//
 	// Event time
+	out.println("<tr><td align=\"right\"><b>Program Date:</b></td><td>");
+	out.println("<input type=\"text\" name=\"program_date\" "+
+		    "value=\""+pp.getProgram_date()+"\" maxlength=\"10\" size=\"10\" class=\"date\" /></td></tr>");
 	out.println("<tr><td align=\"right\"><b>Program Time:</b></td><td>");
 	out.println("<input type=\"text\" name=\"event_time\" "+
 		    "value=\""+pp.getEvent_time()+"\" maxlength=\"20\" size=\"20\" />&nbsp;");

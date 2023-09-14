@@ -15,7 +15,7 @@ public class Plan extends CommonInc{
     String id="", name =""; 
     // other fields will be added later
     final static String life_cycle_options[] ={"Intro","Growth","Maturity","Saturation","Decline"}; 
-    String brStatement="", facility="", schedule="", date="", program_title="";
+    String brStatement="", facility="", schedule="", program_date="", program_title="";
     String closings="", other="", message = "", finalMessage="";
     String stat="", stat2="",stat3="",stat4="",stat5="",
 	shedule2="",statement="",schedule2="", lead_id="",p_duration="";
@@ -26,7 +26,7 @@ public class Plan extends CommonInc{
     String life_cycle = "";
     String sponsor="", attendCount="";
     //
-    String season = "", year=""; // for preplan
+    String season = "", program_year=""; // for preplan
     //
     Program lastProgram = null;
     PrePlan prePlan = null;
@@ -95,6 +95,9 @@ public class Plan extends CommonInc{
     public String getProgram_title(){
 	return program_title; // name
     }
+    public String getProgram_date(){
+	return program_date; // name
+    }    
     public String getProfit_obj(){
 	return profit_obj;
     }
@@ -121,22 +124,22 @@ public class Plan extends CommonInc{
     }
     public String getYear_season(){
 	String ret = "";
-	if(year.isEmpty() && season.isEmpty()){
+	if(program_year.isEmpty() && season.isEmpty()){
 	    if(hasPrePlan()){
-		year = prePlan.getYear();
+		program_year = prePlan.getYear();
 		season = prePlan.getSeason();
 	    }
 	}
-	ret =  year+"/"+season;
+	ret =  program_year+"/"+season;
 	return ret;
     }
-    public String getYear(){
-	if(year.equals("")){
+    public String getProgram_year(){
+	if(program_year.equals("")){
 	    if(hasPrePlan()){
-		year =  prePlan.getYear();
+		program_year =  prePlan.getYear();
 	    }
 	}
-	return year;
+	return program_year;
     }
     public String getSeason(){
 	if(season.equals("")){
@@ -161,6 +164,7 @@ public class Plan extends CommonInc{
     public String getSponsor(){
 	return sponsor;
     }
+    
     public String getP_duration(){
 	return p_duration;
     }
@@ -175,10 +179,10 @@ public class Plan extends CommonInc{
     }	
     public String toString(){
 	String ret = program_title;
-	if(!year.isEmpty() || !season.isEmpty()){
-	    if(!year.isEmpty()){
+	if(!program_year.isEmpty() || !season.isEmpty()){
+	    if(!program_year.isEmpty()){
 		if(!ret.isEmpty()) ret += " ";	    
-		ret += year;
+		ret += program_year;
 	    }
 	    if(!season.isEmpty()){
 		if(!ret.isEmpty()) ret += "/";
@@ -314,9 +318,9 @@ public class Plan extends CommonInc{
 	if(val != null)
 	    season = val;
     }
-    public void setYear(String val){
+    public void setProgram_year(String val){
 	if(val != null)
-	    year = val;
+	    program_year = val;
     }
     public void setLife_cycle(String val){
 	if(val != null)
@@ -326,6 +330,10 @@ public class Plan extends CommonInc{
 	if(val != null)
 	    program_title = val.trim();
     }
+    public void setProgram_date(String val){
+	if(val != null)
+	    program_date = val.trim();
+    }    
     public void setIdeas(String val){
 	if(val != null)
 	    ideas = val.trim();
@@ -438,8 +446,10 @@ public class Plan extends CommonInc{
      * allowed, need to create a new plan and add new program to it
      */
     public boolean hasProgram(){
-	Program one = getLastProgram();
-	return one != null;
+	if(lastProgram == null){
+	    lastProgram = getLastProgram();
+	}
+	return lastProgram != null;
     }
     public Program getLastProgram(){
 	if(lastProgram == null && !id.equals("")){
@@ -559,26 +569,108 @@ public class Plan extends CommonInc{
 	    addError(back);
 	    return back;
 	}
+	if(program_year.equals("")){
+	    back = "Program year not set ";
+	    logger.error(back);
+	    addError(back);
+	    return back;
+	}
+	if(season.equals("")){
+	    back = "Program season not set ";
+	    logger.error(back);
+	    addError(back);
+	    return back;
+	}	
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
 	    addError(back);
 	    return back;
 	}
-	String qq = "insert into plans (id,plan_year,season,"+
-	    "program_title,goals,attendCount,ideas,"+ // 5 
-	    "profit_obj,partner,sponsor,lead_id,p_duration,"+ // 10
-	    "market,frequency,min_max,event_time,est_time,"+ // 15
-	    "year_season,history,supply,timeline,life_cycle,program_date)"+
-	    " values(0,?,"+
-	    "?,?,?,?,?,?,?,?,?,?,?"+
-	    "?,?,?,?,?,?,?,?,?,?,?)";
+	String qq = "insert into plans "+
+	    " values(0,"+
+	    "?,?,?,?,?,?,?,?,?,?,?,"+
+	    "?,?,?,?,?,?,?,?,?,?)";
 	try{
 	    if(debug){
 		logger.debug(qq);
 	    }
 	    pstmt = con.prepareStatement(qq);
-	    setParams(pstmt, 1);
+	    pstmt.setString(1, program_year); // 1
+	    pstmt.setString(2, season);
+	    pstmt.setString(3, program_title); // 3
+	    if(ideas.equals(""))
+		pstmt.setNull(4,Types.VARCHAR);
+	    else
+		pstmt.setString(4,ideas); // 6
+	    if(profit_obj.equals(""))
+		pstmt.setNull(5,Types.VARCHAR);
+	    else
+		pstmt.setString(5,profit_obj); //7
+	    if(partner.equals(""))
+		pstmt.setNull(6,Types.VARCHAR);
+	    else
+		pstmt.setString(6,partner); //8
+	    if(market.equals(""))
+		pstmt.setNull(7,Types.VARCHAR);
+	    else
+		pstmt.setString(7,market); //12
+	    if(frequency.equals(""))
+		pstmt.setNull(8,Types.VARCHAR);
+	    else
+		pstmt.setString(8,frequency); //13
+	    if(min_max.equals(""))
+		pstmt.setNull(9,Types.VARCHAR);
+	    else
+		pstmt.setString(9,min_max); //14
+	    if(event_time.equals(""))
+		pstmt.setNull(10,Types.VARCHAR);
+	    else
+		pstmt.setString(10,event_time); // 15
+	    if(est_time.equals(""))
+		pstmt.setNull(11,Types.VARCHAR);
+	    else
+		pstmt.setString(11,est_time); // 16
+	    if(history.equals(""))
+		pstmt.setNull(12,Types.VARCHAR);
+	    else
+		pstmt.setString(12,history); //17
+	    if(supply.equals(""))
+		pstmt.setNull(13,Types.VARCHAR);
+	    else
+		pstmt.setString(13,supply); //18
+	    if(timeline.equals(""))
+		pstmt.setNull(14,Types.VARCHAR);
+	    else
+		pstmt.setString(14,timeline); //19
+	    if(lead_id.equals(""))
+		pstmt.setNull(15,Types.VARCHAR);
+	    else
+		pstmt.setString(15,lead_id); //10
+	    if(sponsor.equals(""))
+		pstmt.setNull(16,Types.VARCHAR);
+	    else
+		pstmt.setString(16,sponsor); //9
+	    if(p_duration.equals(""))
+		pstmt.setNull(17,Types.VARCHAR);
+	    else
+		pstmt.setString(17,p_duration); //11
+	    if(goals.equals(""))
+		pstmt.setNull(18, Types.VARCHAR);
+	    else
+		pstmt.setString(18, goals); // 4
+	    if(attendCount.equals(""))
+		pstmt.setNull(19,Types.VARCHAR);
+	    else
+		pstmt.setString(19,attendCount); //5
+	    if(life_cycle.equals(""))
+		pstmt.setNull(20,Types.VARCHAR);
+	    else
+		pstmt.setString(20,life_cycle); //20
+	    if(program_date.equals(""))
+		pstmt.setString(21,null);
+	    else
+		pstmt.setDate(21,new java.sql.Date(dateFormat.parse(program_date).getTime())); // 21	    
 	    pstmt.executeUpdate();
 	    qq = "select LAST_INSERT_ID() ";
 	    if(debug){
@@ -611,6 +703,18 @@ public class Plan extends CommonInc{
 	    addError(back);
 	    return back;
 	}
+	if(program_year.equals("")){
+	    back = "Program year not set ";
+	    logger.error(back);
+	    addError(back);
+	    return back;
+	}
+	if(season.equals("")){
+	    back = "Program season not set ";
+	    logger.error(back);
+	    addError(back);
+	    return back;
+	}	
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -621,13 +725,28 @@ public class Plan extends CommonInc{
 	    addError(back);
 	    return back;
 	}
-	String qq = "update plans set plan_year,season,"+
-	    "program_title=?,goals=?,"+
-	    "attendCount=?,"+
-	    "ideas=?,profit_obj=?,partner=?,sponsor=?,lead_id=?,"+
-	    "p_duration=?,market=?,frequency=?,min_max=?,event_time=?,"+
-	    "est_time=?,year_season=?,"+
-	    "history=?,supply=?,timeline=?,life_cycle=?,program_date=? "+
+	String qq = "update plans set program_year=?,season=?,"+
+	    "program_title=?,"+
+	    "ideas=?,"+
+	    "profit_obj=?,"+
+	    "partner=?,"+
+	    "market=?,"+
+	    "frequency=?,"+
+	    "min_max=?,"+
+	    "event_time=?,"+
+	    
+	    "est_time=?,"+
+	    "history=?,"+
+	    "supply=?,"+
+	    "timeline=?,"+
+	    "lead_id=?,"+ 
+	    "sponsor=?,"+
+	    "p_duration=?,"+
+	    "goals=?,"+
+	    "attendCount=?,"+ 
+	    "life_cycle=?,"+
+	    
+	    "program_date=? "+
 	    "where id = ? ";
 	try{
 	    if(debug){
@@ -635,8 +754,82 @@ public class Plan extends CommonInc{
 	    }
 	    pstmt = con.prepareStatement(qq);
 	    //
-	    back += setParams(pstmt, 1);
-	    pstmt.setString(23, id);
+	    pstmt.setString(1, program_year); // 1
+	    pstmt.setString(2, season);
+	    pstmt.setString(3, program_title); // 3
+	    if(ideas.equals(""))
+		pstmt.setNull(4,Types.VARCHAR);
+	    else
+		pstmt.setString(4,ideas); // 6
+	    if(profit_obj.equals(""))
+		pstmt.setNull(5,Types.VARCHAR);
+	    else
+		pstmt.setString(5,profit_obj); //7
+	    if(partner.equals(""))
+		pstmt.setNull(6,Types.VARCHAR);
+	    else
+		pstmt.setString(6,partner); //8
+	    if(market.equals(""))
+		pstmt.setNull(7,Types.VARCHAR);
+	    else
+		pstmt.setString(7,market); //12
+	    if(frequency.equals(""))
+		pstmt.setNull(8,Types.VARCHAR);
+	    else
+		pstmt.setString(8,frequency); //13
+	    if(min_max.equals(""))
+		pstmt.setNull(9,Types.VARCHAR);
+	    else
+		pstmt.setString(9,min_max); //14
+	    if(event_time.equals(""))
+		pstmt.setNull(10,Types.VARCHAR);
+	    else
+		pstmt.setString(10,event_time); // 15
+	    if(est_time.equals(""))
+		pstmt.setNull(11,Types.VARCHAR);
+	    else
+		pstmt.setString(11,est_time); // 16
+	    if(history.equals(""))
+		pstmt.setNull(12,Types.VARCHAR);
+	    else
+		pstmt.setString(12,history); //17
+	    if(supply.equals(""))
+		pstmt.setNull(13,Types.VARCHAR);
+	    else
+		pstmt.setString(13,supply); //18
+	    if(timeline.equals(""))
+		pstmt.setNull(14,Types.VARCHAR);
+	    else
+		pstmt.setString(14,timeline); //19
+	    if(lead_id.equals(""))
+		pstmt.setNull(15,Types.VARCHAR);
+	    else
+		pstmt.setString(15,lead_id); //10
+	    if(sponsor.equals(""))
+		pstmt.setNull(16,Types.VARCHAR);
+	    else
+		pstmt.setString(16,sponsor); //9
+	    if(p_duration.equals(""))
+		pstmt.setNull(17,Types.VARCHAR);
+	    else
+		pstmt.setString(17,p_duration); //11
+	    if(goals.equals(""))
+		pstmt.setNull(18, Types.VARCHAR);
+	    else
+		pstmt.setString(18, goals); // 4
+	    if(attendCount.equals(""))
+		pstmt.setNull(19,Types.VARCHAR);
+	    else
+		pstmt.setString(19,attendCount); //5
+	    if(life_cycle.equals(""))
+		pstmt.setNull(20,Types.VARCHAR);
+	    else
+		pstmt.setString(20,life_cycle); //20
+	    if(program_date.equals(""))
+		pstmt.setString(21,null);
+	    else
+		pstmt.setDate(21,new java.sql.Date(dateFormat.parse(program_date).getTime())); // 21	    
+	    pstmt.setString(22, id);
 	    pstmt.executeUpdate();
 	    doAddsAndUpdates();
 	    message="Updated Successfully";
@@ -655,86 +848,82 @@ public class Plan extends CommonInc{
     String setParams(PreparedStatement pstmt, int jj){
 	String back = "";
 	try{
-	    pstmt.setString(jj++, year);
-	    pstmt.setString(jj++, season);	    
-	    pstmt.setString(jj++, program_title);
-	    if(goals.equals(""))
-		pstmt.setNull(jj++, Types.VARCHAR);
-	    else
-		pstmt.setString(jj++, goals);
-	    if(attendCount.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
-	    else
-		pstmt.setString(jj++,attendCount);
+	    pstmt.setString(1, program_year); // 1
+	    pstmt.setString(2, season);
+	    pstmt.setString(3, program_title); // 3
 	    if(ideas.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(4,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,ideas);
+		pstmt.setString(4,ideas); // 6
 	    if(profit_obj.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(5,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,profit_obj);
+		pstmt.setString(5,profit_obj); //7
 	    if(partner.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(6,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,partner);
-	    if(sponsor.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
-	    else
-		pstmt.setString(jj++,sponsor);
-	    if(lead_id.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
-	    else
-		pstmt.setString(jj++,lead_id);
-	    if(p_duration.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
-	    else
-		pstmt.setString(jj++,p_duration);
+		pstmt.setString(6,partner); //8
 	    if(market.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(7,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,market);
+		pstmt.setString(7,market); //12
 	    if(frequency.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(8,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,frequency);
+		pstmt.setString(8,frequency); //13
 	    if(min_max.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(9,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,min_max);
+		pstmt.setString(9,min_max); //14
 	    if(event_time.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(10,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,event_time);
+		pstmt.setString(10,event_time); // 15
 	    if(est_time.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(11,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,est_time);
-	    if(year_season.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
-	    else
-		pstmt.setString(jj++,year_season);
+		pstmt.setString(11,est_time); // 16
 	    if(history.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(12,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,history);
+		pstmt.setString(12,history); //17
 	    if(supply.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(13,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,supply);
+		pstmt.setString(13,supply); //18
 	    if(timeline.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(14,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,timeline);
+		pstmt.setString(14,timeline); //19
+	    if(lead_id.equals(""))
+		pstmt.setNull(15,Types.VARCHAR);
+	    else
+		pstmt.setString(15,lead_id); //10
+	    if(sponsor.equals(""))
+		pstmt.setNull(16,Types.VARCHAR);
+	    else
+		pstmt.setString(16,sponsor); //9
+	    if(p_duration.equals(""))
+		pstmt.setNull(17,Types.VARCHAR);
+	    else
+		pstmt.setString(17,p_duration); //11
+	    if(goals.equals(""))
+		pstmt.setNull(18, Types.VARCHAR);
+	    else
+		pstmt.setString(18, goals); // 4
+	    if(attendCount.equals(""))
+		pstmt.setNull(19,Types.VARCHAR);
+	    else
+		pstmt.setString(19,attendCount); //5
 	    if(life_cycle.equals(""))
-		pstmt.setNull(jj++,Types.VARCHAR);
+		pstmt.setNull(20,Types.VARCHAR);
 	    else
-		pstmt.setString(jj++,life_cycle);
-	    if(date.equals(""))
-		pstmt.setString(jj++,null);
+		pstmt.setString(20,life_cycle); //20
+	    if(program_date.equals(""))
+		pstmt.setString(21,null);
 	    else
-		pstmt.setDate(jj++,new java.sql.Date(dateFormat.parse(date).getTime()));
-	    
+		pstmt.setDate(21,new java.sql.Date(dateFormat.parse(program_date).getTime())); // 21
+	    pstmt.setString(22,null);
 	}
 	catch(Exception ex){
 	    back += ex;
@@ -784,17 +973,16 @@ public class Plan extends CommonInc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 		
-	String qq = "select plan_year,season,program_title,"+
+	String qq = "select program_year,season,program_title,"+
 	    "ideas,profit_obj,"+ // 10
 	    "partner,market,frequency,min_max,event_time,est_time,"+
-	    "year_season,"+
 	    "history,"+                                        
 	    "supply,"+                    
 	    "timeline,"+
 	    "sponsor,lead_id,p_duration, "+                     
 	    "goals,"+                  
 	    " attendCount,life_cycle, "+
-	    " date_format(program_date,'%m/%d/%Y'), "+ 
+	    " date_format(program_date,'%m/%d/%Y') "+ 
 	    " from plans where id=? ";
 	con = Helper.getConnection();
 	if(con == null){
@@ -811,7 +999,7 @@ public class Plan extends CommonInc{
 	    rs = pstmt.executeQuery();
 	    if(rs.next()){
 		String str = rs.getString(1);
-		if(str != null) year = str; // program
+		if(str != null) program_year = str; // program
 		str = rs.getString(2);
 		if(str != null) season = str; // program		
 		str = rs.getString(3);
@@ -833,29 +1021,26 @@ public class Plan extends CommonInc{
 		str = rs.getString(11);
 		if(str != null) est_time = str;
 		str = rs.getString(12);
-		if(str != null) year_season = str;
-		//
-		str = rs.getString(13);
 		if(str != null) history += str;
-		str = rs.getString(14);
+		str = rs.getString(13);
 		if(str != null) supply += str;
-		str = rs.getString(15);
+		str = rs.getString(14);
 		if(str != null) timeline += str;
-		str = rs.getString(16);
+		str = rs.getString(15);
 		if(str != null) sponsor = str;
-		str = rs.getString(17);
+		str = rs.getString(16);
 		if(str != null) lead_id = str;
-		str = rs.getString(18);
+		str = rs.getString(17);
 		if(str != null) p_duration = str;
-		str = rs.getString(19);
+		str = rs.getString(18);
 		if(str != null) goals = str;
-		str = rs.getString(20);
+		str = rs.getString(19);
 		if(str != null && !str.equals("0")) 
 		    attendCount = str;
-		str = rs.getString(21);
+		str = rs.getString(20);
 		if(str != null) life_cycle = str;
-		str = rs.getString(22);
-		if(str != null) date = str;		
+		str = rs.getString(21);
+		if(str != null) program_date = str;		
 		message = "";
 	    }
 	}
@@ -1033,7 +1218,7 @@ public class Plan extends CommonInc{
     }
 }
 /**
-   alter table plans add plan_year int after id;
+   alter table plans add program_year int after id;
    alter table plans add season enum('Fall/Winter','Winter/Spring','Summer','Ongoing') after plan_year;
    alter table plans add program_date date;
    ALTER TABLE plans RENAME COLUMN program TO program_title;
@@ -1045,7 +1230,6 @@ public class Plan extends CommonInc{
    update programs set regDeadLine=null where regDeadLine like '%-00';   
    alter table programs add foreign key(plan_id) references plans(id);
 
-   ALTER TABLE plans RENAME COLUMN program_name TO program_title;
 
 
 

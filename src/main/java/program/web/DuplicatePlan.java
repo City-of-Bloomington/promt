@@ -110,7 +110,7 @@ public class DuplicatePlan extends TopServlet{
 	if(action.startsWith("Dup") && user.canEdit()){
 	    Plan pp2 = new Plan();
 	    pp2.setSeason(season);
-	    pp2.setYear(year);
+	    pp2.setProgram_year(year);
 	    pp2.setLead_id(lead_id);
 	    pp2.setProgram_title(pp.getProgram_title());
 	    back = pp2.doSave(); // duplication of the old plan
@@ -241,19 +241,19 @@ public class DuplicatePlan extends TopServlet{
 	out.println("</b></td><td><left>"+id);
 	out.println("</td></tr>");
 	out.println("<tr><td align=right>");
-	out.println("<b>Season:</b></td><td>");
+	out.println("<b>Pick New Season:</b></td><td>");
 	out.println("<select name=\"season\">");
 	out.println("<option value=\"\"></option>");
 	out.println(Helper.allSeasons);		
 	out.println("</select>");
-	out.println("<b>Year:</b>");
+	out.println("<b>Pick New Year:</b>");
 	out.println("<select name=\"year\">");
 	int[] years = Helper.getFutureYears();
 	for(int yy:years){
 	    out.println("<option>"+yy+"</option>");
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><td align=right><b>Lead:");
+	out.println("<tr><td align=right><b> Pick the Lead:");
 	out.println("</b></td><td><left>");
 	out.println("<select name=\"lead_id\">");
 	out.println("<option value=\"\">Pick one</option>");

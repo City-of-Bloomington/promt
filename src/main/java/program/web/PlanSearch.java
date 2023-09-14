@@ -176,7 +176,7 @@ public class PlanSearch extends TopServlet{
 	out.println("</select></td></tr>");
 				
 	out.println("<tr><td align=\"right\" valign=\"bottom\">");
-	out.println("<b>Plan Program: </b></td><td align=\"left\">");
+	out.println("<b>Plan Program Title: </b></td><td align=\"left\">");
 	out.println("<font color=\"green\" size=\"-1\">"+
 		    "Key word <br /></font>");				
 	out.println("<input type=\"text\" name=\"program\" maxlength=\"70\" size=\"40\" />");
@@ -318,7 +318,7 @@ public class PlanSearch extends TopServlet{
 	    else if (name.equals("year")){
 		pl.setYear(value);
 	    }
-	    else if (name.equals("program_title")){
+	    else if (name.equals("program")){
 		pl.setProgram_title(value);
 	    }						
 	    else if (name.equals("date_from")){

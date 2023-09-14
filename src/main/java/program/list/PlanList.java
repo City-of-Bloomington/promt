@@ -151,7 +151,7 @@ public class PlanList extends ArrayList<Plan>{
 		}
 		if(!year.equals("")){
 		    if(!qw.equals("")) qw += " and ";
-		    qw += " pl.year = ? ";
+		    qw += " pl.program_year = ? ";
 		}
 		if(!date_from.equals("")){
 		    preTbl = true;
