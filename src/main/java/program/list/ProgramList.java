@@ -315,6 +315,9 @@ public class ProgramList extends ArrayList<Program>{
     }
     //
     public List<Program> getPrograms(){
+	if(sortby.indexOf("title") > -1){
+	    Collections.sort(this);
+	}
 	return this;
     }
     /**
@@ -1088,6 +1091,7 @@ public class ProgramList extends ArrayList<Program>{
 	    if(!sortby.equals("")){
 		qq += " order by "+sortby;
 	    }
+	    // System.err.println(qq);
 	    qq += limit;
 	    if(debug){
 		logger.debug(qq);

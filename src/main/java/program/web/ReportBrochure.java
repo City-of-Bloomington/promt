@@ -78,8 +78,10 @@ public class ReportBrochure extends TopServlet{
 		if(!value.equals(""))
 		    id = value;
 	    }			
-	    else if(name.equals("sortby")){  
+	    else if(name.equals("sortby")){
+		plist.setSortby(value);
 		sortby = value;
+		System.err.println(" sortby "+sortby);
 	    }
 	    else if(name.equals("category_id")){
 		plist.setCategory_id(value);
