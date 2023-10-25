@@ -1219,10 +1219,10 @@ public class Plan extends CommonInc{
 }
 /**
    alter table plans add program_year int after id;
-   alter table plans add season enum('Fall/Winter','Winter/Spring','Summer','Ongoing') after plan_year;
+   alter table plans add season enum('Fall/Winter','Winter/Spring','Summer','Ongoing') after program_year;
    alter table plans add program_date date;
    ALTER TABLE plans RENAME COLUMN program TO program_title;
-   update plans p,pre_plans pre set p.plan_year=pre.year,p.season=pre.season where pre.id=p.id;
+   update plans p,pre_plans pre set p.program_year=pre.year,p.season=pre.season where pre.id=p.id;
    update plans p,pre_plans pre set p.program_date=pre.date where pre.id=p.id;
    alter table programs drop constraint programs_ibfk_5;
    alter table plans modify id int auto_increment;
