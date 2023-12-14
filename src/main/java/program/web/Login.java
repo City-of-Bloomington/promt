@@ -13,12 +13,11 @@ import program.list.*;
 import program.model.*;
 import program.util.*;
 
-@WebServlet(urlPatterns = {"/Login"})
+@WebServlet(urlPatterns = {"/CasLogin"})
 public class Login extends TopServlet{
-
     //
-    String cookieName = ""; // "cas_session";
-    String cookieValue = ""; // ".bloomington.in.gov";
+    String cookieName = ""; 
+    String cookieValue = "";
     static Logger logger = LogManager.getLogger(Login.class);
 	
     /**

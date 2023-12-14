@@ -22,8 +22,8 @@ import program.util.*;
  * for ADFS login
  * 
  */
-// uncomment this line if you want to use ADFS
-@WebServlet(urlPatterns = {"/OpenidLogin","/openidlogin"}, loadOnStartup = 1)
+// comment this line if you want to use CAS
+@WebServlet(urlPatterns = {"/Login","/login"}, loadOnStartup = 1)
 public class LoginServlet extends TopServlet {
 
     static Logger logger = LogManager.getLogger(LoginServlet.class);
