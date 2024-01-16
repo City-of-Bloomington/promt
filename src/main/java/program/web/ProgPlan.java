@@ -244,6 +244,7 @@ public class ProgPlan extends TopServlet{
 		success = false;
 	    }
 	    else{
+		id = pp.getId();
 		message = "Saved Successfully";
 		History one = new History(debug, id, "Saved","Plan",user.getId());
 		one.doSave();	

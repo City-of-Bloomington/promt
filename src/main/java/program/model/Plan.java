@@ -589,8 +589,8 @@ public class Plan extends CommonInc{
 	}
 	String qq = "insert into plans "+
 	    " values(0,"+
-	    "?,?,?,?,?,?,?,?,?,?,?,"+
-	    "?,?,?,?,?,?,?,?,?,?)";
+	    "?,?,?,?,?, ?,?,?,?,?, ?,"+
+	    "?,?,?,?,?, ?,?,?,?,?)";
 	try{
 	    if(debug){
 		logger.debug(qq);
@@ -644,7 +644,7 @@ public class Plan extends CommonInc{
 	    else
 		pstmt.setString(14,timeline); //19
 	    if(lead_id.equals(""))
-		pstmt.setNull(15,Types.VARCHAR);
+		pstmt.setNull(15,Types.INTEGER);
 	    else
 		pstmt.setString(15,lead_id); //10
 	    if(sponsor.equals(""))
