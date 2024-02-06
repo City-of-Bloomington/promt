@@ -158,6 +158,7 @@ public class CodeResult extends TopServlet{
 	}
 	pl.setCodeNeed("y");
 	pl.setHasNoCodeYet();
+	pl.includeSessions();
 	User user = null;
 	HttpSession	hsession = req.getSession(false);
 	Control control = null;
