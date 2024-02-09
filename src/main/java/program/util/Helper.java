@@ -663,7 +663,43 @@ public class Helper{
 	}
 	out.println("</table>");
     }
-								   
+    public final static void writeMediaRequests(PrintWriter out,
+						String title,
+						List<MediaRequest> requests,
+						String url){
+	out.println("<table width=\"75%\" border=\"1\">");
+	out.println("<caption>"+title+"</caption>");
+	for(MediaRequest one:requests){
+	    out.println("<tr><th>Media Request:</th><td><a href=\""+url+"MediaRequest?id="+one.getId()+"\">"+one.getId()+"</td></tr>");	    
+	    out.println("<tr><th>Request Date:</th><td>"+one.getRequestDate()+"</td></tr>");
+	    if(one.hasLead()){
+		out.println("<tr><th>lead:</th><td>"+one.getLead()+"</td></tr>");
+	    }
+	    if(one.hasProgram()){
+		out.println("<tr><th>Program:</th><td><a href=\""+url+"Program?id="+one.getProgram_id()+"\">"+one.getProgram_id()+"</a></td></tr>");
+	    }
+	    if(one.hasFacility()){
+		out.println("<tr><th>Facility:</th><td>"+"<a href=\""+url+"Facility?id="+one.getFacility_id()+"\">"+one.getFacility_id()+"</a></td></tr>");
+	    }
+	    if(one.hasLocation()){
+		out.println("<tr><th>Location:</th><td>"+one.getLocation()+"</td></tr>");
+	    }
+	    if(one.hasLocationDescription()){
+		out.println("<tr><th>Other Location Info:</th><td>"+one.getLocationDescription()+"</td></tr>");
+	    }
+	    if(one.hasContentSpecific()){
+		out.println("<tr><th>Content Specific:</th><td>"+one.getContentSpecific()+"</td></tr>");
+	    }
+	    out.println("<tr><th>Meda Requested:</th><td>"+one.getRequestTypeStr()+"</td></tr>");
+	    if(one.hasOtherType()){
+		out.println("<tr><th>Other Meda Type:</th><td>"+one.getOtherType()+"</td></tr>");
+	    }
+	    if(one.hasNotes()){
+		out.println("<tr><th>Notes:</th><td>"+one.getNotes()+"</td></tr>");
+	    }	    
+	}
+	out.println("</table>");
+    }								   
     public final static void writeProgram(PrintWriter out, 
 				   Program prog,
 				   boolean showTasks, 

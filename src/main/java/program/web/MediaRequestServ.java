@@ -55,7 +55,7 @@ public class MediaRequestServ extends TopServlet{
 	    return;
 	}
 	LeadList leads = null;
-	TypeList locations = null;
+	LocationList locations = null;
 	MediaRequest request = new MediaRequest(debug);
         String [] vals;
 	while (values.hasMoreElements()){
@@ -88,7 +88,7 @@ public class MediaRequestServ extends TopServlet{
 		request.setContentSepecific(value);
 	    }			
 	    else if(name.equals("requestType")){
-		request.setRequestType(value);
+		request.setRequestType(vals);
 	    }
 	    else if(name.equals("otherType")){
 		request.setOtherType(value);
@@ -96,6 +96,9 @@ public class MediaRequestServ extends TopServlet{
 	    else if(name.equals("requestDate")){
 		request.setRequestDate(value);
 	    }
+	    else if(name.equals("notes")){
+		request.setNotes(value);
+	    }	    
 	    else if(name.equals("fromBrowse")){
 		if(value != null)
 		    fromBrowse = value;
@@ -172,7 +175,8 @@ public class MediaRequestServ extends TopServlet{
 		message += back;
 		success = false;
 	    }
-	    locations = new TypeList(debug, "locations");
+	    locations = new LocationList(debug);
+	    locations.setActiveOnly();
 	    back = locations.find();
 	    if(!back.equals("")){
 		message += back;
@@ -241,12 +245,12 @@ public class MediaRequestServ extends TopServlet{
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table>");
 	if(!id.isEmpty()){
-	    out.println("<tr><td align=\"right\"><b>Request Date: </b></td><td align=\"left\">");
+	    out.println("<tr><td align=\"left\" width=\"30%\"><b>Request Date: </b></td><td align=\"left\">");
 	    out.println(request.getRequestDate());
 	    out.println("</td></tr>");
 	}
 	if(!request.getProgram_id().isEmpty()){
-	    out.println("<tr><td align=\"right\"><b>Program: </b></td><td align=\"left\">");
+	    out.println("<tr><td align=\"left\"><b>Program: </b></td><td align=\"left\">");
 	    
 	    out.println("<a href=\""+url+"Program?id="+request.getProgram_id()+"\"> "+request.getProgram_id()+"</a>");
 	    out.println("</td></tr>");
@@ -257,7 +261,7 @@ public class MediaRequestServ extends TopServlet{
 	    out.println("<a href=\""+url+"Facility?id="+request.getFacility_id()+"\">"+request.getFacility_id()+"</a>");
 	    out.println("</td></tr>");
 	}	
-	out.println("<tr><td align=\"right\"><b>Lead: </b></td><td align=\"left\">");
+	out.println("<tr><td align=\"left\"><b>Lead: </b></td><td align=\"left\">");
 	out.println("<select name=\"lead_id\">");
 	out.println("<option value=\"\">Pick a Lead</option>");	
 	if(leads != null){
@@ -272,46 +276,55 @@ public class MediaRequestServ extends TopServlet{
 	}	
 	out.println("</select>");
 	out.println("</td></tr>");	
-	out.println("<tr><td align=\"right\"><b>Location:</b></td><td align=\"left\">");
+	out.println("<tr><td align=\"left\"><b>Location/Parks Initiative:</b></td><td align=\"left\">");
 	out.println("<select name=\"location_id\">");
 	out.println("<option value=\"\">Pick a Location</option>");		
 	if(locations != null){
-	    for(Type one:locations){
+	    for(Location one:locations){
 		String selected = "";
 		if(one.getId().equals(request.getLocation_id())){
 		    selected = "selected=\"selected\"";
 		}
-		else if(!one.isActive()) continue;
-		out.println("<option "+selected+" value=\""+one.getId()+"\">"+one+"</option>");
+		out.println("<option "+selected+" value=\""+one.getId()+"\">"+one.getName()+"</option>");
 	    }
 	}
 	out.println("</select>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Location Description:</b></td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Location Specifics </b><br> (such as 'near the playground')</td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"locationDescription\" row=\"5\" cols=\"50\" wrap=\"wrap\">");
+	out.println("<textarea name=\"locationDescription\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
 	out.println(request.getLocationDescription());
 	out.println("</textarea></td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Content Specific</b></td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Content Specific </b> <br />Indicate if you need a specific season or date/time. Examples would be 'Griffy in the snow' or 'during program hours 5-7pm on mm/dd/yy', or even 'of staff helping guests'. </td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"contentSepecific\" row=\"5\" cols=\"50\" wrap=\"wrap\">");
-	out.println(request.getContentSepecific());
+	out.println("<textarea name=\"contentSepecific\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
+	out.println(request.getContentSpecific());
 	out.println("</textarea></td></tr>");
 	out.println("</td></tr>");	
-	out.println("<tr><td align=\"right\"><b>Request Type:</b></td><td align=\"left\">");	
-	String requst_types[] = {"Photography","Videography","Other"};
-	for(String type:requst_types){
-	    String selected = "";
-	    if(type.equals(request.getRequestType())){
-		selected="selected=\"selected\"";
+	out.println("<tr><td align=\"left\"><b>Media Requested </b>(Check all that apply) </td><td align=\"left\">");	
+	String request_types[] = {"Photography","Videography","Other"};
+	Set<String> typeSet = null;
+	if(request.getRequestType() != null){
+	    typeSet = Set.of(request.getRequestType());
+	}
+	for(String type:request_types){
+	    String checked = "";
+	    if(typeSet != null && typeSet.contains(type)){
+		checked="checked=\"checked\"";
 	    }
-	    out.println("<input type\"radio\" name=\"requestType\" value=\""+type+"\" "+selected+"/>");
+	    out.println("<input type=\"checkbox\" name=\"requestType\" id=\""+type+"\" value=\""+type+"\" "+checked+" /><label for=\""+type+"\" >"+type+"</label>");
 	}
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Other Type</b></td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Other Media Type </b></td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"otherType\" row=\"5\" cols=\"50\" wrap=\"wrap\">");
+	out.println("<textarea name=\"otherType\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
 	out.println(request.getOtherType());
+	out.println("</textarea></td></tr>");
+	out.println("</td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Notes </b><br /> We will be contacting you if there are any questions or clarifications. Please include any helpful details here:</td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\">");
+	out.println("<textarea name=\"notes\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
+	out.println(request.getNotes());
 	out.println("</textarea></td></tr>");
 	out.println("</td></tr>");	
 	out.println("</table></td></tr>");

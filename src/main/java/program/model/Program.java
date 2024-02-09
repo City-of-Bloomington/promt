@@ -56,6 +56,7 @@ public class Program implements Comparable <Program>{
     HistoryList history = null;
     TaxonomySubList taxSubList = null;
     List<PromtFile> files = null;
+    List<MediaRequest> mediaRequests = null;
     //
     public Program(boolean val){
 	debug = val;
@@ -795,6 +796,22 @@ public class Program implements Comparable <Program>{
     public boolean hasFiles(){
 	getFiles();
 	return files != null && files.size() > 0;
+    }
+    public boolean hasMediaRequests(){
+	findMediaRequests();
+	return mediaRequests != null && mediaRequests.size() > 0;
+    }
+    public List<MediaRequest> getMediaRequests(){
+	return mediaRequests;
+    }
+    private String findMediaRequests(){
+	MediaRequestList mdl = new MediaRequestList(debug);
+	mdl.setProgram_id(id);
+	String back = mdl.find();
+	if(back.isEmpty()){
+	    mediaRequests = mdl.getRequests(); 
+	}
+	return back;
     }
     //
     // one string containing all taxonomy info

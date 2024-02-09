@@ -1820,6 +1820,17 @@ public class ProgramServ extends TopServlet{
 			" onclick=\"document.location='"+url+
 			"VolShift.do?pid="+pr.getId()+
 			"';\" /></td>");
+	    jj++;
+	    if(jj > 4){
+		jj=1;
+		out.println("</tr>");
+		out.println("<tr>");
+	    }
+	    out.println("<td align=\"center\" valign=\"top\">");
+	    out.println("<input type=\"button\" value=\"Add Media Request\" "+
+			" onclick=\"document.location='"+url+
+			"MediaRequest?program_id="+pr.getId()+
+			"';\" /></td>");	    
 	    if(marketFound || pr.hasOldMarket()){
 		jj++;
 		if(jj > 4){
@@ -1844,6 +1855,7 @@ public class ProgramServ extends TopServlet{
 		out.println("<input type=\"button\" value=\"Sponsorship\" "+
 			    " onclick=\"window.alert('You need to finish marketing first')\"></input></td>");
 	    }
+	    
 	    if(user.isAdmin()){
 		jj++;
 		if(jj > 4){
@@ -1896,12 +1908,16 @@ public class ProgramServ extends TopServlet{
 	    Helper.writeSessions(out, sessions, sopt, 
 				 id, url, debug);
 	}
+	if(pr.hasMediaRequests()){
+	    Helper.writeMediaRequests(out,"Media Requests", pr.getMediaRequests(), url);
+	}
         if(pr.hasFiles()){
 	    Helper.printFiles(out, url, pr.getFiles());
         }
 	if(pr.hasHistory()){
 	    Helper.writeHistory(out, "Program Logs", pr.getHistory()); 
 	}
+
 	// End Session table
 	//
 	Helper.writeWebFooter(out, url);

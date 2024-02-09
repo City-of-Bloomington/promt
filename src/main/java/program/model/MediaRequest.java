@@ -16,11 +16,13 @@ public class MediaRequest extends CommonInc{
     boolean debug = false;
     static Logger logger = LogManager.getLogger(MediaRequest.class);    
     String id="", program_id="", lead_id="", location_id="",
-	facility_id="",
-	location_description="", content_specific="",
-	request_type=""; // Photography, Videography, Other
+	facility_id="", 
+	location_description="", content_specific="", notes="";
+	; // request_tyes: Photography, Videography, Other
+    String request_type[] = null;
     String other_type="", request_date="";
-
+    Lead lead = null;
+    Location location = null;
     public MediaRequest(boolean val){
 	debug = val;
     }
@@ -36,11 +38,12 @@ public class MediaRequest extends CommonInc{
 			String val6,
 			String val7,
 			String val8,
-			String val9,
+			String[] val9,
 			String val10,
-			String val11
+			String val11,
+			String val12
 	    ){
-	setVals(val,val2, val3, val4, val5, val6, val7, val8, val9, val10, val11);
+	setVals(val,val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12);
 
     }
     private void
@@ -53,9 +56,10 @@ public class MediaRequest extends CommonInc{
 		String val6,
 		String val7,
 		String val8,
-		String val9,
+		String val9[],
 		String val10,
-		String val11
+		String val11,
+		String val12
 		){
 	debug = val;
 	setId(val2);
@@ -68,6 +72,7 @@ public class MediaRequest extends CommonInc{
 	setRequestType(val9);
 	setOtherType(val10);
 	setRequestDate(val11);
+	setNotes(val12);
     }	
 
     //
@@ -101,7 +106,20 @@ public class MediaRequest extends CommonInc{
 	if(val != null)
 	    content_specific = val;
     }
-    public void setRequestType(String val){
+    public void setRequestTypeStr(String val){
+	if(val != null){
+	    String [] arr = null;
+	    if(val.indexOf(",") > -1){
+		arr = val.split(",");
+	    }
+	    else{
+		arr = new String[1];
+	        arr[0] = val;
+	    }
+	    setRequestType(arr);
+	}
+    }
+    public void setRequestType(String[] val){
 	if(val != null)
 	    request_type = val;
     }
@@ -112,6 +130,10 @@ public class MediaRequest extends CommonInc{
     public void setRequestDate(String val){
 	if(val != null)
 	    request_date = val;
+    }
+    public void setNotes(String val){
+	if(val != null)
+	    notes = val;
     }    
     //
     // getters
@@ -134,11 +156,21 @@ public class MediaRequest extends CommonInc{
     public String getLocationDescription(){
 	return location_description;
     }	
-    public String getContentSepecific(){
+    public String getContentSpecific(){
 	return content_specific;
     }
-    public String getRequestType(){
+    public String[] getRequestType(){
 	return request_type;
+    }
+    public String getRequestTypeStr(){
+	String str = "";
+	if(request_type != null){
+	    for(String one:request_type){
+		if(!one.isEmpty()) one += ", ";
+		str += one;
+	    }
+	}
+	return str;
     }
     public String getOtherType(){
 	return other_type;
@@ -146,6 +178,53 @@ public class MediaRequest extends CommonInc{
     public String getRequestDate(){
 	return request_date;
     }
+    public String getNotes(){
+	return notes;
+    }    
+    public Lead getLead(){
+	if(lead == null && !lead_id.isEmpty()){
+	    Lead one = new Lead(debug, lead_id);
+	    String back = one.doSelect();
+	    if(back.isEmpty()){
+		lead = one;
+	    }
+	}
+	return lead;
+    }
+    public Location getLocation(){
+	if(location == null && !location_id.isEmpty()){
+	    Location one = new Location(debug, location_id);
+	    String back = one.doSelect();
+	    if(back.isEmpty()){
+		location = one;
+	    }
+	}
+	return location;
+    }
+    public boolean hasLocation(){
+	return !location_id.isEmpty();
+    }
+    public boolean hasProgram(){
+	return !program_id.isEmpty();
+    }
+    public boolean hasFacility(){
+	return !facility_id.isEmpty();
+    }
+    public boolean hasLead(){
+	return !lead_id.isEmpty();
+    }
+    public boolean hasLocationDescription(){
+	return !location_description.isEmpty();
+    }
+    public boolean hasContentSpecific(){
+	return !content_specific.isEmpty();
+    }
+    public boolean hasOtherType(){
+	return !other_type.isEmpty();
+    }
+    public boolean hasNotes(){
+	return !notes.isEmpty();
+    }    
     public boolean equals(Object gg){
 	boolean match = false;
 	if (gg != null && gg instanceof MediaRequest){
@@ -201,7 +280,7 @@ public class MediaRequest extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
-	String qq = "select id,program_id,facility,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m%d/%Y') "+
+	String qq = "select id,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m%d/%Y'),notes "+
 	    " from media_requests where id=?";
 	if(debug){
 	    logger.debug(qq);
@@ -217,6 +296,17 @@ public class MediaRequest extends CommonInc{
 	    pstmt.setString(1,id);
 	    rs = pstmt.executeQuery();
 	    if(rs.next()){
+		String str  = rs.getString(8);
+		String [] arr = null;
+		if(str != null){
+		    if(str.indexOf(",") > -1){
+			arr = str.split(",");
+		    }
+		    else{
+			arr = new String[1];
+			arr[0] = str;
+		    }
+		}
 		setVals(debug,
 			rs.getString(1),
 			rs.getString(2),
@@ -225,9 +315,10 @@ public class MediaRequest extends CommonInc{
 			rs.getString(5),
 			rs.getString(6),
 			rs.getString(7),
-			rs.getString(8),
+			arr,			
 			rs.getString(9),
-			rs.getString(10)
+			rs.getString(10),
+			rs.getString(11)
 			);
 	    }
 	    else{
@@ -250,7 +341,7 @@ public class MediaRequest extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
-	String qq = "update media_requests set program_id=?,facility_id=?,lead_id=?,location_id=?,location_description=?,content_specific=?,request_type=?,other_type=? "+
+	String qq = "update media_requests set program_id=?,facility_id=?,lead_id=?,location_id=?,location_description=?,content_specific=?,request_type=?,other_type=?,notes=? "+
 	    " where id=?";
 	if(debug){
 	    logger.debug(qq);
@@ -290,15 +381,25 @@ public class MediaRequest extends CommonInc{
 		pstmt.setString(6,null);
 	    else
 		pstmt.setString(6,content_specific);
-	    if(request_type.equals(""))
-		pstmt.setString(7,null);
+	    if(request_type != null){
+		String r_types = "";
+		for(String str:request_type){
+		    if(!r_types.isEmpty())  r_types +=",";
+		    r_types += str;
+		}
+		pstmt.setString(7,r_types);
+	    }
 	    else
-		pstmt.setString(7,request_type);
+		pstmt.setString(7,null);
 	    if(other_type.equals(""))
 		pstmt.setString(8,null);
 	    else
-		pstmt.setString(8,other_type);	    
-	    pstmt.setString(9,id);
+		pstmt.setString(8,other_type);
+	    if(notes.equals(""))
+		pstmt.setString(9,null);
+	    else
+		pstmt.setString(9,notes);	    
+	    pstmt.setString(10,id);
 	    pstmt.executeUpdate();
 	}
 	catch(Exception ex){
@@ -316,7 +417,8 @@ public class MediaRequest extends CommonInc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
 	String back = "";
-	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,now())";
+	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,now()),?";
+	request_date = Helper.getToday2();
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
@@ -352,14 +454,24 @@ public class MediaRequest extends CommonInc{
 		pstmt.setString(6,null);
 	    else
 		pstmt.setString(6,content_specific);
-	    if(request_type.equals(""))
+	    if(request_type == null)
 		pstmt.setString(7,null);
-	    else
-		pstmt.setString(7,request_type);
+	    else{
+		String r_types = "";
+		for(String str:request_type){
+		    if(!r_types.isEmpty())  r_types +=",";
+		    r_types += str;
+		}
+		pstmt.setString(7,r_types);
+	    }
 	    if(other_type.equals(""))
 		pstmt.setString(8,null);
 	    else
-		pstmt.setString(8,other_type);	 
+		pstmt.setString(8,other_type);
+	    if(notes.equals(""))
+		pstmt.setString(9,null);
+	    else
+		pstmt.setString(9,notes);	    
 	    pstmt.executeUpdate();
 	    qq = "select LAST_INSERT_ID() ";
 	    if(debug){
@@ -389,10 +501,11 @@ public class MediaRequest extends CommonInc{
        lead_id int,
        location_id int,
        location_description varchar(1024),
-       conent_specific varchar(1024),
-       request_type enum('Photography','Videography','Other'),
+       content_specific varchar(1024),
+       request_type varchar(1024),
        other_type varchar(512),
        request_date date,
+       notes varchar(1024),
        foreign key(program_id) references programs(id),
        foreign key(lead_id) references leads(id),
        foreign key(location_id) references locations(id),

@@ -71,7 +71,7 @@ public class MediaRequestList{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	Connection con = Helper.getConnection();
-	String qq = "select id,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y') from media_requests ";	
+	String qq = "select id,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),notes from media_requests ";	
 	String qw = "", qf="";
 	if(!id.isEmpty()){
 	    if(!qw.equals("")) qw += " and ";
@@ -112,6 +112,15 @@ public class MediaRequestList{
 	    	    
 	    rs = pstmt.executeQuery();
 	    while(rs.next()){
+		String str  = rs.getString(8);
+		String [] arr = null;
+		if(str.indexOf(",") > -1){
+		    arr = str.split(",");
+		}
+		else{
+		    arr = new String[1];
+		    arr[0] = str;
+		}
 		MediaRequest one =
 		    new MediaRequest(debug,
 				     rs.getString(1),
@@ -121,9 +130,10 @@ public class MediaRequestList{
 				     rs.getString(5),
 				     rs.getString(6),
 				     rs.getString(7),
-				     rs.getString(8),
+				     arr,
 				     rs.getString(9),
-				     rs.getString(10)
+				     rs.getString(10),
+				     rs.getString(11)
 				     );
 		if(requests == null)
 		    requests = new ArrayList<>();
