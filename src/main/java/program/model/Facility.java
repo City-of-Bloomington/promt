@@ -25,7 +25,8 @@ public class Facility extends CommonInc{
     Market market = null;
     MarketList markets = null;
     List<PromtFile> files = null;
-		
+    List<MediaRequest> mediaRequests = null;
+    
     public Facility(boolean val){
 	debug = val;
     }
@@ -164,7 +165,22 @@ public class Facility extends CommonInc{
 	}
 	return files;
     }		
-		
+    public boolean hasMediaRequests(){
+	findMediaRequests();
+	return mediaRequests != null && mediaRequests.size() > 0;
+    }
+    public List<MediaRequest> getMediaRequests(){
+	return mediaRequests;
+    }
+    private String findMediaRequests(){
+	MediaRequestList mdl = new MediaRequestList(debug);
+	mdl.setFacility_id(id);
+	String back = mdl.find();
+	if(back.isEmpty()){
+	    mediaRequests = mdl.getRequests(); 
+	}
+	return back;
+    }		
     public boolean hasMarket(){
 	getMarket();
 	return market != null;

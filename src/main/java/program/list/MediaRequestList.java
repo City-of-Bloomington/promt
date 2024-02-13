@@ -3,6 +3,7 @@ package program.list;
 import java.util.*;
 import java.sql.*;
 import java.io.*;
+import java.text.*;
 import javax.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,8 +17,11 @@ public class MediaRequestList{
 
     boolean debug = false;
     static Logger logger = LogManager.getLogger(MediaRequestList.class);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     //	
     String program_id="", id="", lead_id="", facility_id="";
+    String date_from = "", date_to = "";
+    String year="", season="";
     List<MediaRequest> requests = null;
     List<String> errors = null;
     String message = "";
@@ -36,6 +40,14 @@ public class MediaRequestList{
     public void setId(String val){
 	if(val != null)
 	    id = val;
+    }
+    public void setYear(String val){
+	if(val != null)
+	    year = val;
+    }
+    public void setSeason(String val){
+	if(val != null)
+	    season = val;
     }
     public void setLead_id(String val){
 	if(val != null)
@@ -65,6 +77,23 @@ public class MediaRequestList{
     public List<MediaRequest> getRequests(){
 	return requests;
     }
+    void setDateRange(){
+	if(!year.isEmpty() && !season.isEmpty() && !season.equals("Ongoing")){
+	    if(season.startsWith("Summer")){
+		date_from = Helper.summerStartDate+year;
+		date_to = Helper.summerEndDate+year;
+	    }
+	    else if(season.startsWith("Winter")){
+		date_from = Helper.winterSpringStartDate+year;
+		date_to = Helper.winterSpringEndDate+year;
+	    }
+	    else {
+		date_from = Helper.fallWinterStartDate+year;
+		date_to = Helper.fallWinterEndDate+year;
+	    }
+	    year="";
+	}
+    }
     public String find(){
 		
 	String back = "";
@@ -73,6 +102,7 @@ public class MediaRequestList{
 	Connection con = Helper.getConnection();
 	String qq = "select id,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),notes from media_requests ";	
 	String qw = "", qf="";
+	setDateRange();
 	if(!id.isEmpty()){
 	    if(!qw.equals("")) qw += " and ";
 	    qw += " id = ? ";
@@ -85,6 +115,19 @@ public class MediaRequestList{
 	    if(!qw.isEmpty()) qw += " and ";
 	    qw += " facility_id = ? ";
 	}
+	if(!date_from.isEmpty()){
+	    if(!qw.isEmpty()) qw += " and ";
+	    qw += " date >= ? ";	    
+	}
+	if(!date_to.isEmpty()){
+	    if(!qw.isEmpty()) qw += " and ";
+	    qw += " date <= ? ";	    
+	}	
+	if(!year.equals("")){
+	    if(!qw.equals("")) qw += " and ";
+	    qw += " year(date) = ? ";
+	}
+	    
 	if(con == null){
 	    back = "Could not connect to DB";
 	    addError(back);
@@ -109,7 +152,16 @@ public class MediaRequestList{
 	    else if(!facility_id.equals("")){
 		pstmt.setString(j++, facility_id);
 	    }
-	    	    
+	    if(date_from.isEmpty()){
+		pstmt.setDate(j++,new java.sql.Date(dateFormat.parse(date_from).getTime()));
+	    }
+	    if(!date_to.equals("")){
+		pstmt.setDate(j++,new java.sql.Date(dateFormat.parse(date_to).getTime()));					
+	    }	    
+	    if(!year.equals("")){
+		pstmt.setString(j++, year);
+	    }
+	    	    	    	    
 	    rs = pstmt.executeQuery();
 	    while(rs.next()){
 		String str  = rs.getString(8);

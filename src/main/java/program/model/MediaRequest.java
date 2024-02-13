@@ -83,11 +83,11 @@ public class MediaRequest extends CommonInc{
 	    id = val;
     }
     public void setProgram_id (String val){
-	if(val != null)
+	if(val != null && !val.isEmpty())
 	    program_id = val;
     }
     public void setFacility_id (String val){
-	if(val != null)
+	if(val != null && !val.isEmpty())
 	    facility_id = val;
     }    
     public void setLead_id (String val){
@@ -200,6 +200,12 @@ public class MediaRequest extends CommonInc{
 	    }
 	}
 	return location;
+    }
+    public String getLocationName(){
+	getLocation();
+	if(location != null)
+	    return location.getName();
+	return "";
     }
     public boolean hasLocation(){
 	return !location_id.isEmpty();
@@ -346,6 +352,11 @@ public class MediaRequest extends CommonInc{
 	if(debug){
 	    logger.debug(qq);
 	}
+	if(lead_id.isEmpty()){
+	    back = "Lead is required";
+	    addError(back);
+	    return back;
+	}
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
@@ -417,14 +428,19 @@ public class MediaRequest extends CommonInc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
 	String back = "";
-	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,now()),?";
+	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,now(),?)";
 	request_date = Helper.getToday2();
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
 	    addError(back);
 	    return back;
-	}				
+	}
+	if(lead_id.isEmpty()){
+	    back = "Lead is required";
+	    addError(back);
+	    return back;
+	}	
 	if(debug){
 	    logger.debug(qq);
 	}

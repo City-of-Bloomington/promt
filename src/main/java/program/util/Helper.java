@@ -25,12 +25,12 @@ public class Helper{
     static Logger logger = LogManager.getLogger(Helper.class);
     final static Locale local = new Locale("Latin","US");
     final static TimeZone tzone = TimeZone.getTimeZone("America/Indiana/Indianapolis");
-    final static String summerStartDate = "05/01/"; // real 6/22
-    final static String summerEndDate = "08/31/";   // real 09/22
-    final static String fallWinterStartDate = "09/01/"; // real 9/23
-    final static String fallWinterEndDate = "12/31/";  
-    final static String winterSpringStartDate = "01/01/"; // 
-    final static String winterSpringEndDate = "04/30/"; //  real 6/21
+    public final static String summerStartDate = "05/01/"; // real 6/22
+    public final static String summerEndDate = "08/31/";   // real 09/22
+    public final static String fallWinterStartDate = "09/01/"; // real 9/23
+    public final static String fallWinterEndDate = "12/31/";  
+    public final static String winterSpringStartDate = "01/01/"; // 
+    public final static String winterSpringEndDate = "04/30/"; //  real 6/21
     private static final Pattern REMOVE_TAGS = Pattern.compile("<.+?>");    
     final static Map<String, String> cutUpSeasons = createMap();
     final static Map<String, String> cutUpDates = createMap2();		
@@ -670,7 +670,7 @@ public class Helper{
 	out.println("<table width=\"75%\" border=\"1\">");
 	out.println("<caption>"+title+"</caption>");
 	for(MediaRequest one:requests){
-	    out.println("<tr><th>Media Request:</th><td><a href=\""+url+"MediaRequest?id="+one.getId()+"\">"+one.getId()+"</td></tr>");	    
+	    out.println("<tr><th>Media Request:</th><td><a href=\""+url+"MediaRequest?id="+one.getId()+"\">"+one.getId()+"</td></tr>");
 	    out.println("<tr><th>Request Date:</th><td>"+one.getRequestDate()+"</td></tr>");
 	    if(one.hasLead()){
 		out.println("<tr><th>lead:</th><td>"+one.getLead()+"</td></tr>");
@@ -1810,7 +1810,12 @@ public class Helper{
 
 	Matcher m = REMOVE_TAGS.matcher(string);
 	return m.replaceAll("");
-    }    
+    }
+    public final static String writeMediaRequestCsv(MediaRequest one){
+	String line="";
+	line = "\""+one.getId()+"\",\""+one.getRequestDate()+"\",\""+one.getProgram_id()+"\",\""+one.getFacility_id()+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestType()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
+	return line;
+    }
     public final static String writeMarketCsv(Market market, String type, String name, String lead){
 	//
 	

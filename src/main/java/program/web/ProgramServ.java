@@ -1827,7 +1827,7 @@ public class ProgramServ extends TopServlet{
 		out.println("<tr>");
 	    }
 	    out.println("<td align=\"center\" valign=\"top\">");
-	    out.println("<input type=\"button\" value=\"Add Media Request\" "+
+	    out.println("<input type=\"button\" value=\"New Media Request\" "+
 			" onclick=\"document.location='"+url+
 			"MediaRequest?program_id="+pr.getId()+
 			"';\" /></td>");	    

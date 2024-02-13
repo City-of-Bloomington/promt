@@ -123,16 +123,6 @@ public class FacilityServ extends TopServlet{
 		success = false;
 	    }
 	}
-	else if(action.equals("zoom")){
-	    //
-	    //
-	    String back = fc.doSelect();
-	    if(!back.equals("")){
-		message += " Error retreiving data "+back;
-		success = false;
-		logger.error(back);
-	    }
-	}
 	else if(action.startsWith("Update")){
 	    //
 	    if(user.canEdit()){
@@ -180,6 +170,17 @@ public class FacilityServ extends TopServlet{
 	    // 
 	    fc = new Facility(debug);
 	}
+	else if(!id.isEmpty()){
+	    //
+	    //
+	    String back = fc.doSelect();
+	    if(!back.equals("")){
+		message += " Error retreiving data "+back;
+		success = false;
+		logger.error(back);
+	    }
+	}
+	
 	if(true){
 	    leads = new LeadList(debug);
 	    String back = leads.find();
@@ -358,6 +359,11 @@ public class FacilityServ extends TopServlet{
 		out.println("<td valign=\"top\" align=\"right\"><input type=\"submit\" "+
 			    "name=\"action\" value=\"Update\"></td>");
 	    }
+	    out.println("<td align=\"center\" valign=\"top\">");
+	    out.println("<input type=\"button\" value=\"New Media Request\" "+
+			" onclick=\"document.location='"+url+
+			"MediaRequest?facility_id="+fc.getId()+
+			"';\" /></td>");
 	    out.println("<td valign=\"top\" align=\"center\">");
 	    out.println("<input type=button value=\"New Marketing\""+
 			" onclick=\"document.location='"+url+
@@ -434,7 +440,10 @@ public class FacilityServ extends TopServlet{
 	}
 	if(fc.hasFiles()){
 	    Helper.printFiles(out, url, fc.getFiles());
-        }		
+        }
+	if(fc.hasMediaRequests()){
+	    Helper.writeMediaRequests(out,"Media Requests", fc.getMediaRequests(), url);
+	}	
 	//
 	if(fc.hasHistory()){
 	    Helper.writeHistory(out, "Facility Logs", fc.getHistory()); 

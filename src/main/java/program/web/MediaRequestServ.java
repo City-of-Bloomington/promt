@@ -249,21 +249,21 @@ public class MediaRequestServ extends TopServlet{
 	    out.println(request.getRequestDate());
 	    out.println("</td></tr>");
 	}
-	if(!request.getProgram_id().isEmpty()){
+	if(request.hasProgram()){
 	    out.println("<tr><td align=\"left\"><b>Program: </b></td><td align=\"left\">");
 	    
 	    out.println("<a href=\""+url+"Program?id="+request.getProgram_id()+"\"> "+request.getProgram_id()+"</a>");
 	    out.println("</td></tr>");
 	}
-	if(!request.getFacility_id().isEmpty()){
-	    out.println("<tr><td align=\"right\"><b>Facility: </b></td><td align=\"left\">");
+	if(request.hasFacility()){
+	    out.println("<tr><td align=\"left\"><b>Facility: </b></td><td align=\"left\">");
 	    
 	    out.println("<a href=\""+url+"Facility?id="+request.getFacility_id()+"\">"+request.getFacility_id()+"</a>");
 	    out.println("</td></tr>");
 	}	
 	out.println("<tr><td align=\"left\"><b>Lead: </b></td><td align=\"left\">");
 	out.println("<select name=\"lead_id\">");
-	out.println("<option value=\"\">Pick a Lead</option>");	
+	out.println("<option value=\"\">Pick a Lead*</option>");	
 	if(leads != null){
 	    for(Lead one:leads){
 		String selected = "";
