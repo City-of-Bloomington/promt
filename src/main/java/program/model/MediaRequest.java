@@ -15,7 +15,8 @@ public class MediaRequest extends CommonInc{
 
     boolean debug = false;
     static Logger logger = LogManager.getLogger(MediaRequest.class);    
-    String id="", program_id="", lead_id="", location_id="",
+    String id="", season="", request_year="",
+	program_id="", lead_id="", location_id="",
 	facility_id="", 
 	location_description="", content_specific="", notes="";
 	; // request_tyes: Photography, Videography, Other
@@ -38,12 +39,14 @@ public class MediaRequest extends CommonInc{
 			String val6,
 			String val7,
 			String val8,
-			String[] val9,
+			String val9,
 			String val10,
-			String val11,
-			String val12
+			String[] val11,
+			String val12,
+			String val13,
+			String val14
 	    ){
-	setVals(val,val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12);
+	setVals(val,val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13, val14);
 
     }
     private void
@@ -56,23 +59,27 @@ public class MediaRequest extends CommonInc{
 		String val6,
 		String val7,
 		String val8,
-		String val9[],
+		String val9,
 		String val10,
-		String val11,
-		String val12
+		String[] val11,
+		String val12,
+		String val13,
+		String val14
 		){
 	debug = val;
 	setId(val2);
-	setProgram_id(val3);
-	setFacility_id(val4);
-	setLead_id(val5);
-	setLocation_id(val6);
-	setLocationDescription(val7);
-	setContentSepecific(val8);		
-	setRequestType(val9);
-	setOtherType(val10);
-	setRequestDate(val11);
-	setNotes(val12);
+	setSeason(val3);
+	setRequestYear(val4);
+	setProgram_id(val5);
+	setFacility_id(val6);
+	setLead_id(val7);
+	setLocation_id(val8);
+	setLocationDescription(val9);
+	setContentSepecific(val10);		
+	setRequestType(val11);
+	setOtherType(val12);
+	setRequestDate(val13);
+	setNotes(val14);
     }	
 
     //
@@ -82,6 +89,14 @@ public class MediaRequest extends CommonInc{
 	if(val != null)
 	    id = val;
     }
+    public void setSeason(String val){
+	if(val != null)
+	    season = val;
+    }
+    public void setRequestYear(String val){
+	if(val != null)
+	    request_year = val;
+    }    
     public void setProgram_id (String val){
 	if(val != null && !val.isEmpty())
 	    program_id = val;
@@ -141,6 +156,12 @@ public class MediaRequest extends CommonInc{
     public String getId(){
 	return id;
     }
+    public String getSeason(){
+	return season;
+    }
+    public String getRequestYear(){
+	return request_year;
+    }    
     public String getProgram_id(){
 	return program_id;
     }
@@ -286,7 +307,7 @@ public class MediaRequest extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
-	String qq = "select id,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m%d/%Y'),notes "+
+	String qq = "select id,season,request_year,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m%d/%Y'),notes "+
 	    " from media_requests where id=?";
 	if(debug){
 	    logger.debug(qq);
@@ -302,7 +323,7 @@ public class MediaRequest extends CommonInc{
 	    pstmt.setString(1,id);
 	    rs = pstmt.executeQuery();
 	    if(rs.next()){
-		String str  = rs.getString(8);
+		String str  = rs.getString(10);
 		String [] arr = null;
 		if(str != null){
 		    if(str.indexOf(",") > -1){
@@ -321,10 +342,12 @@ public class MediaRequest extends CommonInc{
 			rs.getString(5),
 			rs.getString(6),
 			rs.getString(7),
-			arr,			
+			rs.getString(8),
 			rs.getString(9),
-			rs.getString(10),
-			rs.getString(11)
+			arr,			
+			rs.getString(11),
+			rs.getString(12),
+			rs.getString(13)
 			);
 	    }
 	    else{
@@ -347,7 +370,7 @@ public class MediaRequest extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
-	String qq = "update media_requests set program_id=?,facility_id=?,lead_id=?,location_id=?,location_description=?,content_specific=?,request_type=?,other_type=?,notes=? "+
+	String qq = "update media_requests set season=?,request_year=?,program_id=?,facility_id=?,lead_id=?,location_id=?,location_description=?,content_specific=?,request_type=?,other_type=?,notes=? "+
 	    " where id=?";
 	if(debug){
 	    logger.debug(qq);
@@ -357,6 +380,16 @@ public class MediaRequest extends CommonInc{
 	    addError(back);
 	    return back;
 	}
+	if(season.isEmpty()){
+	    back = "Season is required";
+	    addError(back);
+	    return back;
+	}
+	if(request_year.isEmpty()){
+	    back = "Request year is required";
+	    addError(back);
+	    return back;
+	}	
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
@@ -368,49 +401,51 @@ public class MediaRequest extends CommonInc{
 	}
 	try{
 	    pstmt = con.prepareStatement(qq);
+	    pstmt.setString(1, season);
+	    pstmt.setString(2, request_year);
 	    if(program_id.equals(""))
-		pstmt.setString(1,null);
-	    else
-		pstmt.setString(1,program_id);
-	    if(facility_id.equals(""))
-		pstmt.setString(2,null);
-	    else
-		pstmt.setString(2,facility_id);
-	    if(lead_id.equals(""))
 		pstmt.setString(3,null);
 	    else
-		pstmt.setString(3,lead_id);	    
-	    if(location_id.equals(""))
+		pstmt.setString(3,program_id);
+	    if(facility_id.equals(""))
 		pstmt.setString(4,null);
 	    else
-		pstmt.setString(4,location_id);
-	    if(location_description.equals(""))
+		pstmt.setString(4,facility_id);
+	    if(lead_id.equals(""))
 		pstmt.setString(5,null);
 	    else
-		pstmt.setString(5,location_description);			
-	    if(content_specific.equals(""))
+		pstmt.setString(5,lead_id);	    
+	    if(location_id.equals(""))
 		pstmt.setString(6,null);
 	    else
-		pstmt.setString(6,content_specific);
+		pstmt.setString(6,location_id);
+	    if(location_description.equals(""))
+		pstmt.setString(7,null);
+	    else
+		pstmt.setString(7,location_description);			
+	    if(content_specific.equals(""))
+		pstmt.setString(8,null);
+	    else
+		pstmt.setString(8,content_specific);
 	    if(request_type != null){
 		String r_types = "";
 		for(String str:request_type){
 		    if(!r_types.isEmpty())  r_types +=",";
 		    r_types += str;
 		}
-		pstmt.setString(7,r_types);
+		pstmt.setString(9,r_types);
 	    }
 	    else
-		pstmt.setString(7,null);
-	    if(other_type.equals(""))
-		pstmt.setString(8,null);
-	    else
-		pstmt.setString(8,other_type);
-	    if(notes.equals(""))
 		pstmt.setString(9,null);
+	    if(other_type.equals(""))
+		pstmt.setString(10,null);
 	    else
-		pstmt.setString(9,notes);	    
-	    pstmt.setString(10,id);
+		pstmt.setString(10,other_type);
+	    if(notes.equals(""))
+		pstmt.setString(11,null);
+	    else
+		pstmt.setString(11,notes);	    
+	    pstmt.setString(12,id);
 	    pstmt.executeUpdate();
 	}
 	catch(Exception ex){
@@ -428,66 +463,91 @@ public class MediaRequest extends CommonInc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
 	String back = "";
-	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,now(),?)";
+	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,?, ?,now(),?)";
 	request_date = Helper.getToday2();
+	if(request_year.isEmpty() || season.isEmpty()){ 
+	    if(!program_id.isEmpty()){
+		Program pp = new Program(debug, program_id);
+		back = pp.doSelect();
+		if(back.isEmpty()){
+		    season = pp.getSeason();
+		    request_year = pp.getYear();
+		}
+		else{
+		    return back;
+		}
+	    }
+	}
+	if(lead_id.isEmpty()){
+	    back = "Lead is required";
+	    addError(back);
+	    return back;
+	}
+	if(season.isEmpty()){
+	    back = "Season is required";
+	    addError(back);
+	    return back;
+	}
+	if(request_year.isEmpty()){
+	    back = "Request year is required";
+	    addError(back);
+	    return back;
+	}
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
 	    addError(back);
 	    return back;
 	}
-	if(lead_id.isEmpty()){
-	    back = "Lead is required";
-	    addError(back);
-	    return back;
-	}	
 	if(debug){
 	    logger.debug(qq);
 	}
 	try{
 	    pstmt = con.prepareStatement(qq);
+	    pstmt.setString(1, season);
+	    pstmt.setString(2, request_year);	    
 	    if(program_id.equals(""))
-		pstmt.setString(1,null);
-	    else
-		pstmt.setString(1,program_id);
-	    if(facility_id.equals(""))
-		pstmt.setString(2,null);
-	    else
-		pstmt.setString(2,facility_id);
-	    if(lead_id.equals(""))
 		pstmt.setString(3,null);
 	    else
-		pstmt.setString(3,lead_id);	    
-	    if(location_id.equals(""))
+		pstmt.setString(3,program_id);
+	    if(facility_id.equals(""))
 		pstmt.setString(4,null);
 	    else
-		pstmt.setString(4,location_id);
-	    if(location_description.equals(""))
+		pstmt.setString(4,facility_id);
+	    if(lead_id.equals(""))
 		pstmt.setString(5,null);
 	    else
-		pstmt.setString(5,location_description);			
-	    if(content_specific.equals(""))
+		pstmt.setString(5,lead_id);	    
+	    if(location_id.equals(""))
 		pstmt.setString(6,null);
 	    else
-		pstmt.setString(6,content_specific);
-	    if(request_type == null)
+		pstmt.setString(6,location_id);
+	    if(location_description.equals(""))
 		pstmt.setString(7,null);
+	    else
+		pstmt.setString(7,location_description);			
+	    if(content_specific.equals(""))
+		pstmt.setString(8,null);
+	    else
+		pstmt.setString(8,content_specific);
+	    if(request_type == null)
+		pstmt.setString(9,null);
 	    else{
 		String r_types = "";
 		for(String str:request_type){
 		    if(!r_types.isEmpty())  r_types +=",";
 		    r_types += str;
 		}
-		pstmt.setString(7,r_types);
+		pstmt.setString(9,r_types);
 	    }
 	    if(other_type.equals(""))
-		pstmt.setString(8,null);
+		pstmt.setString(10,null);
 	    else
-		pstmt.setString(8,other_type);
+		pstmt.setString(10,other_type);
 	    if(notes.equals(""))
-		pstmt.setString(9,null);
+		pstmt.setString(11,null);
 	    else
-		pstmt.setString(9,notes);	    
+		pstmt.setString(11,notes);	    
 	    pstmt.executeUpdate();
 	    qq = "select LAST_INSERT_ID() ";
 	    if(debug){
@@ -512,6 +572,8 @@ public class MediaRequest extends CommonInc{
     /**
        create table media_requests (
        id int auto_increment primary key,
+       season enum('Fall/Winter','Winter/Spring','Summer','Ongoing'),
+       request_year int,
        program_id int,
        facility_id int,
        lead_id int,
@@ -527,7 +589,9 @@ public class MediaRequest extends CommonInc{
        foreign key(location_id) references locations(id),
        foreign key(facility_id) references facilities(id)
        )engine=InnoDB;
-       
+
+       alter table media_requests add season enum('Fall/Winter','Winter/Spring','Summer','Ongoing') after id;
+       alter table media_requests add request_year int after season;       
      */
 }
 

@@ -675,6 +675,7 @@ public class Helper{
 	    if(one.hasLead()){
 		out.println("<tr><th>lead:</th><td>"+one.getLead()+"</td></tr>");
 	    }
+	    out.println("<tr><th>Year - Season</th><td>"+one.getRequestYear()+" - "+one.getSeason()+"</td></tr>");	    
 	    if(one.hasProgram()){
 		out.println("<tr><th>Program:</th><td><a href=\""+url+"Program?id="+one.getProgram_id()+"\">"+one.getProgram_id()+"</a></td></tr>");
 	    }
@@ -696,7 +697,8 @@ public class Helper{
 	    }
 	    if(one.hasNotes()){
 		out.println("<tr><th>Notes:</th><td>"+one.getNotes()+"</td></tr>");
-	    }	    
+	    }
+	    out.println("<tr><td colspan=\"2\" align=\"center\"> ------------- </td></tr>");	    
 	}
 	out.println("</table>");
     }								   
@@ -1813,7 +1815,7 @@ public class Helper{
     }
     public final static String writeMediaRequestCsv(MediaRequest one){
 	String line="";
-	line = "\""+one.getId()+"\",\""+one.getRequestDate()+"\",\""+one.getProgram_id()+"\",\""+one.getFacility_id()+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestType()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
+	line = "\""+one.getId()+"\",\""+one.getRequestYear()+"\",\""+one.getSeason()+"\",\""+one.getRequestDate()+"\",\""+one.getProgram_id()+"\",\""+one.getFacility_id()+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestType()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
 	return line;
     }
     public final static String writeMarketCsv(Market market, String type, String name, String lead){

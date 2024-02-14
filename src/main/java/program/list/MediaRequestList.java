@@ -48,7 +48,15 @@ public class MediaRequestList{
     public void setSeason(String val){
 	if(val != null)
 	    season = val;
+    }    
+    public void setDateFrom(String val){
+	if(val != null)
+	    date_from = val;
     }
+    public void setDateTo(String val){
+	if(val != null)
+	    date_to = val;
+    }    
     public void setLead_id(String val){
 	if(val != null)
 	    lead_id = val;
@@ -77,6 +85,7 @@ public class MediaRequestList{
     public List<MediaRequest> getRequests(){
 	return requests;
     }
+    /**
     void setDateRange(){
 	if(!year.isEmpty() && !season.isEmpty() && !season.equals("Ongoing")){
 	    if(season.startsWith("Summer")){
@@ -94,15 +103,16 @@ public class MediaRequestList{
 	    year="";
 	}
     }
+    */
     public String find(){
 		
 	String back = "";
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	Connection con = Helper.getConnection();
-	String qq = "select id,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),notes from media_requests ";	
+	String qq = "select id,season,request_year,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),notes from media_requests ";	
 	String qw = "", qf="";
-	setDateRange();
+	// setDateRange();
 	if(!id.isEmpty()){
 	    if(!qw.equals("")) qw += " and ";
 	    qw += " id = ? ";
@@ -115,19 +125,22 @@ public class MediaRequestList{
 	    if(!qw.isEmpty()) qw += " and ";
 	    qw += " facility_id = ? ";
 	}
+	if(!season.isEmpty()){
+	    if(!qw.isEmpty()) qw += " and ";
+	    qw += " season = ? ";	    
+	}
+	if(!year.isEmpty()){
+	    if(!qw.isEmpty()) qw += " and ";
+	    qw += " request_year = ? ";	    
+	}	
 	if(!date_from.isEmpty()){
 	    if(!qw.isEmpty()) qw += " and ";
-	    qw += " date >= ? ";	    
+	    qw += " request_date >= ? ";	    
 	}
 	if(!date_to.isEmpty()){
 	    if(!qw.isEmpty()) qw += " and ";
-	    qw += " date <= ? ";	    
+	    qw += " request_date <= ? ";	    
 	}	
-	if(!year.equals("")){
-	    if(!qw.equals("")) qw += " and ";
-	    qw += " year(date) = ? ";
-	}
-	    
 	if(con == null){
 	    back = "Could not connect to DB";
 	    addError(back);
@@ -137,6 +150,7 @@ public class MediaRequestList{
 	    if(!qw.isEmpty()){
 		qq += " where "+qw;
 	    }
+	    qq += " order by id desc ";
 	    if(debug){
 		logger.debug(qq);
 	    }
@@ -152,19 +166,22 @@ public class MediaRequestList{
 	    else if(!facility_id.equals("")){
 		pstmt.setString(j++, facility_id);
 	    }
-	    if(date_from.isEmpty()){
+	    if(!season.isEmpty()){
+		pstmt.setString(j++, season);
+	    }	    
+	    if(!year.isEmpty()){
+		pstmt.setString(j++, year);
+	    }
+	    if(!date_from.isEmpty()){
 		pstmt.setDate(j++,new java.sql.Date(dateFormat.parse(date_from).getTime()));
 	    }
 	    if(!date_to.equals("")){
 		pstmt.setDate(j++,new java.sql.Date(dateFormat.parse(date_to).getTime()));					
 	    }	    
-	    if(!year.equals("")){
-		pstmt.setString(j++, year);
-	    }
 	    	    	    	    
 	    rs = pstmt.executeQuery();
 	    while(rs.next()){
-		String str  = rs.getString(8);
+		String str  = rs.getString(10);
 		String [] arr = null;
 		if(str.indexOf(",") > -1){
 		    arr = str.split(",");
@@ -182,10 +199,12 @@ public class MediaRequestList{
 				     rs.getString(5),
 				     rs.getString(6),
 				     rs.getString(7),
-				     arr,
+				     rs.getString(8),
 				     rs.getString(9),
-				     rs.getString(10),
-				     rs.getString(11)
+				     arr,
+				     rs.getString(11),
+				     rs.getString(12),
+				     rs.getString(13)
 				     );
 		if(requests == null)
 		    requests = new ArrayList<>();

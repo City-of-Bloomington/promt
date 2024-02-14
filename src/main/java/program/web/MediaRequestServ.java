@@ -34,7 +34,7 @@ public class MediaRequestServ extends TopServlet{
 	out = res.getWriter();
 	Enumeration values = req.getParameterNames();
 	String name, value, action="", fromBrowse="";
-	String id ="";
+	String id ="", program_id="";
 		
 	//
 	// reinitialize to blank
@@ -70,6 +70,8 @@ public class MediaRequestServ extends TopServlet{
 		}
 	    }
 	    else if(name.equals("program_id")){
+		if(value != null)
+		program_id = value;
 		request.setProgram_id(value);
 	    }			
 	    else if(name.equals("lead_id")){
@@ -96,6 +98,12 @@ public class MediaRequestServ extends TopServlet{
 	    else if(name.equals("requestDate")){
 		request.setRequestDate(value);
 	    }
+	    else if(name.equals("season")){
+		request.setSeason(value);
+	    }
+	    else if(name.equals("requestYear")){
+		request.setRequestYear(value);
+	    }	    	    
 	    else if(name.equals("notes")){
 		request.setNotes(value);
 	    }	    
@@ -106,9 +114,6 @@ public class MediaRequestServ extends TopServlet{
 	    else if(name.equals("action")){
 		action = value;
 	    }
-	}
-	if(id.equals("")){ // for new records
-	    fromBrowse="y";
 	}
 	//
        	if(action.equals("Delete")){
@@ -166,6 +171,14 @@ public class MediaRequestServ extends TopServlet{
 	    if(!back.equals("")){
 		message += back;
 		success = false;
+	    }
+	}
+	if(id.isEmpty() && !program_id.isEmpty()){
+	    Program pp = new Program(debug, program_id);
+	    String back = pp.doSelect();
+	    if(back.isEmpty()){
+		request.setSeason(pp.getSeason());
+		request.setRequestYear(pp.getYear());
 	    }
 	}
 	if(true){
@@ -237,10 +250,13 @@ public class MediaRequestServ extends TopServlet{
 	if(!id.isEmpty()){
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	    out.println("<input type=\"hidden\" name=\"requestDate\" value=\""+request.getRequestDate()+"\" />");
+	    if(request.hasProgram()){
+		out.println("<input type=\"hidden\" name=\"season\" value=\""+request.getSeason()+"\" />");
+		out.println("<input type=\"hidden\" name=\"requestYear\" value=\""+request.getRequestYear()+"\" />");		
+	    }
 	}
 	out.println("<input type=\"hidden\" name=\"program_id\" value=\""+request.getProgram_id()+"\" />");
 	out.println("<input type=\"hidden\" name=\"facility_id\" value=\""+request.getFacility_id()+"\" />");	    
-	// Plan
 	out.println("<table width=\"90%\" border>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table>");
@@ -254,12 +270,28 @@ public class MediaRequestServ extends TopServlet{
 	    
 	    out.println("<a href=\""+url+"Program?id="+request.getProgram_id()+"\"> "+request.getProgram_id()+"</a>");
 	    out.println("</td></tr>");
+	    out.println("<tr><td align=\"left\"><b>Year - Season </b></td><td align=\"left\">");
+	    out.println(request.getRequestYear()+" - "+request.getSeason()+"</td></tr>");
 	}
 	if(request.hasFacility()){
 	    out.println("<tr><td align=\"left\"><b>Facility: </b></td><td align=\"left\">");
 	    
 	    out.println("<a href=\""+url+"Facility?id="+request.getFacility_id()+"\">"+request.getFacility_id()+"</a>");
 	    out.println("</td></tr>");
+	    out.println("<tr><td align=\"left\"><b>Season: </b></td><td align=\"left\"> <select name=\"season\">");
+	    out.println("<option value=\""+request.getSeason()+"\" selected>"+
+			request.getSeason()+"\n");
+	    out.println(Helper.allSeasons);
+	    out.println("</select><b> Year: </b>");
+	    out.println("<select name=\"requestYear\">");
+	    int years[] = Helper.getPrevYears();
+	    for(int yy:years){
+		String selected="";
+		if(request.getRequestYear().equals(""+yy))
+		    selected="selected=\"selected\"";
+		out.println("<option "+selected+" value=\""+yy+"\">"+yy+"</option>");
+	    }
+	    out.println("</select></td></tr>");	    
 	}	
 	out.println("<tr><td align=\"left\"><b>Lead: </b></td><td align=\"left\">");
 	out.println("<select name=\"lead_id\">");
