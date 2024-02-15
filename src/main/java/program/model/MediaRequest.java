@@ -187,7 +187,7 @@ public class MediaRequest extends CommonInc{
 	String str = "";
 	if(request_type != null){
 	    for(String one:request_type){
-		if(!one.isEmpty()) one += ", ";
+		if(!str.isEmpty()) str += ", ";
 		str += one;
 	    }
 	}

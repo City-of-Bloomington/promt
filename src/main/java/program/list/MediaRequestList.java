@@ -20,7 +20,7 @@ public class MediaRequestList{
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     //	
     String program_id="", id="", lead_id="", facility_id="";
-    String date_from = "", date_to = "";
+    String date_from = "", date_to = "", sortby = " id desc ";
     String year="", season="";
     List<MediaRequest> requests = null;
     List<String> errors = null;
@@ -61,6 +61,10 @@ public class MediaRequestList{
 	if(val != null)
 	    lead_id = val;
     }
+    public void setSortby(String val){
+	if(val != null)
+	    sortby = val;
+    }    
     public void setFacility_id(String val){
 	if(val != null)
 	    facility_id = val;
@@ -125,6 +129,10 @@ public class MediaRequestList{
 	    if(!qw.isEmpty()) qw += " and ";
 	    qw += " facility_id = ? ";
 	}
+	if(!lead_id.isEmpty()){
+	    if(!qw.isEmpty()) qw += " and ";
+	    qw += " lead_id = ? ";	    
+	}	
 	if(!season.isEmpty()){
 	    if(!qw.isEmpty()) qw += " and ";
 	    qw += " season = ? ";	    
@@ -150,7 +158,7 @@ public class MediaRequestList{
 	    if(!qw.isEmpty()){
 		qq += " where "+qw;
 	    }
-	    qq += " order by id desc ";
+	    qq += " order by "+sortby;
 	    if(debug){
 		logger.debug(qq);
 	    }
@@ -166,6 +174,9 @@ public class MediaRequestList{
 	    else if(!facility_id.equals("")){
 		pstmt.setString(j++, facility_id);
 	    }
+	    if(!lead_id.isEmpty()){
+		pstmt.setString(j++, lead_id);
+	    }	    	    
 	    if(!season.isEmpty()){
 		pstmt.setString(j++, season);
 	    }	    

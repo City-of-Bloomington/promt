@@ -60,7 +60,13 @@ public class MediaRequestReport extends TopServlet{
 	    }
 	    else if(name.equals("sortby")){
 		// mlist.setSortby(value);
+		mlist.setSortby(" id "); 
 	    }
+	    else if(name.equals("id")){  
+		if(value != null)
+		mlist.setProgram_id(value);
+	    }
+	    
 	    else if(name.equals("program_id")){  
 		if(value != null)
 		mlist.setProgram_id(value);
@@ -73,6 +79,15 @@ public class MediaRequestReport extends TopServlet{
 		if(value != null)
 		mlist.setLead_id(value);
 	    }
+	    else if(name.equals("category_id")){   
+		// not set
+	    }
+	    else if(name.equals("area_id")){   
+		// not set
+	    }
+	    else if(name.equals("nraccount")){   
+		// not set
+	    }	    	    
 	}
 	User user = null;
 	HttpSession	session = req.getSession(false);
@@ -130,9 +145,9 @@ public class MediaRequestReport extends TopServlet{
 	    //
 	    Helper.writeFirstPage(out,"Media Requests' Report", year, season);
 	    out.println("<br />");
-	    out.println(" Total Requests :"+ requests.size() + "<br />");
+	    String str = " Total: "+ requests.size();
 	    out.println("<hr width=\"75%\"/>");
-	    Helper.writeMediaRequests(out, "Media Requests", requests, url);
+	    Helper.writeMediaRequests(out, "Media Requests ("+str+")", requests, url);
 	    out.flush();
 	    out.println("</form>");
 	    out.println("</center></body>");
@@ -150,7 +165,7 @@ public class MediaRequestReport extends TopServlet{
 	    res.setHeader("Expires", "0");
 	    res.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
 	    res.setHeader("Pragma", "public");
-	    res.setHeader("Content-Disposition","inline; filename=\"marketing.csv\"");
+	    res.setHeader("Content-Disposition","inline; filename=\"media_requests.csv\"");
 	    out2 = res.getOutputStream();
 	    byte [] buf = all.getBytes();
 	    // setting the content type

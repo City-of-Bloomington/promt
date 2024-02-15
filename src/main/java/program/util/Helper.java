@@ -1815,7 +1815,7 @@ public class Helper{
     }
     public final static String writeMediaRequestCsv(MediaRequest one){
 	String line="";
-	line = "\""+one.getId()+"\",\""+one.getRequestYear()+"\",\""+one.getSeason()+"\",\""+one.getRequestDate()+"\",\""+one.getProgram_id()+"\",\""+one.getFacility_id()+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestType()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
+	line = "\""+one.getId()+"\",\""+one.getRequestYear()+"\",\""+one.getSeason()+"\",\""+one.getRequestDate()+"\",\""+one.getProgram_id()+"\",\""+one.getFacility_id()+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestTypeStr()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
 	return line;
     }
     public final static String writeMarketCsv(Market market, String type, String name, String lead){

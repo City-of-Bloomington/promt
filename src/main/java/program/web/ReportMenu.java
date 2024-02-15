@@ -318,7 +318,7 @@ public class ReportMenu extends TopServlet{
 	//
 	//
 	// form 6
-	out.println("<form name=mForm6 method=post action=\""+
+	out.println("<form name=\"mForm6\" method=\"post\" action=\""+
 		    url + "MarketReport\" "+
 		    "onsubmit=\"return validateForm(this)\">");
 	out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
@@ -346,6 +346,37 @@ public class ReportMenu extends TopServlet{
 	out.println("</td></tr>");
 	out.println("</table>");		
 	out.println("</form>");
+	//
+	// form 12
+	out.println("<form name=\"mForm12\" method=\"post\" action=\""+
+		    url + "MediaRequestReport\" "+
+		    "onsubmit=\"return validateForm(this)\">");
+	out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"season\" value=\"" + season + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"category_id\" value=\""+category_id + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"area_id\" value=\"" + area_id + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"lead_id\" value=\"" + lead_id + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"nraccount\" value=\"" + nraccount + 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
+		    "\" />");
+	out.println("<table width=\"75%\">");		
+	out.println("<tr><td align=\"left\"><li><b>Media Requests: </b> ");
+	out.println("<input type=\"checkbox\" name=\"csvOutput\" value=\"y\" />CSV Output");
+	out.println("</li></td>");
+	out.println("<td align=\"left\" width=\"50%\">");		
+	out.println("<input type=\"submit\" value=\"Click here\" />");
+	out.println("</td></tr>");
+	out.println("</table>");		
+	out.println("</form>");
+	
 	//
 	// form 7
 	out.println("<form name=\"mForm7\" method=\"post\" action=\""+
@@ -404,8 +435,8 @@ public class ReportMenu extends TopServlet{
 	out.println("</form>");
 	//
 	// form 8
-	out.println("<form name=mForm8 method=post action="+
-		    url + "ReportCodeNeed "+
+	out.println("<form name=\"mForm8\" method=\"post\" action=\""+
+		    url + "ReportCodeNeed\" "+
 		    "onSubmit=\"return validateForm(this)\">");
 	out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
 		    "\" />");
@@ -477,8 +508,8 @@ public class ReportMenu extends TopServlet{
 	if(accept){
 	    //
 	    // form 9
-	    out.println("<form name=mForm10 method=post action="+
-			url + "DeadLineReport "+
+	    out.println("<form name=\"mForm10\" method=\"post\" action=\""+
+			url + "DeadLineReport\" "+
 			"onSubmit=\"return validateForm(this)\">");
 	    out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
 			"\" />");
@@ -507,8 +538,8 @@ public class ReportMenu extends TopServlet{
 	    out.println("</form>");
 	}
 	// form 10
-	out.println("<form name=mForm2 method=post action="+
-		    url + "ReportVol "+
+	out.println("<form name=\"mForm2\" method=\"post\" action=\""+
+		    url + "ReportVol\" "+
 		    "onSubmit=\"return validateForm(this)\">");
 	out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
 		    "\" />");
@@ -535,8 +566,8 @@ public class ReportMenu extends TopServlet{
 	out.println("</form>");
 	//
 	// form 11
-	out.println("<form name=mForm11 method=post action="+
-		    url + "ReportInclusive "+
+	out.println("<form name=\"mForm11\" method=\"post\" action=\""+
+		    url + "ReportInclusive\" "+
 		    "onSubmit=\"return validateForm(this)\">");
 	out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
 		    "\" />");
@@ -564,8 +595,8 @@ public class ReportMenu extends TopServlet{
 	out.println("</table>");
 	out.println("</form>");
 	// form 5
-	out.println("<form name=mForm5 method=post action="+
-		    url + "FacilityTable "+
+	out.println("<form name=\"mForm5\" method=\"post\" action=\""+
+		    url + "FacilityTable\" "+
 		    "onSubmit=\"return validateForm(this)\">");
 	out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
 		    "\" />");
@@ -590,6 +621,7 @@ public class ReportMenu extends TopServlet{
 	out.println("</td></tr>");
 	out.println("</table>");
 	out.println("</form>");
+	
 	out.println("</fieldset><br />");
 	//
 	out.println("</center></body></html>");
