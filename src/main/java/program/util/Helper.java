@@ -677,10 +677,10 @@ public class Helper{
 	    }
 	    out.println("<tr><th>Year - Season</th><td>"+one.getRequestYear()+" - "+one.getSeason()+"</td></tr>");	    
 	    if(one.hasProgram()){
-		out.println("<tr><th>Program:</th><td><a href=\""+url+"Program?id="+one.getProgram_id()+"\">"+one.getProgram_id()+"</a></td></tr>");
+		out.println("<tr><th>Program:</th><td><a href=\""+url+"Program?id="+one.getProgram_id()+"\">"+one.getProgram().getTitle()+"</a></td></tr>");
 	    }
-	    if(one.hasFacility()){
-		out.println("<tr><th>Facility:</th><td>"+"<a href=\""+url+"Facility?id="+one.getFacility_id()+"\">"+one.getFacility_id()+"</a></td></tr>");
+	    else if(one.hasFacility()){
+		out.println("<tr><th>Facility:</th><td>"+"<a href=\""+url+"Facility?id="+one.getFacility_id()+"\">"+one.getFacility().getName()+"</a></td></tr>");
 	    }
 	    if(one.hasLocation()){
 		out.println("<tr><th>Location:</th><td>"+one.getLocation()+"</td></tr>");
@@ -692,6 +692,9 @@ public class Helper{
 		out.println("<tr><th>Content Specific:</th><td>"+one.getContentSpecific()+"</td></tr>");
 	    }
 	    out.println("<tr><th>Meda Requested:</th><td>"+one.getRequestTypeStr()+"</td></tr>");
+	    if(one.hasOrientation()){
+		out.println("<tr><th>Orientation:</th><td>"+one.getOrientation()+"</td></tr>");
+	    }
 	    if(one.hasOtherType()){
 		out.println("<tr><th>Other Meda Type:</th><td>"+one.getOtherType()+"</td></tr>");
 	    }
@@ -1793,6 +1796,12 @@ public class Helper{
 	    out.println(market.getSpInstructions());
 	    out.println("</td></tr>");
 	}
+	if(!market.getSignBoard().isEmpty()){
+	    out.println("<tr><td align=\"right\">");
+	    out.println("<b>Digital Sign Board is Needed </b></td><td>");
+	    out.println("<tr><td align=\"right\">");
+	    out.println("<b>Needed Date </b>"+market.getSignBoardDate()+"</td><td>");	    
+	}
 	out.println("</table>");
 
     }
@@ -1815,7 +1824,15 @@ public class Helper{
     }
     public final static String writeMediaRequestCsv(MediaRequest one){
 	String line="";
-	line = "\""+one.getId()+"\",\""+one.getRequestYear()+"\",\""+one.getSeason()+"\",\""+one.getRequestDate()+"\",\""+one.getProgram_id()+"\",\""+one.getFacility_id()+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestTypeStr()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
+	String pr_title = "", fc_name = "";
+	if(one.getProgram() != null){
+	    pr_title = one.getProgram().getTitle();
+	}
+	if(one.getFacility() != null){
+	    fc_name = one.getFacility().getName();
+	}
+	
+	line = "\""+one.getId()+"\",\""+one.getRequestYear()+"\",\""+one.getSeason()+"\",\""+one.getRequestDate()+"\",\""+pr_title+"\",\""+fc_name+"\",\""+one.getLead()+"\",\""+one.getLocationName()+"\",\""+one.getLocationDescription()+"\",\""+one.getContentSpecific()+"\",\""+one.getRequestTypeStr()+"\",\""+one.getOrientation()+"\",\""+one.getOtherType()+"\",\""+one.getNotes()+"\"\n";
 	return line;
     }
     public final static String writeMarketCsv(Market market, String type, String name, String lead){
@@ -2362,6 +2379,8 @@ public class Helper{
 	if(out != null && !url.isEmpty()){
 	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery-3.6.1.min.js\"></script>");
 	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery-ui.min-1.13.2.js\"></script>");
+	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery.easing.1.3.js\"></script>");
+	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery.jBreadCrumb.1.1.js\"></script>");	    
 	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jqAreYouSure.js\"></script>");
 	    String dateStr = "{ nextText: \"Next\",prevText:\"Prev\", buttonText: \"Pick Date\", showOn: \"both\", navigationAsDateFormat: true, buttonImage: \""+url+"js/calendar.gif\"}";
 	    out.println("<script>");

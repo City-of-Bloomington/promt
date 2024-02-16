@@ -157,7 +157,7 @@ public class MediaRequestReport extends TopServlet{
 	}
 	else{ // csv format
 	    String all = "";
-	    String line = "Id, Year, Season, Date, Program ID, Facility ID, Lead, Location, Location  Specific, Content Specific, Media Type, Other Media Type, Notes\n";
+	    String line = "Id, Year, Season, Date, Program ID, Facility ID, Lead, Location, Location Specific, Content Specific, Media Type, Orientation, Other Media Type, Notes\n";
 	    all += line;
 	    for(MediaRequest one:requests){
 		all += Helper.writeMediaRequestCsv(one);

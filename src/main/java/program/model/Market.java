@@ -19,6 +19,7 @@ public class Market extends CommonInc{
 	prog_id="",facility_id="",general_id="",
 	year = "", season="", // for facility
 	other_ad="",class_list="",other_market="",
+	sign_board="", sign_board_date="",
 	spInstructions="";
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");	
     List<MarketAd> ads = null;
@@ -57,7 +58,9 @@ public class Market extends CommonInc{
 		  String val2,
 		  String val3,
 		  String val4,
-		  String val5
+		  String val5,
+		  String val6,
+		  String val7
 		  ){
 	//
 	// initialize
@@ -68,6 +71,8 @@ public class Market extends CommonInc{
 	setClass_list(val3);
 	setOther_market(val4);
 	setSpInstructions(val5);
+	setSignBoard(val6);
+	setSignBoardDate(val7);
     }
     public Market(boolean deb,
 		  String val,
@@ -79,7 +84,9 @@ public class Market extends CommonInc{
 		  String val7,
 		  String val8,
 		  String val9,
-		  String val10
+		  String val10,
+		  String val11,
+		  String val12
 		  ){
 	//
 	// initialize
@@ -90,11 +97,13 @@ public class Market extends CommonInc{
 	setClass_list(val3);
 	setOther_market(val4);
 	setSpInstructions(val5);
-	setProg_id(val6);
-	setFacility_id(val7);
-	setGeneral_id(val8);
-	setYear(val9);
-	setSeason(val10);
+	setSignBoard(val6);
+	setSignBoardDate(val7);	
+	setProg_id(val8);
+	setFacility_id(val9);
+	setGeneral_id(val10);
+	setYear(val11);
+	setSeason(val12);
 	selectionDone = true;
     }	
     //
@@ -135,7 +144,13 @@ public class Market extends CommonInc{
     }
     public String getSeason(){
 	return season;
-    }		
+    }
+    public String getSignBoard(){
+	return sign_board;
+    }
+    public String getSignBoardDate(){
+	return sign_board_date;
+    }    
     //
     // setters
     //
@@ -187,6 +202,16 @@ public class Market extends CommonInc{
 	if(val != null)
 	    spInstructions = val.trim();
     }
+    public void setSignBoard(String val){
+	if(val != null && !val.equals("")){
+	    sign_board = val;
+	}
+    }
+    public void setSignBoardDate(String val){
+	if(val != null && !val.equals("")){
+	    sign_board_date = val;
+	}
+    }    
     public void addAds(MarketAd[] vals){
 	addAds = vals;
     }
@@ -375,7 +400,7 @@ public class Market extends CommonInc{
 	    }
 	}
 	String qq = "insert into marketing "+
-	    "values(0,?,?,?,?)";						
+	    "values(0,?,?,?,?,?,?)";						
 	try{
 	    pstmt = con.prepareStatement(qq);			
 	    setParams(pstmt);
@@ -482,7 +507,7 @@ public class Market extends CommonInc{
 	}
 	String qq = "update marketing set "+
 	    "other_ad=?,class_list=?,other_market=?,"+
-	    "spInstructions=? "+
+	    "spInstructions=?,sign_board=?,sign_board_date=? "+
 	    "where id = ? ";
 	if(debug)
 	    logger.debug(qq);
@@ -491,7 +516,7 @@ public class Market extends CommonInc{
 	    pstmt = con.prepareStatement(qq);
 	    //
 	    back += setParams(pstmt);
-	    pstmt.setString(5, id);
+	    pstmt.setString(7, id);
 	    pstmt.executeUpdate();
 	    message="Updated Successfully";
 	}
@@ -528,6 +553,14 @@ public class Market extends CommonInc{
 		pstmt.setNull(jj++,Types.VARCHAR);
 	    else
 		pstmt.setString(jj++,spInstructions);
+	    if(sign_board.equals(""))
+		pstmt.setNull(jj++,Types.CHAR);
+	    else
+		pstmt.setString(jj++,"y");
+	    if(sign_board_date.equals(""))
+		pstmt.setNull(jj++,Types.DATE);
+	    else
+		pstmt.setDate(jj++,new java.sql.Date(dateFormat.parse(sign_board_date).getTime()));
 	}
 	catch(Exception ex){
 	    back += ex;
@@ -604,6 +637,7 @@ public class Market extends CommonInc{
 		
 	String qq = "select "+
 	    " m.other_ad,m.class_list,m.other_market,m.spInstructions, "+
+	    " m.sign_board,m.sign_board_date, "+
 	    " mp.prog_id,mf.facility_id,mf.year,mf.season,"+
 	    " g.general_id,g.year,g.season "+
 	    " from marketing m "+
@@ -633,13 +667,17 @@ public class Market extends CommonInc{
 		if(str != null) other_market = str;
 		str = rs.getString(4);
 		if(str != null) spInstructions = str;
-		setProg_id(rs.getString(5));
-		setFacility_id(rs.getString(6));
-		setYear(rs.getString(7));
-		setSeason(rs.getString(8));
-		setGeneral_id(rs.getString(9));
-		setYear(rs.getString(10));
-		setSeason(rs.getString(11));
+		str = rs.getString(5);
+		if(str != null) sign_board = str;
+		str = rs.getString(6);
+		if(str != null) sign_board_date = str;
+		setProg_id(rs.getString(7));
+		setFacility_id(rs.getString(8));
+		setYear(rs.getString(9));
+		setSeason(rs.getString(10));
+		setGeneral_id(rs.getString(11));
+		setYear(rs.getString(12));
+		setSeason(rs.getString(13));
 		message = "";
 		selectionDone = true;
 	    }

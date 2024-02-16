@@ -3,6 +3,7 @@ package program.model;
 import java.util.*;
 import java.sql.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.sql.*;
@@ -14,16 +15,20 @@ import program.list.*;
 public class MediaRequest extends CommonInc{
 
     boolean debug = false;
-    static Logger logger = LogManager.getLogger(MediaRequest.class);    
+    static Logger logger = LogManager.getLogger(MediaRequest.class);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     String id="", season="", request_year="",
 	program_id="", lead_id="", location_id="",
-	facility_id="", 
+	facility_id="",  
 	location_description="", content_specific="", notes="";
-	; // request_tyes: Photography, Videography, Other
+    String orientation = ""; // Vertical, Horizental, Both
+    // request_tyes: Photography, Videography, Other
     String request_type[] = null;
     String other_type="", request_date="";
     Lead lead = null;
     Location location = null;
+    Program program = null;
+    Facility facility = null;
     public MediaRequest(boolean val){
 	debug = val;
     }
@@ -44,9 +49,10 @@ public class MediaRequest extends CommonInc{
 			String[] val11,
 			String val12,
 			String val13,
-			String val14
+			String val14,
+			String val15
 	    ){
-	setVals(val,val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13, val14);
+	setVals(val,val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13, val14, val15);
 
     }
     private void
@@ -64,7 +70,8 @@ public class MediaRequest extends CommonInc{
 		String[] val11,
 		String val12,
 		String val13,
-		String val14
+		String val14,
+		String val15
 		){
 	debug = val;
 	setId(val2);
@@ -79,7 +86,8 @@ public class MediaRequest extends CommonInc{
 	setRequestType(val11);
 	setOtherType(val12);
 	setRequestDate(val13);
-	setNotes(val14);
+	setOrientation(val14);	
+	setNotes(val15);
     }	
 
     //
@@ -149,6 +157,10 @@ public class MediaRequest extends CommonInc{
     public void setNotes(String val){
 	if(val != null)
 	    notes = val;
+    }
+    public void setOrientation(String val){
+	if(val != null)
+	    orientation = val;
     }    
     //
     // getters
@@ -201,6 +213,9 @@ public class MediaRequest extends CommonInc{
     }
     public String getNotes(){
 	return notes;
+    }
+    public String getOrientation(){
+	return orientation;
     }    
     public Lead getLead(){
 	if(lead == null && !lead_id.isEmpty()){
@@ -221,6 +236,26 @@ public class MediaRequest extends CommonInc{
 	    }
 	}
 	return location;
+    }
+    public Program getProgram(){
+	if(program == null){
+	    Program pp = new Program(debug, program_id);
+	    String back = pp.doSelect();
+	    if(back.isEmpty()){
+		program = pp;
+	    }
+	}
+	return program;
+    }
+    public Facility getFacility(){
+	if(facility == null){
+	    Facility ff = new Facility(debug, facility_id);
+	    String back = ff.doSelect();
+	    if(back.isEmpty()){
+		facility = ff;
+	    }
+	}
+	return facility;
     }
     public String getLocationName(){
 	getLocation();
@@ -251,7 +286,10 @@ public class MediaRequest extends CommonInc{
     }
     public boolean hasNotes(){
 	return !notes.isEmpty();
-    }    
+    }
+    public boolean hasOrientation(){
+	return !orientation.isEmpty();
+    }        
     public boolean equals(Object gg){
 	boolean match = false;
 	if (gg != null && gg instanceof MediaRequest){
@@ -307,7 +345,7 @@ public class MediaRequest extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
-	String qq = "select id,season,request_year,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m%d/%Y'),notes "+
+	String qq = "select id,season,request_year,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),orientation,notes "+
 	    " from media_requests where id=?";
 	if(debug){
 	    logger.debug(qq);
@@ -347,7 +385,8 @@ public class MediaRequest extends CommonInc{
 			arr,			
 			rs.getString(11),
 			rs.getString(12),
-			rs.getString(13)
+			rs.getString(13),
+			rs.getString(14)
 			);
 	    }
 	    else{
@@ -370,7 +409,7 @@ public class MediaRequest extends CommonInc{
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
-	String qq = "update media_requests set season=?,request_year=?,program_id=?,facility_id=?,lead_id=?,location_id=?,location_description=?,content_specific=?,request_type=?,other_type=?,notes=? "+
+	String qq = "update media_requests set season=?,request_year=?,program_id=?,facility_id=?,lead_id=?,location_id=?,location_description=?,content_specific=?,request_type=?,other_type=?,request_date=?,orientation=?,notes=? "+
 	    " where id=?";
 	if(debug){
 	    logger.debug(qq);
@@ -389,7 +428,9 @@ public class MediaRequest extends CommonInc{
 	    back = "Request year is required";
 	    addError(back);
 	    return back;
-	}	
+	}
+	if(request_date.isEmpty())
+	    request_date = Helper.getToday2();	
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
@@ -441,11 +482,16 @@ public class MediaRequest extends CommonInc{
 		pstmt.setString(10,null);
 	    else
 		pstmt.setString(10,other_type);
-	    if(notes.equals(""))
-		pstmt.setString(11,null);
+	    pstmt.setDate(11,new java.sql.Date(dateFormat.parse(request_date).getTime()));	    
+	    if(orientation.equals(""))
+		pstmt.setString(12,null);
 	    else
-		pstmt.setString(11,notes);	    
-	    pstmt.setString(12,id);
+		pstmt.setString(12,orientation);
+	    if(notes.equals(""))
+		pstmt.setString(13,null);
+	    else
+		pstmt.setString(13,notes);	    
+	    pstmt.setString(14,id);
 	    pstmt.executeUpdate();
 	}
 	catch(Exception ex){
@@ -463,8 +509,9 @@ public class MediaRequest extends CommonInc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;	
 	String back = "";
-	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,?, ?,now(),?)";
-	request_date = Helper.getToday2();
+	String qq = "insert into media_requests values (0,?,?,?,?, ?,?,?,?,?, ?,?,?,?)";
+	if(request_date.isEmpty())
+	    request_date = Helper.getToday2();
 	if(request_year.isEmpty() || season.isEmpty()){ 
 	    if(!program_id.isEmpty()){
 		Program pp = new Program(debug, program_id);
@@ -544,10 +591,15 @@ public class MediaRequest extends CommonInc{
 		pstmt.setString(10,null);
 	    else
 		pstmt.setString(10,other_type);
-	    if(notes.equals(""))
-		pstmt.setString(11,null);
+	    pstmt.setDate(11,new java.sql.Date(dateFormat.parse(request_date).getTime()));
+	    if(orientation.equals(""))
+		pstmt.setString(12,null);
 	    else
-		pstmt.setString(11,notes);	    
+		pstmt.setString(12,orientation);	    
+	    if(notes.equals(""))
+		pstmt.setString(13,null);
+	    else
+		pstmt.setString(13,notes);	    
 	    pstmt.executeUpdate();
 	    qq = "select LAST_INSERT_ID() ";
 	    if(debug){
@@ -583,6 +635,7 @@ public class MediaRequest extends CommonInc{
        request_type varchar(1024),
        other_type varchar(512),
        request_date date,
+       orientation enum('Vertical','Horizental','Both'),
        notes varchar(1024),
        foreign key(program_id) references programs(id),
        foreign key(lead_id) references leads(id),
@@ -591,7 +644,13 @@ public class MediaRequest extends CommonInc{
        )engine=InnoDB;
 
        alter table media_requests add season enum('Fall/Winter','Winter/Spring','Summer','Ongoing') after id;
-       alter table media_requests add request_year int after season;       
+       alter table media_requests add request_year int after season;
+       alter table media_requests add orientation enum('Vertical','Horizental','Both') after request_date;
+
+       // marketing
+       alter table marketing add sign_board char(1);
+       alter table marketing add sign_board_date date;
+       
      */
 }
 

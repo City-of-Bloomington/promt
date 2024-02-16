@@ -114,7 +114,7 @@ public class MediaRequestList{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	Connection con = Helper.getConnection();
-	String qq = "select id,season,request_year,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),notes from media_requests ";	
+	String qq = "select id,season,request_year,program_id,facility_id,lead_id,location_id,location_description,content_specific,request_type,other_type,date_format(request_date,'%m/%d/%Y'),orientation,notes from media_requests ";	
 	String qw = "", qf="";
 	// setDateRange();
 	if(!id.isEmpty()){
@@ -215,7 +215,8 @@ public class MediaRequestList{
 				     arr,
 				     rs.getString(11),
 				     rs.getString(12),
-				     rs.getString(13)
+				     rs.getString(13),
+				     rs.getString(14)
 				     );
 		if(requests == null)
 		    requests = new ArrayList<>();

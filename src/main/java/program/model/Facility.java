@@ -200,6 +200,16 @@ public class Facility extends CommonInc{
 	}
 	return markets;
     }
+    public Market findLatestMarket(){
+	MarketList ml = new MarketList(debug, null, id, null);
+	String back = ml.findLatestForFacility();
+	if(back.isEmpty()){
+	    if(ml.size() > 0){
+		market = ml.get(0);
+	    }
+	}
+	return market;
+    }
     public boolean equals(Object  gg){
 	boolean match = false;
 	if (gg != null && gg instanceof Location){

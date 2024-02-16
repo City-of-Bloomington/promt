@@ -129,6 +129,71 @@ public class MarketList extends ArrayList<Market>{
 	    back += findMarketForPrograms();
 	return back;
     }
+    public String findLatestForFacility(){
+	String back = "";
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	Connection con = Helper.getConnection();
+	if(con == null){
+	    back = "Could not connect to DB";
+	    addError(back);
+	    return back;
+	}
+	String qq = "select m.id, "+
+	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
+	    " m.sign_board,m.sign_board_date, "+
+	    " null,mf.facility_id,null,mf.year,mf.season ";
+	String qw = "", qf = "from marketing m ";		
+	qf += " join marketing_facilities mf on m.id=mf.market_id ";
+	qf += " left join market_ad_details ad on m.id = ad.market_id ";
+	qf += " left join market_type_details t on m.id = t.market_id ";
+	qw += " mf.facility_id=?";
+	sortBy = " m.id DESC limit 1"; // last first
+	if(!qw.equals("")){
+	    qw = " where "+qw;
+	}
+	qq += qf+qw;
+	if(!sortBy.equals("")){
+	    qq += " order by "+sortBy;
+	}
+	if(debug){
+	    logger.debug(qq);
+	}
+	try{
+	    pstmt = con.prepareStatement(qq);
+	    pstmt.setString(1, facility_id);
+	    rs = pstmt.executeQuery();
+	    if(rs.next()){
+		Market one =
+		    new Market(debug,
+			       rs.getString(1),
+			       rs.getString(2),
+			       rs.getString(3),
+			       rs.getString(4),
+			       rs.getString(5),
+			       rs.getString(6),
+			       rs.getString(7),
+			       rs.getString(8),
+			       rs.getString(9),
+			       rs.getString(10),
+			       rs.getString(11),
+			       rs.getString(12)
+			       );
+		if(!this.contains(one)){
+		    this.add(one);
+		}
+	    }
+	}
+	catch(Exception ex){
+	    back += ex+" : "+qq;
+	    logger.error(back);
+	    addError(back);
+	}
+	finally{
+	    Helper.databaseDisconnect(con, pstmt, rs);
+	}
+	return back;
+    }
     //
     public String findMarketForPrograms(){
 		
@@ -142,7 +207,9 @@ public class MarketList extends ArrayList<Market>{
 	    return back;
 	}
 	String qq = "select m.id, "+
-	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,mp.prog_id,null,null,null,null ";
+	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
+	    " m.sign_board,m.sign_board_date, "+
+	    " mp.prog_id,null,null,null,null ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_programs mp on m.id=mp.market_id ";
 	qf += " join programs p on p.id=mp.prog_id ";
@@ -251,7 +318,9 @@ public class MarketList extends ArrayList<Market>{
 			       rs.getString(7),
 			       rs.getString(8),
 			       rs.getString(9),
-			       rs.getString(10)
+			       rs.getString(10),
+			       rs.getString(11),
+			       rs.getString(12)
 			       );
 		if(!this.contains(one)){
 		    this.add(one);
@@ -280,7 +349,9 @@ public class MarketList extends ArrayList<Market>{
 	    return back;
 	}
 	String qq = "select m.id, "+
-	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,null,null,mp.general_id,gl.year,gl.season ";
+	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
+	    " m.sign_board, m.sign_board_date, "+
+	    " null,null,mp.general_id,gl.year,gl.season ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_generals mp on m.id=mp.market_id ";
 	qf += " join general_listings gl on gl.id=mp.general_id ";		
@@ -385,7 +456,9 @@ public class MarketList extends ArrayList<Market>{
 			       rs.getString(7),
 			       rs.getString(8),
 			       rs.getString(9),
-			       rs.getString(10)
+			       rs.getString(10),
+			       rs.getString(11),
+			       rs.getString(12)
 			       );
 		if(!this.contains(one)){
 		    this.add(one);
@@ -425,7 +498,9 @@ public class MarketList extends ArrayList<Market>{
 	    }
 	}		
 	String qq = "select m.id, "+
-	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,null,mf.facility_id,null,mf.year,mf.season ";
+	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
+	    " m.sign_board,m.sign_board_date, "+
+	    " null,mf.facility_id,null,mf.year,mf.season ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_facilities mf on m.id=mf.market_id ";
 	qf += " left join market_ad_details ad on m.id = ad.market_id ";
@@ -527,7 +602,9 @@ public class MarketList extends ArrayList<Market>{
 			       rs.getString(7),
 			       rs.getString(8),
 			       rs.getString(9),
-			       rs.getString(10)
+			       rs.getString(10),
+			       rs.getString(11),
+			       rs.getString(12)
 			       );
 		if(!this.contains(one)){
 		    this.add(one);

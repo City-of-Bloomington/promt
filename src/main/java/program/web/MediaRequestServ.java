@@ -34,7 +34,7 @@ public class MediaRequestServ extends TopServlet{
 	out = res.getWriter();
 	Enumeration values = req.getParameterNames();
 	String name, value, action="", fromBrowse="";
-	String id ="", program_id="";
+	String id ="", program_id="", facility_id="";
 		
 	//
 	// reinitialize to blank
@@ -75,10 +75,14 @@ public class MediaRequestServ extends TopServlet{
 		request.setProgram_id(value);
 	    }			
 	    else if(name.equals("lead_id")){
-		request.setLead_id(value);
+		if(value != null)
+		    request.setLead_id(value);
 	    }
 	    else if(name.equals("facility_id")){
-		request.setFacility_id(value);
+		if(value != null){
+		    request.setFacility_id(value);
+		    facility_id = value;
+		}
 	    }	    
 	    else if(name.equals("location_id")){
 		request.setLocation_id(value);
@@ -103,7 +107,10 @@ public class MediaRequestServ extends TopServlet{
 	    }
 	    else if(name.equals("requestYear")){
 		request.setRequestYear(value);
-	    }	    	    
+	    }
+	    else if(name.equals("orientation")){
+		request.setOrientation(value);
+	    }	 	    
 	    else if(name.equals("notes")){
 		request.setNotes(value);
 	    }	    
@@ -173,12 +180,27 @@ public class MediaRequestServ extends TopServlet{
 		success = false;
 	    }
 	}
-	if(id.isEmpty() && !program_id.isEmpty()){
-	    Program pp = new Program(debug, program_id);
-	    String back = pp.doSelect();
-	    if(back.isEmpty()){
-		request.setSeason(pp.getSeason());
-		request.setRequestYear(pp.getYear());
+	if(id.isEmpty()){
+	    if(request.hasProgram()){
+		Program pp = request.getProgram();
+		if(pp != null){
+		    request.setSeason(pp.getSeason());
+		    request.setRequestYear(pp.getYear());
+		    request.setLead_id(pp.getLead_id());
+		    request.setLocation_id(pp.getLocation_id());
+		    request.setRequestDate(pp.getStartDate());
+		}
+	    }
+	    else if(request.hasFacility()){
+		Facility ff = request.getFacility();
+		if(ff != null){
+		    request.setLead_id(ff.getLead_id());		    
+		    Market market = ff.findLatestMarket();
+		    if(market != null){
+			request.setSeason(market.getSeason());
+			request.setRequestYear(market.getYear());
+		    }
+		}
 	    }
 	}
 	if(true){
@@ -249,7 +271,6 @@ public class MediaRequestServ extends TopServlet{
 	}		
 	if(!id.isEmpty()){
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
-	    out.println("<input type=\"hidden\" name=\"requestDate\" value=\""+request.getRequestDate()+"\" />");
 	    if(request.hasProgram()){
 		out.println("<input type=\"hidden\" name=\"season\" value=\""+request.getSeason()+"\" />");
 		out.println("<input type=\"hidden\" name=\"requestYear\" value=\""+request.getRequestYear()+"\" />");		
@@ -260,15 +281,13 @@ public class MediaRequestServ extends TopServlet{
 	out.println("<table width=\"90%\" border>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table>");
-	if(!id.isEmpty()){
-	    out.println("<tr><td align=\"left\" width=\"30%\"><b>Request Date: </b></td><td align=\"left\">");
-	    out.println(request.getRequestDate());
-	    out.println("</td></tr>");
-	}
+	out.println("<tr><td align=\"left\" width=\"30%\"><b>Request Date: </b></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"requestDate\" value=\""+request.getRequestDate()+"\" size=\"10\" maxlength=\"10\' class=\"date\" id=\"requestDate\" />");
+	out.println("</td></tr>");
 	if(request.hasProgram()){
 	    out.println("<tr><td align=\"left\"><b>Program: </b></td><td align=\"left\">");
 	    
-	    out.println("<a href=\""+url+"Program?id="+request.getProgram_id()+"\"> "+request.getProgram_id()+"</a>");
+	    out.println("<a href=\""+url+"Program?id="+request.getProgram_id()+"\"> "+request.getProgram().getTitle()+"</a>");
 	    out.println("</td></tr>");
 	    out.println("<tr><td align=\"left\"><b>Year - Season </b></td><td align=\"left\">");
 	    out.println(request.getRequestYear()+" - "+request.getSeason()+"</td></tr>");
@@ -276,7 +295,7 @@ public class MediaRequestServ extends TopServlet{
 	if(request.hasFacility()){
 	    out.println("<tr><td align=\"left\"><b>Facility: </b></td><td align=\"left\">");
 	    
-	    out.println("<a href=\""+url+"Facility?id="+request.getFacility_id()+"\">"+request.getFacility_id()+"</a>");
+	    out.println("<a href=\""+url+"Facility?id="+request.getFacility_id()+"\">"+request.getFacility().getName()+"</a>");
 	    out.println("</td></tr>");
 	    out.println("<tr><td align=\"left\"><b>Season: </b></td><td align=\"left\"> <select name=\"season\">");
 	    out.println("<option value=\""+request.getSeason()+"\" selected>"+
@@ -339,12 +358,23 @@ public class MediaRequestServ extends TopServlet{
 	if(request.getRequestType() != null){
 	    typeSet = Set.of(request.getRequestType());
 	}
+
 	for(String type:request_types){
 	    String checked = "";
 	    if(typeSet != null && typeSet.contains(type)){
 		checked="checked=\"checked\"";
 	    }
 	    out.println("<input type=\"checkbox\" name=\"requestType\" id=\""+type+"\" value=\""+type+"\" "+checked+" /><label for=\""+type+"\" >"+type+"</label>");
+	}
+	out.println("</td></tr>");
+	out.println("<tr><td align=\"left\"><b>What orientation is needed </b> </td><td align=\"left\">");			
+	String orientation_types[] = {"Vertical","Horizental","Both"};
+	for(String str:orientation_types){
+	    String checked = "";
+	    if(str.equals(request.getOrientation())){
+		checked = "checked=\"checked\"";
+	    }
+	    out.println("<input type=\"radio\" name=\"orientation\" value=\""+str+"\" "+checked+" /> "+str);
 	}
 	out.println("</td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Other Media Type </b></td></tr>");
@@ -399,6 +429,10 @@ public class MediaRequestServ extends TopServlet{
 	    out.println("<a href=javascript:window.close();>Close</a>");
 	}
 	Helper.writeWebFooter(out, url);
+	String dateStr = "{ nextText: \"Next\",prevText:\"Prev\", buttonText: \"Pick Date\", showOn: \"both\", navigationAsDateFormat: true, buttonImage: \""+url+"js/calendar.gif\"}";
+	out.println("<script>");
+	out.println("  $( \"#requestDate\" ).datepicker("+dateStr+"); ");
+	out.println("</script>");	
 	//
 	out.print("</center></body></html>");
 	out.close();

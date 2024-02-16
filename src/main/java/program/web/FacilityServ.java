@@ -438,16 +438,31 @@ public class FacilityServ extends TopServlet{
 	    if(lastMarket != null)
 		Helper.writeMarket(out, lastMarket, url);
 	}
+	out.println("<div id=\"accordion\">");
+	
 	if(fc.hasFiles()){
+	    out.println("<h3>Uploaded Files </h3>");
+	    out.println("<div>");
 	    Helper.printFiles(out, url, fc.getFiles());
+	    out.println("</div>");
         }
 	if(fc.hasMediaRequests()){
+	    out.println("<h3>Media Requests </h3>");
+	    out.println("<div>");	    
 	    Helper.writeMediaRequests(out,"Media Requests", fc.getMediaRequests(), url);
+	    out.println("</div>");
 	}	
 	//
 	if(fc.hasHistory()){
-	    Helper.writeHistory(out, "Facility Logs", fc.getHistory()); 
+	    out.println("<h3>Update Logs </h3>");
+	    out.println("<div>");
+	    Helper.writeHistory(out, " ", fc.getHistory());
+	    out.println("</div>");
 	}
+	out.println("</div>");
+	out.println("<script>");
+	out.println("  $( \"#accordion\" ).accordion({collapsible:true, autoHeight: false,animated : false, icons:icons}); ");
+	out.println("</script>");	
 	Helper.writeWebFooter(out, url);
 	out.println("<br />");
 	out.println("<br />");
