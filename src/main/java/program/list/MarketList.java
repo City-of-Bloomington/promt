@@ -141,7 +141,8 @@ public class MarketList extends ArrayList<Market>{
 	}
 	String qq = "select m.id, "+
 	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
-	    " m.sign_board,m.sign_board_date, "+
+	    " m.sign_board, "+
+	    " date_format(m.sign_board_date,'%m/%d/%Y'), "+ // 44
 	    " null,mf.facility_id,null,mf.year,mf.season ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_facilities mf on m.id=mf.market_id ";
@@ -208,7 +209,8 @@ public class MarketList extends ArrayList<Market>{
 	}
 	String qq = "select m.id, "+
 	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
-	    " m.sign_board,m.sign_board_date, "+
+	    " m.sign_board,"+
+	    " date_format(m.sign_board_date,'%m/%d/%Y'), "+
 	    " mp.prog_id,null,null,null,null ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_programs mp on m.id=mp.market_id ";
@@ -350,7 +352,8 @@ public class MarketList extends ArrayList<Market>{
 	}
 	String qq = "select m.id, "+
 	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
-	    " m.sign_board, m.sign_board_date, "+
+	    " m.sign_board, "+
+	    " date_format(m.sign_board_date,'%m/%d/%Y'), "+ // 44
 	    " null,null,mp.general_id,gl.year,gl.season ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_generals mp on m.id=mp.market_id ";
@@ -499,7 +502,8 @@ public class MarketList extends ArrayList<Market>{
 	}		
 	String qq = "select m.id, "+
 	    " m.other_ad,m.class_list,m.other_market,m.spInstructions,"+
-	    " m.sign_board,m.sign_board_date, "+
+	    " m.sign_board, "+
+	    " date_format(m.sign_board_date,'%m/%d/%Y'), "+ // 44
 	    " null,mf.facility_id,null,mf.year,mf.season ";
 	String qw = "", qf = "from marketing m ";		
 	qf += " join marketing_facilities mf on m.id=mf.market_id ";

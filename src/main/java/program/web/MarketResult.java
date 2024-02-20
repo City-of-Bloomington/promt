@@ -150,10 +150,10 @@ public class MarketResult extends TopServlet{
 		    for(MarketAd one:ads){
 			if(!all.equals("")) all += ", ";
 			all += one;
-			if(!one.getDue_date().equals("")){
+			if(!one.getDue_date().isEmpty()){
 			    all += " Due:"+one.getDue_date();
 			}
-			if(!one.getDetails().equals("")){
+			if(!one.getDetails().isEmpty()){
 			    all += " Details: "+one.getDetails();
 			}
 		    }
@@ -164,7 +164,7 @@ public class MarketResult extends TopServlet{
 		    out.println("<tr><td align=\"right\"><b>Announcements</b></td>");
 		    String all = "";
 		    for(Type one:announces){
-			if(!all.equals("")) all += ", ";
+			if(!all.isEmpty()) all += ", ";
 			all += one;
 		    }
 		    out.println("<td align=\"left\">"+all+"</td></tr>");
@@ -174,25 +174,31 @@ public class MarketResult extends TopServlet{
 		    out.println("<tr><td align=\"right\" valign=\"top\"><b>Marketing Pieces</b></td>");
 		    String all = "";
 		    for(MarketItem one:items){
-			if(!all.equals("")) all += "<br />";
+			if(!all.isEmpty()) all += "<br />";
 			all += one.getType()+" ("+one.getQuantity()+")";
-			if(!one.getDue_date().equals("")){
+			if(!one.getDue_date().isEmpty()){
 			    all += " Due:"+one.getDue_date();
 			}
-			if(!one.getDetails().equals("")){
+			if(!one.getDetails().isEmpty()){
 			    all += ", Details: "+one.getDetails();
 			}						
 		    }
 		    out.println("<td align=\"left\">"+all+"</td></tr>");
 		}
-		if(!market.getOther_market().equals("")){
+		if(!market.getOther_market().isEmpty()){
 		    out.println("<tr><td align=\"right\"><b>Other Marketing</b></td>");
 		    out.println("<td align=\"left\">"+market.getOther_market()+"</td></tr>");					
 		}
-		if(!market.getSpInstructions().equals("")){
+		if(!market.getSpInstructions().isEmpty()){
 		    out.println("<tr><td align=\"right\"><b>Special Instructions</b></td>");
 		    out.println("<td align=\"left\">"+market.getSpInstructions()+"</td></tr>");
 		}
+		if(!market.getSignBoard().isEmpty()){
+		    out.println("<tr><td align=\"right\"><b>Sign Board Needed</b>:</td>");
+		    out.println("<td align=\"left\">Yes</td></tr>");
+		    out.println("<tr><td align=\"right\"><b>Needed Date</b>:</td>");
+		    out.println("<td align=\"left\">"+market.getSignBoardDate()+"</td></tr>");		    
+		}		
 		out.println("<tr><td colspan=\"2\">&nbsp;</td></tr>");
 	    }
 	    out.println("</table><br />");

@@ -515,8 +515,32 @@ public class Market extends CommonInc{
 	try{
 	    pstmt = con.prepareStatement(qq);
 	    //
-	    back += setParams(pstmt);
-	    pstmt.setString(7, id);
+	    int jj=1;
+	    if(other_ad.equals(""))
+		pstmt.setNull(jj++,Types.VARCHAR);
+	    else
+		pstmt.setString(jj++,other_ad);
+	    if(class_list.equals(""))
+		pstmt.setNull(jj++,Types.VARCHAR);
+	    else
+		pstmt.setString(jj++, class_list);
+	    if(other_market.equals(""))
+		pstmt.setNull(jj++,Types.VARCHAR);
+	    else
+		pstmt.setString(jj++,other_market);
+	    if(spInstructions.equals(""))
+		pstmt.setNull(jj++,Types.VARCHAR);
+	    else
+		pstmt.setString(jj++,spInstructions);
+	    if(sign_board.isEmpty())
+		pstmt.setNull(jj++,Types.CHAR);
+	    else
+		pstmt.setString(jj++,"y");
+	    if(sign_board_date.equals(""))
+		pstmt.setNull(jj++,Types.DATE);
+	    else
+		pstmt.setDate(jj++,new java.sql.Date(dateFormat.parse(sign_board_date).getTime()));
+	    pstmt.setString(jj++, id);
 	    pstmt.executeUpdate();
 	    message="Updated Successfully";
 	}
@@ -553,7 +577,7 @@ public class Market extends CommonInc{
 		pstmt.setNull(jj++,Types.VARCHAR);
 	    else
 		pstmt.setString(jj++,spInstructions);
-	    if(sign_board.equals(""))
+	    if(sign_board.isEmpty())
 		pstmt.setNull(jj++,Types.CHAR);
 	    else
 		pstmt.setString(jj++,"y");
@@ -637,7 +661,8 @@ public class Market extends CommonInc{
 		
 	String qq = "select "+
 	    " m.other_ad,m.class_list,m.other_market,m.spInstructions, "+
-	    " m.sign_board,m.sign_board_date, "+
+	    " m.sign_board, "+
+	    " date_format(m.sign_board_date,'%m/%d/%Y'), "+ // 44
 	    " mp.prog_id,mf.facility_id,mf.year,mf.season,"+
 	    " g.general_id,g.year,g.season "+
 	    " from marketing m "+

@@ -1718,7 +1718,7 @@ public class Helper{
 	    }
 	    out.println("</table></td></tr>");
 	}
-	if(!market.getOther_ad().equals("")){
+	if(!market.getOther_ad().isEmpty()){
 	    out.println("<tr><td align=\"right\"><b>Other Ad:</b></td><td align=\"left\">");
 	    out.println(market.getOther_ad()+"</td></tr>");
 	}
@@ -1761,13 +1761,13 @@ public class Helper{
 	    out.println("</table></td></tr>");				
 	}
 	//
-	if(!market.getClass_list().equals("")){
+	if(!market.getClass_list().isEmpty()){
 	    out.println("<tr><td align=\"right\" valign=\"top\">");
 	    out.println("<b>Does the marketing piece <br />combine classes or programs?</td><td colspan='2' valign=\"top\">");
 	    out.print(market.getClass_list());
 	    out.println("</td></tr>");
 	}
-	if(!market.getOther_market().equals("")){
+	if(!market.getOther_market().isEmpty()){
 	    out.println("<tr><td valign='top' align=\"right\"><b>Other Marketing</b></td><td>");
 	    out.print(market.getOther_market());
 	    out.println("</td></tr>");
@@ -1790,7 +1790,7 @@ public class Helper{
 	}
 	//		
 	// Special Instruction
-	if(!market.getSpInstructions().equals("")){
+	if(!market.getSpInstructions().isEmpty()){
 	    out.println("<tr><td valign=\"top\" align=\"right\">");
 	    out.println("<b>Special Instructions</b></td><td>");
 	    out.println(market.getSpInstructions());
@@ -1798,7 +1798,7 @@ public class Helper{
 	}
 	if(!market.getSignBoard().isEmpty()){
 	    out.println("<tr><td align=\"right\">");
-	    out.println("<b>Digital Sign Board is Needed </b></td><td>");
+	    out.println("<b>Digital Sign Board is Needed: Yes </b></td><td>");
 	    out.println("<tr><td align=\"right\">");
 	    out.println("<b>Needed Date </b>"+market.getSignBoardDate()+"</td><td>");	    
 	}
