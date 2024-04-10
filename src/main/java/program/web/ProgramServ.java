@@ -1830,7 +1830,18 @@ public class ProgramServ extends TopServlet{
 	    out.println("<input type=\"button\" value=\"New Media Request\" "+
 			" onclick=\"document.location='"+url+
 			"MediaRequest?program_id="+pr.getId()+
-			"';\" /></td>");	    
+			"';\" /></td>");
+	    jj++;
+	    if(jj > 4){
+		jj=1;
+		out.println("</tr>");
+		out.println("<tr>");
+	    }
+	    out.println("<td align=\"center\" valign=\"top\">");
+	    out.println("<input type=\"button\" value=\"Add Notes\" "+
+			" onclick=\"document.location='"+url+
+			"ProgramNote?program_id="+pr.getId()+
+			"';\" /></td>");	    	    
 	    if(marketFound || pr.hasOldMarket()){
 		jj++;
 		if(jj > 4){
@@ -1914,11 +1925,12 @@ public class ProgramServ extends TopServlet{
         if(pr.hasFiles()){
 	    Helper.printFiles(out, url, pr.getFiles());
         }
+	if(pr.hasProgramNotes()){
+	    Helper.writeProgramNotes(out, "Program Notes", pr.getProgramNotes(), url); 
+	}	
 	if(pr.hasHistory()){
 	    Helper.writeHistory(out, "Program Logs", pr.getHistory()); 
 	}
-
-	// End Session table
 	//
 	Helper.writeWebFooter(out, url);
 	//

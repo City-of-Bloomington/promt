@@ -57,6 +57,7 @@ public class Program implements Comparable <Program>{
     TaxonomySubList taxSubList = null;
     List<PromtFile> files = null;
     List<MediaRequest> mediaRequests = null;
+    List<ProgramNote> programNotes = null;
     //
     public Program(boolean val){
 	debug = val;
@@ -812,7 +813,24 @@ public class Program implements Comparable <Program>{
 	    mediaRequests = mdl.getRequests(); 
 	}
 	return back;
+    }    
+    public boolean hasProgramNotes(){
+	findProgramNotes();
+	return programNotes != null && programNotes.size() > 0;
     }
+    public List<ProgramNote> getProgramNotes(){
+	return programNotes;
+    }
+    private String findProgramNotes(){
+	ProgramNoteList mdl = new ProgramNoteList(debug, id);
+	// mdl.setProgram_id(id);
+	String back = mdl.find();
+	if(back.isEmpty() && mdl.hasProgramNotes()){
+	    programNotes = mdl.getProgramNotes(); 
+	}
+	return back;
+    }    
+
     //
     // one string containing all taxonomy info
     //

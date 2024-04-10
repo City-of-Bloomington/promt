@@ -663,6 +663,22 @@ public class Helper{
 	}
 	out.println("</table>");
     }
+    public final static void writeProgramNotes(PrintWriter out,
+					       String title,
+					       List<ProgramNote> programNotes,
+					       String url){
+	out.println("<table width=\"50%\" border=\"1\">");
+	out.println("<caption>"+title+"</caption>");
+	out.println("<tr><th>ID</th><th>Added By</th><th>Date & Time</th><th>Notes</th></tr>");
+	for(ProgramNote one:programNotes){
+	    out.println("<tr><td><a href=\""+url+"ProgramNote?id="+one.getId()+"\">"+one.getId()+"</td>");
+	    out.println("<td>"+one.getUser()+"</td>");
+	    out.println("<td>"+one.getDate_time()+"</td>");
+	    out.println("<td>"+one.getNotes()+"</td>");	    
+	    out.println("</tr>");
+	}
+	out.println("</table>");
+    }    
     public final static void writeMediaRequests(PrintWriter out,
 						String title,
 						List<MediaRequest> requests,

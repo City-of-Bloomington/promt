@@ -12,10 +12,10 @@ import program.list.*;
 import program.model.*;
 import program.util.*;
 
-@WebServlet(urlPatterns = {"/Contact.do","/Contact"})
-public class ContactServ extends TopServlet{
+@WebServlet(urlPatterns = {"/ProgramNote"})
+public class ProgramNoteServ extends TopServlet{
 
-    static Logger logger = LogManager.getLogger(ContactServ.class);
+    static Logger logger = LogManager.getLogger(ProgramNoteServ.class);
 
     /**
      * The main class method doGet.
@@ -50,7 +50,7 @@ public class ContactServ extends TopServlet{
 	out = res.getWriter();
 	Enumeration values = req.getParameterNames();
 	String name, value, action="", fromBrowse="";
-	String id ="";
+	String id ="", program_id="";
 		
 	//
 	// reinitialize to blank
@@ -71,7 +71,8 @@ public class ContactServ extends TopServlet{
 	    res.sendRedirect(str);
 	    return;
 	}
-	Contact cont = new Contact(debug);
+	ProgramNote cont = new ProgramNote(debug);
+	Program prog = null;
         String [] vals;
 	while (values.hasMoreElements()){
 	    name = ((String)values.nextElement()).trim();
@@ -82,40 +83,25 @@ public class ContactServ extends TopServlet{
 		cont.setId(value);
 		id = value;
 	    }
-	    if(name.equals("plan_id")){
-		cont.setPlan_id(value);
-	    }			
-	    else if(name.equals("instructor")){
-		cont.setName(value);
-	    }
-	    else if(name.equals("phone_h")){
-		cont.setPhone_h(value);
+	    else if(name.equals("notes")){
+		cont.setNotes(value);
 	    }
 	    else if(name.equals("fromBrowse")){
 		fromBrowse = value;
 	    }			
-	    else if(name.equals("phone_c")){
-		cont.setPhone_c(value);
-	    }			
-	    else if(name.equals("phone_w")){
-		cont.setPhone_w(value);
-	    }
-	    else if(name.equals("email")){
-		cont.setEmail (value);
-	    }
-	    else if(name.equals("address")){
-		cont.setAddress (value);
+	    else if(name.equals("program_id")){
+		cont.setProgram_id (value);
+		program_id = value;
 	    }
 	    else if(name.equals("action")){
 		action = value;
 	    }
 	}
-	if(id.equals("")){ // for new records
-	    fromBrowse="y";
-	}
 	//
        	if(action.equals("Delete")){
 	    if(user.canDelete()){
+		cont.doSelect();
+		program_id = cont.getProgram_id();
 		String back = cont.doDelete();
 		if(back.equals("")){
 		    id="";
@@ -130,27 +116,12 @@ public class ContactServ extends TopServlet{
 		success = false;
 	    }
 	}
-	else if(action.equals("Update")){
-	    if(user.canEdit()){
-		String back = cont.doUpdate();
-		if(back.equals("")){
-		    message = "Record updated successfully";
-		}
-		else{
-		    message += back ;
-		    success = false;
-		}
-	    }
-	    else{
-		message = "You can not update ";
-		success = false;
-	    }			
-	}
 	else if(action.equals("Save")){
 	    //
 	    if(user.canEdit()){
+		cont.setAdded_by(user.getId());
 		String back = cont.doSave();
-		if(back.equals("")){
+		if(back.isEmpty()){
 		    id = cont.getId();
 		    message = "Saved successfully";
 		}
@@ -164,6 +135,25 @@ public class ContactServ extends TopServlet{
 		success = false;
 	    }						
 	}
+	else if(action.equals("Update")){
+	    //
+	    if(user.canEdit()){
+		cont.setAdded_by(user.getId());
+		String back = cont.doUpdate();
+		if(back.equals("")){
+		    id = cont.getId();
+		    message = "Saved successfully";
+		}
+		else{
+		    message += back ;
+		    success = false;
+		}
+	    }
+	    else{
+		message = "You can not update ";
+		success = false;
+	    }						
+	}	
 	else if(!id.equals("")){
 	    String back = cont.doSelect();
 	    if(!back.equals("")){
@@ -171,7 +161,6 @@ public class ContactServ extends TopServlet{
 		success = false;
 	    }
 	}
-		
 	//
 	// This script validates textareas and facility
 	//
@@ -204,11 +193,11 @@ public class ContactServ extends TopServlet{
 	//
 	out.println("<center>");
 	Helper.writeTopMenu(out, url);		
-	if(id.equals("")){
-	    out.println("<h2>New Instructor</h2>");
+	if(id.isEmpty()){
+	    out.println("<h2>New Program Notes</h2>");
 	}
 	else{
-	    out.println("<h2>Edit Instructor "+id+"</h2>");
+	    out.println("<h2>Notes Id: "+id+"</h2>");
 	}
 	if(!message.equals("")){
 	    if(success)
@@ -226,32 +215,26 @@ public class ContactServ extends TopServlet{
 	if(!id.equals("")){
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	}
-	// Plan
 	out.println("<table width=\"90%\" border>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table>");
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
-		    "Instructor Contact Info </font></h3></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Instructor: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"instructor\" "+
-		    "value=\""+cont.getName()+"\" maxlength=\"60\" size=\"60\"></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Work Phone:</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"phone_w\" "+
-		    "value=\""+cont.getPhone_w()+"\" maxlength=\"12\" size=\"12\" /><b>Cell:</b>");
-	out.println("<input type=\"text\" name=\"phone_c\" "+
-		    "value=\""+cont.getPhone_c()+"\" maxlength=\"12\" size=\"12\" />");
-	out.println(" <b>Home:</b>");
-	out.println("<input type=\"text\" name=\"phone_h\" "+
-		    "value=\""+cont.getPhone_h()+"\" maxlength=\"12\" size=\"12\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Email:</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"email\" "+
-		    "value=\""+cont.getEmail()+"\" maxlength=\"50\" size=\"50\" /></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Address:</b></td><td align=\"left\">");
-	out.print("<textarea name=\"address\" cols=\"50\" rows=\"4\" "+
-		  " onChange='checkTextLen(this,200)' wrap>");
-	out.print(cont.getAddress());
-	out.println("</textarea></td></tr>");
+		    "Program Notes </font></h3></td></tr>");
+	if(!id.isEmpty()){
+	    out.println("<tr><td align=\"right\"><b>Added by:</b></td><td align=\"left\">");
+	    out.println(cont.getUser());
+	    out.println("</td></tr>");
+	    out.println("<tr><td align=\"right\"><b>Date & Time:</b></td><td align=\"left\">");
+	    out.println(cont.getDate_time());
+	    out.println("</td></tr>");
+	}	
+	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Notes </b></td></tr>");	
+	out.println("<tr><td align=\"left\" colspan=\"2\">");	
+	out.println("<textarea name=\"notes\" rows=\"10\" cols=\"50\" >");
+	out.println(cont.getNotes());
+	out.println("</textarea></td</tr>");
+
 	out.println("</table></td></tr>");
 	//
 	out.println("<tr><td><table width=100%>");
@@ -264,7 +247,7 @@ public class ContactServ extends TopServlet{
 	    out.println("<td valign=top align=right>");				
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Update\" /></td>");
-	    if(user.canDelete() && !cont.hasPlans()){
+	    if(user.canDelete()){
 		out.println("<td valign=\"top\" align=\"right\">");				
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateForm2()\">");
@@ -287,20 +270,10 @@ public class ContactServ extends TopServlet{
 	out.println("</tr>");
 	out.println("</table>");
 	out.println("</td></tr></table>");
+	out.println("<br>Back to Program ");
+	out.println("<a href=\""+url+"Program.do?id="+program_id+
+			    "\">"+program_id+"</a>");
 	out.println("<br />");
-	if(fromBrowse.equals("")){
-	    out.println("<a href=javascript:window.close();>Close</a>");
-	}
-	else if(cont.hasPlans()){
-	    List<Plan> plans = cont.getPlans();
-	    out.println("<table border=\"1\" width=\"70%\"><caption>Plans associated with this Instructor</caption>");
-	    for(Plan one:plans){
-		out.println("<tr><td><a href=\""+url+"ProgPlan?action=zoom&id="+one.getId()+"\">"+one.getId()+"</a></td>");
-		out.println("<td>"+one+"</td></tr>");
-	    }
-	    out.println("</table>");
-
-	}
 	Helper.writeWebFooter(out, url);
 	//
 	out.print("</center></body></html>");
@@ -308,6 +281,7 @@ public class ContactServ extends TopServlet{
     }
 
 }
+
 
 
 
