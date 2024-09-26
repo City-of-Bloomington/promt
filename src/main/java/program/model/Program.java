@@ -806,11 +806,14 @@ public class Program implements Comparable <Program>{
 	return mediaRequests;
     }
     private String findMediaRequests(){
-	MediaRequestList mdl = new MediaRequestList(debug);
-	mdl.setProgram_id(id);
-	String back = mdl.find();
-	if(back.isEmpty()){
-	    mediaRequests = mdl.getRequests(); 
+	String back = "";
+	if(!id.isEmpty()){
+	    MediaRequestList mdl = new MediaRequestList(debug);
+	    mdl.setProgram_id(id);
+	    back = mdl.find();
+	    if(back.isEmpty()){
+		mediaRequests = mdl.getRequests(); 
+	    }
 	}
 	return back;
     }    
@@ -822,11 +825,13 @@ public class Program implements Comparable <Program>{
 	return programNotes;
     }
     private String findProgramNotes(){
-	ProgramNoteList mdl = new ProgramNoteList(debug, id);
-	// mdl.setProgram_id(id);
-	String back = mdl.find();
-	if(back.isEmpty() && mdl.hasProgramNotes()){
-	    programNotes = mdl.getProgramNotes(); 
+	String back = "";
+	if(!id.isEmpty()){
+	    ProgramNoteList mdl = new ProgramNoteList(debug, id);
+	    back = mdl.find();
+	    if(back.isEmpty() && mdl.hasProgramNotes()){
+		programNotes = mdl.getProgramNotes(); 
+	    }
 	}
 	return back;
     }    
