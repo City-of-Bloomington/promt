@@ -147,6 +147,8 @@ public class ProgramNoteServ extends TopServlet{
 		else{
 		    message += back ;
 		    success = false;
+		    cont.doSelect();
+		    program_id = cont.getProgram_id();
 		}
 	    }
 	    else{
@@ -160,6 +162,7 @@ public class ProgramNoteServ extends TopServlet{
 		message += back;
 		success = false;
 	    }
+	    program_id = cont.getProgram_id();
 	}
 	//
 	// This script validates textareas and facility
@@ -270,9 +273,9 @@ public class ProgramNoteServ extends TopServlet{
 	out.println("</tr>");
 	out.println("</table>");
 	out.println("</td></tr></table>");
-	out.println("<br>Back to Program ");
+	out.println("<br /> ");
 	out.println("<a href=\""+url+"Program.do?id="+program_id+
-			    "\">"+program_id+"</a>");
+			    "\"> Back to Program "+program_id+"</a>");
 	out.println("<br />");
 	Helper.writeWebFooter(out, url);
 	//

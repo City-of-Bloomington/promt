@@ -179,13 +179,12 @@ public class ProgramNote extends CommonInc{
 	    addError(back);
 	    return back;
 	}
-	String qq = "update program_notes set program_id=?,notes=?,added_by=?, date_time=now() where id=? ";
+	String qq = "update program_notes set notes=?,added_by=?, date_time=now() where id=? ";
 	try{
 	    pstmt = con.prepareStatement(qq);
-	    pstmt.setString(1, program_id);
-	    pstmt.setString(2, notes);
-	    pstmt.setString(3, added_by);
-	    pstmt.setString(4, id);
+	    pstmt.setString(1, notes);
+	    pstmt.setString(2, added_by);
+	    pstmt.setString(3, id);
 	    pstmt.executeUpdate();
 	    message="Updated Successfully";
 	}
