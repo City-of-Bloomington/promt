@@ -284,7 +284,7 @@ public class SubMenu extends TopServlet{
 	    String year2 =  "" + cal.get(Calendar.YEAR);  
 	    //
 	    out.println("<form name=\"myForm\" method=\"post\" action=\""+url +
-			"CodeBrowse\""+
+			"CodeResult\""+
 			" onSubmit=\"return validateForm()\">");			
 	    out.println("<table border=0><tr><td align=\"center\">"); 
 	    out.println("<font color=\"#000099\" size=\"+2\">Code Entry"+

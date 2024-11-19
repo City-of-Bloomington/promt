@@ -201,20 +201,19 @@ public class ProgCodeList{
 	    return back;
 	}
 	if(includeSessions){
-	    qq += ", sessions ps ";
-	    if(!qw.equals("")) qw += " and ";
-	    qw += "p.id = ps.id ";
+	    qq += "left join sessions ps on p.id=ps.id ";
 	}
 	if(!codeNeed.equals("")){
 	    if(!qw.equals("")) qw += " and ";
 	    qw += "p.codeNeed is not null";
 	}
 	if(!hasNoCodeYet.equals("")){
-	    if(!qw.equals("")) qw += " and ";
 	    if(includeSessions){
-		qw += "(ps.code is null)";
+		if(!qw.equals("")) qw += " and ";		
+		qw += "(ps.code is null or p.code is null)";
 	    }
 	    else{
+		if(!qw.equals("")) qw += " and ";		
 		qw += "p.code is null";
 	    }
 	}
