@@ -251,6 +251,7 @@ public class ProgCodeList{
 	if(!limit.equals("")){
 	    qq += limit;
 	}
+	System.err.println(qq);	
 	if(debug){
 	    logger.debug(qq);
 	}
