@@ -134,9 +134,7 @@ public class ProgCodeList{
 	    pstmt3 = con.prepareStatement(qq3);
 	    for(int jj=0;jj<ids.length;jj++){
 		if(!ids[jj].equals("") && !codes[jj].equals("")){
-		    System.err.println(" id, code "+ids[jj]+" "+codes[jj]);
 		    if(!sids[jj].trim().equals("")){
-			System.err.println(" updating session "+sids[jj]);
 			pstmt.setString(1, codes[jj]);
 			pstmt.setString(2, ids[jj]);
 			pstmt.setString(3, sids[jj]);
@@ -145,7 +143,6 @@ public class ProgCodeList{
 			pstmt2.executeUpdate();
 		    }
 		    else{
-			System.err.println(" updating program "+ids[jj]);
 			pstmt3.setString(1, codes[jj]);
 			pstmt3.setString(2, ids[jj]);
 			pstmt3.executeUpdate();
@@ -179,8 +176,10 @@ public class ProgCodeList{
      */
     public String findProgramsAndOrSessions(){
 	String message = "", back="", qq="";
-	String q = "select p.id,p.title,null,c.name,l.name from programs p ";
-	String q2 = "select p.id,p.title,ps.sid,c.name,l.name from programs p ";
+	// program code
+	String q = "select p.id,p.title,null,c.name,l.name,p.code from programs p ";
+	// session code
+	String q2 = "select p.id,p.title,ps.sid,c.name,l.name,ps.code from programs p ";
 	if(includeSessions){
 	    qq = q2;
 	}
@@ -249,9 +248,8 @@ public class ProgCodeList{
 	    qq += " where "+qw;
 	}
 	if(!limit.equals("")){
-	    qq += limit;
+	    // qq += limit;
 	}
-	System.err.println(qq);	
 	if(debug){
 	    logger.debug(qq);
 	}
@@ -293,11 +291,13 @@ public class ProgCodeList{
 					    null,
 					    rs.getString(4),
 					    rs.getString(5));
-		if(list.size() >= max_rows) break;
-		if(!list.contains(one)){
-		    list.add(one);
+		String code = rs.getString(6);
+		if(code == null || code.isEmpty()){
+		    if(list.size() >= max_rows) break;
+		    if(!list.contains(one)){
+			list.add(one);
+		    }
 		}
-								
 	    }
 	    if(list.size() > 0){
 		// Collections.sort(list);
