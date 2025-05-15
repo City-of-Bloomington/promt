@@ -212,7 +212,7 @@ public class ContactServ extends TopServlet{
 	}
 	if(!message.equals("")){
 	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
+		out.println(message);
 	    else
 		out.println("<font color=\"red\">"+message+"</font>");
 	    out.println("<br>");
@@ -227,69 +227,66 @@ public class ContactServ extends TopServlet{
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	}
 	// Plan
-	out.println("<table width=\"90%\" border>");
+	out.println("<table width=\"90%\" border=\"1\" >");
+	out.println("<caption>instructor Info</caption>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table>");
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Instructor Contact Info </font></h3></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Instructor: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"instructor\" "+
+	out.println("<tr><td align=\"right\"><label for=\"inst_id\">Instructor: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"instructor\" id=\"inst_id\" "+
 		    "value=\""+cont.getName()+"\" maxlength=\"60\" size=\"60\"></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Work Phone:</b></td><td align=\"left\">");
+	out.println("<tr><td align=\"right\"><label for=\"w_phone\">Work Phone:</label></td><td align=\"left\">");
 	out.println("<input type=\"text\" name=\"phone_w\" "+
-		    "value=\""+cont.getPhone_w()+"\" maxlength=\"12\" size=\"12\" /><b>Cell:</b>");
+		    "value=\""+cont.getPhone_w()+"\" maxlength=\"12\" size=\"12\" id=\"w_phone\" /><label for=\"c_phone\">Cell:</label>");
 	out.println("<input type=\"text\" name=\"phone_c\" "+
-		    "value=\""+cont.getPhone_c()+"\" maxlength=\"12\" size=\"12\" />");
-	out.println(" <b>Home:</b>");
+		    "value=\""+cont.getPhone_c()+"\" maxlength=\"12\" size=\"12\" id=\"c_phone\" />");
+	out.println(" <label for=\"h_phone\">Home:</label>");
 	out.println("<input type=\"text\" name=\"phone_h\" "+
-		    "value=\""+cont.getPhone_h()+"\" maxlength=\"12\" size=\"12\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Email:</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"email\" "+
+		    "value=\""+cont.getPhone_h()+"\" maxlength=\"12\" size=\"12\" id=\"h_phone\" /></td></tr>");
+	out.println("<tr><td align=\"right\"><label for=\"email\">Email:</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"email\" id=\"email\" "+
 		    "value=\""+cont.getEmail()+"\" maxlength=\"50\" size=\"50\" /></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Address:</b></td><td align=\"left\">");
-	out.print("<textarea name=\"address\" cols=\"50\" rows=\"4\" "+
-		  " onChange='checkTextLen(this,200)' wrap>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"addr\">Address:</label></td><td align=\"left\">");
+	out.print("<textarea name=\"address\" cols=\"50\" rows=\"4\" id=\"addr\" "+
+		  " onchange='checkTextLen(this,200)' wrap>");
 	out.print(cont.getAddress());
 	out.println("</textarea></td></tr>");
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td><table width=100%>");
-	out.println("<tr>");
 	if(!id.equals("")){
 	    //
 	    // if no program yet (it is new plan)
 	    // can be duplicated only when a program is linked to it
 	    //
-	    out.println("<td valign=top align=right>");				
+	    out.println("<tr><td valign=\"top\" align=\"right\">");				
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Update\" /></td>");
 	    if(user.canDelete() && !cont.hasPlans()){
-		out.println("<td valign=\"top\" align=\"right\">");				
+		out.println("<td>");				
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateForm2()\">");
 		out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
-		out.println("</td><td valign=\"top\" align=\"right\">");
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Delete\">&nbsp;");
 		out.println("</form></td>");
 	    }
+	    out.println("</tr>");
 	}
-	else { // delete startNew
-	    out.println("<td valign=\"top\" align=\"right\">");
+	else { 
+	    out.println("<tr><td valign=\"top\" align=\"right\">");
 	    if(user.canEdit()){
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Save\" /></td>"+
 			    "<td align=\"right\" valign=\"top\">" );
 	    }
 	    out.println("</form></td>");
+	    out.println("</tr>");	    
 	}
-	out.println("</tr>");
 	out.println("</table>");
 	out.println("</td></tr></table>");
 	out.println("<br />");
 	if(fromBrowse.equals("")){
-	    out.println("<a href=javascript:window.close();>Close</a>");
+	    out.println("<a href=\"javascript:window.close();\">Close</a>");
 	}
 	else if(cont.hasPlans()){
 	    List<Plan> plans = cont.getPlans();
@@ -299,7 +296,6 @@ public class ContactServ extends TopServlet{
 		out.println("<td>"+one+"</td></tr>");
 	    }
 	    out.println("</table>");
-
 	}
 	Helper.writeWebFooter(out, url);
 	//

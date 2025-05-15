@@ -216,46 +216,45 @@ public class DuplicatePlan extends TopServlet{
 	out.println("<body onLoad=\"showStatus();\">    ");
 	Helper.writeTopMenu(out, url);		
 	if(!success){
-	    out.println("<p><font color=red>"+message+"</font></p>");
+	    out.println("<p><font color=\"red\">"+message+"</font></p>");
 	}
-	out.println("<h2><center>Duplicate Plan</h2>");
-	out.println("<form name=myForm method=post "+
-		    "onSubmit=\" return validateForm()\">");
+	out.println("<h2>Duplicate Plan</h2>");
+	out.println("<form name=\"myForm\" method=\"post\" "+
+		    "onSubmit=\"return validateForm()\">");
 	//
 	if(!id.equals("")) 
-	    out.println("<input type=hidden name=id value=" + id + " />");
+	    out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
 	//
 	// Title season year
-	out.println("<table border width=\"60%\"><tr><td><table>");
-	out.println("<tr><td colspan=\"2\">");
-	out.println("<font color=green>To make a similar copy of this "+
-		    "plan<br>"+
-		    "Select the new year, season and lead for the new plan "+
-		    "<br> and then click on Duplicate "+
-		    "<br>You will get a message about the duplication<br>"+
-		    "If the duplication is successful you will be forwarded to the plan page "+
-		    " where you can make <br />"+
-		    " additional changes.</font>");
+	out.println("To make a similar copy of this plan <br />"+
+		    "<ul><li>Select the new year, season and lead for the new plan </li>"+
+		    "<li> click on Duplicate</li> "+
+		    "<li>You will get a message about the duplication</li>"+
+		    "<li>If the duplication is successful you will be forwarded to the plan page "+
+		    " where you can make "+
+		    " additional changes.</li>");
+	out.println("</ul>");	
+	out.println("<table border width=\"60%\">");
+	out.println("<caption>Select from the options</caption>");
+	out.println("<tr><td align=\"right\"><b>Plan:");
+	out.println("</b></td><td>"+id);
 	out.println("</td></tr>");
-	out.println("<tr><td align=right><b>Plan ID:");
-	out.println("</b></td><td><left>"+id);
-	out.println("</td></tr>");
-	out.println("<tr><td align=right>");
-	out.println("<b>Pick New Season:</b></td><td>");
-	out.println("<select name=\"season\">");
+	out.println("<tr><td align=\"right\">");
+	out.println("<label for=\"season\">Pick New Season:</label></td><td>");
+	out.println("<select name=\"season\" id=\"season\">");
 	out.println("<option value=\"\"></option>");
 	out.println(Helper.allSeasons);		
 	out.println("</select>");
-	out.println("<b>Pick New Year:</b>");
-	out.println("<select name=\"year\">");
+	out.println("<label for=\"year\">Pick New Year:</label>");
+	out.println("<select name=\"year\" id=\"year\">");
 	int[] years = Helper.getFutureYears();
 	for(int yy:years){
 	    out.println("<option>"+yy+"</option>");
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><td align=right><b> Pick the Lead:");
-	out.println("</b></td><td><left>");
-	out.println("<select name=\"lead_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"lead_id\"> Pick the Lead:");
+	out.println("</label></td><td>");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">Pick one</option>");
 	if(leads != null){
 	    for(Lead one:leads){
@@ -268,17 +267,15 @@ public class DuplicatePlan extends TopServlet{
 	    }
 	}
 	out.println("</select>");
-	out.println("</left></td></tr>");				
-	out.println("<tr><td colspan=2 align=right><input type=submit "+
-		    "name=action value=Duplicate>&nbsp;&nbsp;"+
-		    "&nbsp;&nbsp;&nbsp;" +
-		    "&nbsp;&nbsp;<input type=reset value=Clear>"+
+	out.println("</td></tr>");				
+	out.println("<tr><td colspan=\"2\"><input type=\"submit\" "+
+		    "name=\"action\" value=\"Duplicate\" />&nbsp;&nbsp;"+
+		    "&nbsp;&nbsp;<input type=\"reset\" value=\"Clear\" />"+
 		    "</td></tr>"); 
-	out.println("</form>");
-	out.println("</table></td></tr></table>");
-	out.println("<HR>");
-	out.println("<HR>");
-	out.println("</center>");
+
+	out.println("</table>");
+	out.println("</form>");	
+	out.println("<br /><br />");
 	out.print("</body></html>");
 	out.flush();
 	out.close();

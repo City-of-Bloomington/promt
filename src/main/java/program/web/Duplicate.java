@@ -210,8 +210,7 @@ public class Duplicate extends TopServlet{
 	}
 	if(action.equals("")){
 	    out.println("<h2>Duplicate Program</h2>");
-	    out.println("<table width=\"80%\" border=\"0\"><tr><td align=\"left\">");
-	    out.println("<font color=\"green\">To make a similar copy of this "+
+	    out.println("To make a similar copy of this "+
 			"program and all its related session, volunteer,"+
 			" sponsor, budget, .. records <br />"+
 			"<ul><li>Select the new year and season for the new program </li>"+
@@ -220,10 +219,9 @@ public class Duplicate extends TopServlet{
 			"<li>If success a link to the "+
 			"newly duplicated program will be provided </li>"+
 			"<li>Now you can make "+
-			" additional changes to the new program.</li></ul>");
-	    out.println("</td></tr></table>");
-	    out.println("<form name=myForm method=post "+
-			"onSubmit=\" return validateForm()\">");
+			" additional changes to the new program.</li></ul><br />");
+	    out.println("<form name=\"myForm\" method=\"post\" "+
+			"onsubmit=\" return validateForm()\">");
 	    //
 	    if(!id.equals("")) 
 		out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
@@ -231,34 +229,35 @@ public class Duplicate extends TopServlet{
 		out.println("<input type=\"hidden\" name=\"plan_id\" value=\""+plan_id+"\" />");						
 	    //
 	    // Title season year
-	    out.println("<table border width=\"80%\"><tr><td><table width=\"100%\">");
+	    out.println("<table width=\"100%\">");
+	    out.println("<caption>Duplicate a program</caption>");
 	    if(!plan_id.equals("")){
-		out.println("<tr><td align=right><b>Plan ID:");
-		out.println("</b></td><td align=\"left\">");
-		out.println("<a href="+url+"ProgPlan?id="+plan_id+
+		out.println("<tr><td align=\"right\">Plan:");
+		out.println("</td><td align=\"left\">");
+		out.println("<a href=\""+url+"ProgPlan?id="+plan_id+
 			    "&action=zoom"+
-			    ">Related Plan "+plan_id+"</a>");
+			    "\'>Related Plan "+plan_id+"</a>");
 		out.println("</td></tr>");
 	    }						
-	    out.println("<tr><td align=right><b>Program ID:");
-	    out.println("</b></td><td align=\"left\">");
-	    out.println("<a href="+url+"Program.do?id="+id+
+	    out.println("<tr><td align=\"right\"><b>Program:</b>");
+	    out.println("</td><td align=\"left\">");
+	    out.println("<a href=\""+url+"Program.do?id="+id+
 			"&action=zoom"+
-			">Related Program "+id+"</a>");						
+			"\">Related Program "+id+"</a>");						
 	    out.println("</td></tr>");
-	    out.println("<tr><td align=right>");
-	    out.println("<b>Season</b></td><td>");
+	    out.println("<tr><td align=\"right\">");
+	    out.println("<label for=\"season_id\">Season</label></td><td>");
 	    out.println("<select name=\"season\">");
-	    out.println("<option value=\""+season+"\" selected>"+season+"\n");
+	    out.println("<option value=\""+season+"\" id=\"season_id\" selected=\"selected\">"+season+"\n");
 	    out.println(Helper.allSeasons);
 	    out.println("</select> ");
-	    out.println(" <b>Season 2</b>");
+	    out.println(" <label for=\"season2_id\">Season 2</label>");
 	    out.println("<select name=\"season2\">");
-	    out.println("<option value=\""+season2+"\" selected>"+season2+"\n");
+	    out.println("<option value=\""+season2+"\" id=\"season2_id\" selected=\"selected\" >"+season2+"\n");
 	    out.println(Helper.allSeasons);
 	    out.println("</select> ");						
-	    out.println("<b>Year</b>");
-	    out.println("<select name=\"year\">");
+	    out.println("<label for=\"year\">Year</label>");
+	    out.println("<select name=\"year\" id=\"year\">");
 	    int[] years = Helper.getFutureYears();
 	    for(int yy:years){
 		String selected = "";
@@ -268,9 +267,9 @@ public class Duplicate extends TopServlet{
 		out.println("<option value=\""+yy+"\" "+selected+">"+yy+"\n");
 	    }
 	    out.println("</select></td></tr>");
-	    out.println("<tr><td align=right><b>Lead:");
-	    out.println("</b></td><td><left>");
-	    out.println("<select name=\"lead_id\">");
+	    out.println("<tr><td align=\"right\"><label for=\"lead_id\">Lead:");
+	    out.println("</label></td><td align=\"left\">");
+	    out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	    out.println("<option value=\"\"></option>");
 	    if(leads != null){
 		for(Lead one:leads){
@@ -283,28 +282,23 @@ public class Duplicate extends TopServlet{
 		}
 	    }
 	    out.println("</select>");
-	    out.println("</left></td></tr>");				
+	    out.println("</td></tr>");				
 	    out.println("<tr><td colspan=\"2\" align=\"right\">"+
 			"<input type=\"submit\" "+
 			"name=\"action\" value=\"Duplicate\">&nbsp;&nbsp;"+
 			"</td></tr>"); 
 	    out.println("</form>");
-	    out.println("</table></td></tr></table>");
+	    out.println("</table>");
 	}
 	else if(!id_dup.equals("")){
-	    out.println("<h2> Duplication Done </h2>");
+	    out.println("<h2> Duplication completed </h2>");
 	    out.println("<h3>Program duplicated successfully </h3>");
 	    out.println("<h3>The new program ID: "+id_dup+" </h3>");
-	    out.println("<font color=green>Click on the link below to go"+
-			" to the newly duplicated program <br>");
-	    out.println(" and start making your changes (if "+
-			"any)<br></font>");
 	    out.println("<hr />");
-	    out.println("<LI><A href="+url+"Program.do?id="+id_dup+
+	    out.println("<li><a href=\""+url+"Program.do?id="+id_dup+
 			"&action=zoom"+
-			">Go to the New Program </A><br>");
+			"\">Go to newly duplicated program </a></li>");
 	}
-	out.println("<hr />");
 	out.println("<hr />");
 	out.println("</center>");
 	out.print("</body></html>");

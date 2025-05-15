@@ -357,84 +357,85 @@ public class DayItems extends TopServlet{
 	}
 
 	//box it in 
-	out.println("<center><table border align=center>");
-	out.println("<tr bgcolor=#CDC9A3><td>");
+	out.println("<center><table border=\"1\" align=\"center\">");
+	out.println("<caption>Day Items</caption>");
+	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
 
 	//the real table
-	out.println("<form NAME=myForm method=post "+
-		    "onSubmit=\"return validateForm()\">");
+	out.println("<form name=\"myForm\" method=\"post\" "+
+		    "onsubmit=\"return validateForm()\">");
 	if(!category_id.equals("")){
-	    out.println("<input type=hidden name=category_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"category_id\" value=\"" + 
 			category_id + 
 			"\"></input>");
 	}
 	if(!area_id.equals("")){
-	    out.println("<input type=hidden name=area_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"area_id\" value=\"" + 
 			area_id + 
 			"\"></input>");
 	}
 	if(!lead_id.equals("")){
-	    out.println("<input type=hidden name=lead_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"lead_id\" value=\"" + 
 			lead_id + 
 			"\"></input>");
 	}
 	if(!location_id.equals("")){
-	    out.println("<input type=hidden name=location_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"location_id\" value=\"" + 
 			location_id + 
 			"\"></input>");
 	}
 	if(action.equals("zoom")){
-	    out.println("<input type=hidden name=year value=" + year + 
-			"></input>");
-	    out.println("<input type=hidden name=day value=" + day + 
-			"></input>");
-	    out.println("<input type=hidden name=month value=" + month + 
-			"></input>");
+	    out.println("<input type=\"hidden\" name=\"year\" value=\"" + year + 
+			"\"></input>");
+	    out.println("<input type=\"hidden\" name=\"day\" value=\"" + day + 
+			"\"></input>");
+	    out.println("<input type=\"hidden\" name=\"month\" value=\"" + month + 
+			"\"></input>");
 	}
 	out.println("<table>");
        
-	out.println("<tr><td align=right><b>Date: ");
+	out.println("<tr><td align=\"right\"><b>Date: ");
 	out.println("</b></td><td><left>(mm/dd/yyyy)");
-    	out.println("<input type=text name=reqDate maxlength=10 size=10 "+
-		    "value=\""+reqDate+"\">");
+    	out.println("<input type=\"text\" name=\"reqDate\" maxlength=\"10\" size=\"10\" "+
+		    "value=\""+reqDate+"\" />");
 
 	out.println("</left></td></tr>");
 
-	out.println("<tr><td align=right><b>Item Info: ");
+	out.println("<tr><td align=\"right\"><b>Item Info: ");
 	out.println("</b></td><td><left>");
-    	out.println("<input type=text name=info maxlength=80 size=50 "+
-		    "value=\""+info+"\">");
+    	out.println("<input type=\"text\" name=\"info\" maxlength=\"80\" size=\"50\" "+
+		    "value=\""+info+"\" />");
 	out.println("</left></td></tr>");
 
 	//
 	if(action.equals("") || action.equals("startNew") || 
 	   action.equals("delete")){
-	    out.println("<tr><td colspan=2 align=right><input type=submit "+
-			"name=action value=Save>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-			"&nbsp;&nbsp;&nbsp;<input type=reset "+
-			" value=\"Clear\"></td></tr>"); 
+	    out.println("<tr><td colspan=\"2\" align=\"right\"><input type=\"submit\" "+
+			"name=\"action\" value=\"Save\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+			"&nbsp;&nbsp;&nbsp;<input type=\"reset\" "+
+			" value=\"Clear\" /></td></tr>"); 
 	    out.println("</form>");
 	}
 	else{
-	    out.println("<tr><td align=right><input type=submit "+
-			"name=action value=Update> "+
+	    out.println("<tr><td align=\"right\"><input type=\"submit\" "+
+			"name=\"action\" value=\"Update\" />"+
 			"&nbsp;&nbsp;" +
-			"<input type=submit "+
-			"name=action value=\"Start New\">"+
+			"<input type=\"submit\" "+
+			"name=\"action\" value=\"Start New\" />"+
 			"</td>");
 
 	    out.println("</form>");
 	    //
-	    out.println("<form name=myForm2 method=POST "+
+	    out.println("<form name=\"myForm2\" method=\"post\" "+
 			"onSubmit=\"return validateDeleteForm()\">");
-	    out.println("<input type=hidden name=reqDate value="+reqDate+ ">");
-	    out.println("<input type=hidden name=year value="+ year + ">");
-	    out.println("<input type=hidden name=month value="+month +">");
-	    out.println("<input type=hidden name=day value="+day +">");
-	    out.println("<input type=hidden name=id value="+ id + ">");
-	    out.println("<td align=right>");
-	    out.println("&nbsp;&nbsp;<input type=submit name=action "+
-			"value=Delete>");
+	    out.println("<input type=\"hidden\" name=\"reqDate\" value=\""+reqDate+ "\" />");
+	    out.println("<input type=\"hidden\" name=\"year\" value=\""+ year + "\" />");
+	    out.println("<input type=\"hidden\" name=\"month\" value=\""+month +"\" />");
+	    out.println("<input type=\"hidden\" name=\"day\" value=\""+day +"\" />");
+	    out.println("<input type=\"hidden\" name=\"id\" value=\""+ id + "\" />");
+	    out.println("<td align=\"right\">");
+	    out.println("&nbsp;&nbsp;<input type=\"submit\" name=\"action\" "+
+			"value=\"Delete\" />");
 	    out.println("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
 	    out.println("</form>");	
 
@@ -498,7 +499,8 @@ public class DayItems extends TopServlet{
 
 	if(nrcnt > 0){
 	    int pid=0;
-	    out.println("<table border>");
+	    out.println("<table border=\"1\">");
+	    out.println("<caption>Events on this Day</caption>");
 	    qq = "select agi.id,agi.info,agi.pid,agi.sid "+
 		"from agenda_info agi ";
 	    if(inFlag){
@@ -530,33 +532,33 @@ public class DayItems extends TopServlet{
 				    "</td>");
 		    }
 		    else {
-			out.println("<td><a href="+url+
+			out.println("<td><a href=\""+url+
 				    "DayItems?"+
 				    "&zoom=yes&id="+id+
 				    "&year="+year+
 				    "&month="+month+
 				    "&day="+day+
 				    "&reqDate="+reqDate+
-				    "&id="+str+">"+ str +
+				    "&id="+str+"\">"+ str +
 				    "</a></td>");
 		    }
 		    str = rs.getString(2); 
 		    if(str != null){ 
 			if(pid > 0){
-			    out.println("<td><a href="+url+
+			    out.println("<td><a href=\""+url+
 					"Programs?"+
 					"&zoom=yes&id="+pid+
 					"&pyear="+year+
-					">"+ str +
+					"\">"+ str +
 					"</a></td>");
 			    int sid = rs.getInt(4);
 			    if(sid > 0){
-				out.println("<td><a href="+url+
+				out.println("<td><a href=\""+url+
 					    "Sessions?"+
 					    "&zoom=yes&id="+pid+
 					    "&sid="+sid+
 					    "&pyear="+year+
-					    "><center>"+ sid +
+					    "\"><center>"+ sid +
 					    "</center></a></td>");
 			    }
 			    else{
@@ -580,11 +582,11 @@ public class DayItems extends TopServlet{
 	}
 	//
 	out.println("<HR>");
-	out.println("<ul><LI><A href="+url+
+	out.println("<ul><li><A href=\""+url+
 		    "agenda?"+
 		    "&year="+ year +
 		    "&month="+ month +
-		    "> Go to the Related Agenda </A>");
+		    "\"> Go to the Related Agenda </a>");
 
 	out.print("</ul></body></html>");
 	out.close();

@@ -195,21 +195,17 @@ public class LocationServ extends TopServlet{
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	}
 	// Plan
-	out.println("<table width=\"90%\" border>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table>");
-	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
-		    "><h3><font color=\"white\">"+
-		    "Location Info </font></h3></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Name: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"name\" "+
+	out.println("<table width=\"90%\" border=\"1\">");
+	out.println("<caption>Location Info</caption>");
+	out.println("<tr><td align=\"right\"><label for=\"name\">Name: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"name\" id=\"name\" "+
 		    "value=\""+loc.getName()+"\" maxlength=\"90\" size=\"60\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Location URL: </b></td><td align=\"left\">");				
-	out.println("<input type=\"text\" name=\"location_url\" "+
+	out.println("<tr><td align=\"right\"><label for=\"url\">Location URL: </label></td><td align=\"left\">");				
+	out.println("<input type=\"text\" name=\"location_url\" id=\"url\" "+
 		    "value=\""+loc.getLocation_url()+"\" maxlength=\"150\" size=\"90\" /></td></tr>");
 				
-	out.println("<tr><td align=\"right\"><b>Related Facility: </b></td><td align=\"left\">");
-	out.println("<select name=\"facility_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"f_id\">Related Facility: </label></td><td align=\"left\">");
+	out.println("<select name=\"facility_id\" id=\"f_id\">");
 	out.println("<option value=\"\"></option>");
 	String selected = "";
 	if(facilities != null){
@@ -221,19 +217,17 @@ public class LocationServ extends TopServlet{
 	}
 	out.println("</td></tr>");				
 	String checked = loc.isActive()?"checked=\"checked\"":"";
-	out.println("<tr><td align=\"right\"><b>Is Active?: </b></td><td align=\"left\">");				
+	out.println("<tr><td align=\"right\"><label for=\"active\">Is Active?: </label></td><td align=\"left\">");				
 	out.println("<input type=\"checkbox\" name=\"active\" "+
-		    "value=\"y\" "+checked+" />Yes</td></tr>");				
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td><table width=\"100%\">");
-	out.println("<tr>");
+		    "value=\"y\" "+checked+" id=\"active\" />Yes</td></tr>");				
+
 	if(!id.equals("")){
 	    //
 	    // if no program yet (it is new plan)
 	    // can be duplicated only when a program is linked to it
 	    //
-	    out.println("<td valign=top align=right>");				
+	    out.println("<tr>");	    
+	    out.println("<td>");				
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Update\" /></td>");
 	    if(user.canDelete()){
@@ -241,24 +235,24 @@ public class LocationServ extends TopServlet{
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateForm2()\">");
 		out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
-		out.println("</td><td valign=\"top\" align=\"right\">");
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Delete\" />&nbsp;");
 		out.println("</form></td>");
 	    }
+	    out.println("</tr>");
+	    out.println("</table>");
+	    out.println("</form>");
 	}
 	else { // delete startNew
-	    out.println("<td valign=\"top\" align=\"right\">");
+	    out.println("<tr><td>");
 	    if(user.canEdit()){
 		out.println("<input type=\"submit\" "+
-			    "name=\"action\" value=\"Save\" /></td>"+
-			    "<td align=\"right\" valign=\"top\">" );
+			    "name=\"action\" value=\"Save\" />");
 	    }
-	    out.println("</form></td>");
+	    out.println("</td></tr>");
+	    out.println("</table>");
+	    out.println("</form>");
 	}
-	out.println("</tr>");
-	out.println("</table>");
-	out.println("</td></tr></table>");
 	if(!id.equals("")){
 	    ProgramList plist = new ProgramList(debug);
 	    plist.setLocation_id(id);

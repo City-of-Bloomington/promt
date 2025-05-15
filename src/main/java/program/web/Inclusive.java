@@ -254,17 +254,16 @@ public class Inclusive extends TopServlet{
 	out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	//
 	// program, year, season
-       	out.println("<table border=\"1\"><tr><td><table>");
+       	out.println("<table border=\"1\">");
+	out.println("<caption>Inclusive Items</caption>");
 	out.println("<tr><td align=\"right\"><b>Program:</b></td><td>");
 	out.println("<a href=\""+url+"Program.do?action=zoom&id="+id+"\">");
 	out.println(prog.getTitle()+" ("+prog.getSeasons()+"/"+prog.getYear()+")");
 	out.println("</a></td></tr>");
-	out.println("</table></td></tr>");
-	out.println("<tr><td><table>");
 	if(action.equals("")){
-	    out.println("<tr><td align='center'>");
-	    out.println("<h2>Definition, Examples and Guidelines for "+
-			"Requesting Inclusive Services</h2>");
+	    out.println("<tr><td>");
+	    out.println("<b>Definition, Examples and Guidelines for "+
+			"Requesting Inclusive Services</b>");
 	    out.println("</td></tr>");
 	    out.println("<tr><td>");
 	    out.println("<p>Definition: Inclusion is individuals with and without disabilities participating in recreational activities together.  In order for individuals with disabilities to participate as fully as possible, reasonable accommodations are provided.</p>");
@@ -283,94 +282,90 @@ public class Inclusive extends TopServlet{
 	out.println("<ul>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"consult_pro\" value=\"y\" "+consult_pro+
-		    " />");
-	out.println("I need a Programming Consultation to focus on accessibility/usability of programs and activities to community members with disabilities </li>");		
+		    " id=\"pro\" />");
+	out.println("<label for=\"pro\">I need a Programming Consultation to focus on accessibility/usability of programs and activities to community members with disabilities</label> </li>");		
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"consult_ada\" value=\"y\" "+consult_ada+
-		    " />");
-	out.println("I want/need an Accessibility/ADA Consultation to focus on physical access to facility, park or other site</li>");
+		    " id=\"ada\"/>");
+	out.println("<label for=\"ada\">I want/need an Accessibility/ADA Consultation to focus on physical access to facility, park or other site</label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"training\" value=\"y\" "+
-		    training+" />");
-	out.println("I need Staff Training on: - Can be either tailored to a program area or one of the pre set topics. Topics include, but not limited to: ");
+		    training+" id=\"train\" />");
+	out.println("<label for=\"train\">I need Staff Training on: - Can be either tailored to a program area or one of the pre set topics. Topics include, but not limited to: </label>");
 	out.println("<ul><li>");
 	out.println("<input type=\"checkbox\" name=\"train_aware\" value=\"y\" "+
-		    train_aware+" />");
-	out.println("Disability Awareness and customer service</li>");
+		    train_aware+" id=\"aware\" />");
+	out.println("<label for=\"aware\">Disability Awareness and customer service<label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"train_basics\" value=\"y\" "+
-		    train_basics+" />");
-	out.println("Inclusion the Basics</li>");
+		    train_basics+" id=\"basic\"/>");
+	out.println("<label for=\"basic\">Inclusion the Basics</label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"train_consider\" value=\"y\" "+
-		    train_consider+" />");
-	out.println("Program Considerations for Inclusion</li>");
+		    train_consider+" id=\"con\"/>");
+	out.println("<label for=\"con\">Program Considerations for Inclusion</label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"train_behave\" value=\"y\" "+
-		    train_behave+" />");
-	out.println("Behavior Management</li>");
+		    train_behave+" id=\"behave\"/>");
+	out.println("<label for=\"behave\">Behavior Management</lable></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"train_trip\" value=\"y\" "+
-		    train_trip+" />");
-	out.println("Accessibility considerations when planning field trips</li>");
-	out.println("<li>Other Specify below:<br />");
+		    train_trip+" id=\"trip\" />");
+	out.println("<label for=\trip\">Accessibility considerations when planning field trips</label></li>");
+	out.println("<li><label for=\"other\">Other Specify below:</label><br />");
 
-	out.println("<textarea name=\"train_other\" rows=\"5\" cols=\"70\" wrap>");
+	out.println("<textarea name=\"train_other\" rows=\"5\" cols=\"70\" wrap=\"wrap\" id=\"other\">");
 	out.println(inc.getTrain_other());
 	out.println("</textarea></li>");
 	out.println("</ul>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"market\" value=\"y\" "+
-		    market+" />");
-	out.println("I would like this Marketed to Disability Groups/Populations</li>");
+		    market+" id=\"market\" />");
+	out.println("<label for=\"market\">I would like this Marketed to Disability Groups/Populations</label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"site_visit\" value=\"y\" "+
-		    site_visit+" />");
-	out.println("I would like a site visit/walk through - If the program site has already been determined, this would provide information on any simple maintenance necessary to increase access to individuals with disabilities and identify any removable barriers.</li>");
+		    site_visit+" id=\"visit\"/>");
+	out.println("<label for=\"visit\">I would like a site visit/walk through - If the program site has already been determined, this would provide information on any simple maintenance necessary to increase access to individuals with disabilities and identify any removable barriers.</label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"consult\" value=\"y\" "+
-		    consult+" />");
-	out.println("I need a Programming Consultation to focus on accessibility/usability of programs and activities to community members with disabilities </li>");
+		    consult+" id=\"cons\"/>");
+	out.println("<label for=\"cons\">I need a Programming Consultation to focus on accessibility/usability of programs and activities to community members with disabilities </label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"sign\" value=\"y\" "+
-		    sign+" />");
-	out.println("I want a sign Language Interpreter</li>");
+		    sign+" id=\"sign\" />");
+	out.println("<label for=\"sign\">I want a sign Language Interpreter</label></li>");
 	out.println("<li>");
 	out.println("<input type=\"checkbox\" name=\"prov_sign\" value=\"y\" "+
-		    prov_sign+" />");
-	out.println("I need to know if I should provide a sign language interpreter</li>");
+		    prov_sign+" id=\"psign\"/>");
+	out.println("<label for=\"psign\" I need to know if I should provide a sign language interpreter</label></li>");
 	out.println("</ul></td></tr>");
 	out.println("<tr><td>");
-	out.println("Comments");
+	out.println("<label for=\"comm\">Comments</label>");
 	out.println("</td></tr>");
 	out.println("<tr><td>");
-	out.print("<textarea name=\"comments\" rows=\"5\" cols=\"70\" wrap>");
+	out.print("<textarea name=\"comments\" rows=\"5\" cols=\"70\" wrap id=\"comm\">");
 	out.print(inc.getComments());
 	out.println("</textarea>");
 	out.println("</td></tr>");
-	out.println("</table></td></tr>");
 	//
 	if(action.equals("") || 
 	   action.equals("Delete")){
-	    out.println("<tr><td><table width=\"100%\">");
 	    out.println("<tr><td align=right>");
 	    if(user.canEdit()){
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Add\">");
 	    }
-	    out.println("</td></tr></table></td></tr>"); 
+	    out.println("</td></tr>"); 
 	    out.println("</form>");
 	}
 	else{ // add zoom update
-	    out.println("<tr><td><table width=\"100%\">");
-	    out.println("<tr><td valign=\"top\" align=\"left\">");
+	    out.println("<tr><td>");
 	    if(user.canEdit()){
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Update\">");
 	    }
-	    out.println("</td></form>");
+	    out.println("</form>");
 	    //
-	    out.println("<td align=\"right\" valign=\"top\">");
 	    if(user.canDelete()){
 		out.println("<form name=myForm2 method=post "+
 			    "onsubmit=\"return validateDeleteForm()\">");
@@ -379,7 +374,7 @@ public class Inclusive extends TopServlet{
 			    "value=\"Delete\">");
 		out.println("</form>");					
 	    }
-	    out.println("</td></tr></table></td></tr>");
+	    out.println("</td></tr>");
 	}	    
 	out.println("</table>");
 	Helper.writeWebFooter(out, url);

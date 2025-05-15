@@ -116,8 +116,6 @@ public class ContactSearch extends TopServlet{
 	// This script validates textareas and facility
 	//
 	Helper.writeWebCss(out, url);	
-	out.println("<script type=\"text/javascript\">");
-	out.println("	</script>                          ");   
 	out.println("</head><body>");
 	//
 	Helper.writeTopMenu(out, url);	
@@ -136,37 +134,29 @@ public class ContactSearch extends TopServlet{
 	    out.println("<p>Before you decide to add a new instructor, Please make sure he/she is not already in the system by doing search in this form</p>");
 	}
 	out.println("<table width=\"90%\" border=\"1\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table>");
+	out.println("<caption>Search Options</caption>");
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Instructor Search Options </font></h3></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Instructor ID: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"id\" "+
+	out.println("<tr><td align=\"right\"><label for=\"id\">Instructor ID: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"id\" id=\"id\" "+
 		    "value=\"\" maxlength=\"10\" size=\"10\" /></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Name: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"name\" "+
+	out.println("<tr><td align=\"right\"><label for=\"name\">Name: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"name\" id=\"name\" "+
 		    "value=\"\" maxlength=\"30\" size=\"30\" />*</td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Phone:</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"phone\" maxlength=\"12\" size=\"12\" />*</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Email:</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"email\" "+
+	out.println("<tr><td align=\"right\"><label for=\"phone\">Phone:</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"phone\" maxlength=\"12\" size=\"12\" id=\"phone\" />*</td></tr>");
+	out.println("<tr><td align=\"right\"><label for=\"email\">Email:</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"email\" id=\"email\" "+
 		    "value=\"\" maxlength=\"50\" size=\"50\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Address:</b></td><td align=\"left\">");
-	out.print("<input type=\"text\" name=\"address\" size=\"30\" />");
+	out.println("<tr><td align=\"right\"><label for=\"addr\">Address:</label></td><td align=\"left\">");
+	out.print("<input type=\"text\" name=\"address\" size=\"30\" id=\"addr\"/>");
 	out.println("*</td></tr>");
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td><table width=\"100%\">");
-	out.println("<td align=\"right\">");				
-	out.println("<input type=\"submit\" "+
-		    "name=\"action\" value=\"Search\" /></td>");
-	out.println("<td align=\"right\">");			
-	out.println("<input type=\"button\" onclick=\"document.location='"+url+"Contact.do';\" value=\"New Instructor\" /></td>");		
-	out.println("</tr>");
-	out.println("</table></td></tr>");
-			
 	out.println("</table>");
+	//
+	out.println("<input type=\"submit\" "+
+		    "name=\"action\" value=\"Search\" />");
+	out.println("<input type=\"button\" onclick=\"document.location='"+url+"Contact.do';\" value=\"New Instructor\" /></td>");		
 	out.println("<p>*<font color=\"green\" size=\"-1\"> Notice:you can enter partial name, word or number. </font></p>");
 	if(!action.equals("") && clist.size() == 0){
 	    out.println("<h3> No match found </h3>");

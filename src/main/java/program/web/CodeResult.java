@@ -253,32 +253,30 @@ public class CodeResult extends TopServlet{
 	// Search for programs and sessions that need codes
 	//
 	out.println("<center>");
-	out.println("<Font size=+3>Code Entry Page</Font><br><br>");
+	out.println("<Font size=\"+3\">Code Entry Page</Font><br><br>");
 	if(!success){
 	    if(!message.equals(""))
-		out.println("<font color=red>"+message+"</font><br />");
+		out.println("<font color=\"red\">"+message+"</font><br />");
 	}
 	out.println("<font color=\"green\">Note: Maximum of "+recCount+" records will "+
 		    "be shown at a time.<br>");
 	out.println("Enter the codes for these events and click on Update "+
 		    " to get to the next "+recCount+" records (if any)<br /><br /></font>");
 
-	out.println("<b>Year:</b> "+year+" "+season+"<br />");
+	out.println("<b>Year:</b> "+year+"-"+season+"<br />");
 	boolean hasList = false;
 	if((list == null || list.size() == 0) && (glist == null || glist.size() == 0)){
 	    out.println("<font color=\"green\" size=\"+2\">"+
 			"No records to show</font><br />");
 	}
 	else{
-	    out.println("<table width=\"100%\">");
 	    hasList = true;
 	}
 	if(list != null && list.size() > 0){
 	    //
-	    out.println("<tr><td>Note: The general listing are listed in a separate tble (if any)</td></tr>");
-	    out.println("<tr><td>");
+	    out.println("<p>Note: The general listing are listed in a separate tble (if any)</p><br />");
 	    out.println("<table border=\"1\" width=\"100%\">");
-	    out.println("<legends>Programs and Sessions</legends>");
+	    out.println("<caption>Programs and Sessions</caption>");
 	    out.println("<tr><th>No.</th><th>Program</th><th>Session</th>"+
 			"<th>Category</th>"+
 			"<th>Lead</th><th>Code</th></tr>");
@@ -303,14 +301,12 @@ public class CodeResult extends TopServlet{
 		}
 		jj++;
 	    }
-	    out.println("</table></td></tr>");
+	    out.println("</table>");
 	}
 	if(glist.size() > 0){
 	    //
-	    out.println("<tr><td>");
-	    // interior table
 	    out.println("<table border=\"1\" width=\"100%\">");
-	    out.println("<legends>General Listings</legends>");
+	    out.println("<caption>General Listings</caption>");
 	    out.println("<tr><th>No.</th><th>Title</th><th>ID</th>"+
 			"<th>Lead</th><th>Code</th></tr>");
 	    //
@@ -330,13 +326,12 @@ public class CodeResult extends TopServlet{
 
 		jj++;
 	    }
-	    out.println("</table></td></tr>");
+	    out.println("</table>");
+
 	}
 	if(hasList){
-	    out.println("<tr><td align=right>");
 	    out.println("<input type=\"submit\" name=\"action\" "+
-			"value=\"Update & Next\">");
-	    out.println("</td></tr></table>");
+			"value=\"Update & Next\"><br />");
 	}
 	out.println("</form>");
 	out.println("</body>");

@@ -224,9 +224,9 @@ public class EvalBudgetServ extends TopServlet{
 	    out.println("<h3>Edit Evaluation Budget </h3>");
 	if(!message.equals("")){
 	    if(!success)
-		out.println("<font size=+1 color=red>"+message+"</font><br>");
+		out.println("<font size=\"+1\" color=\"red\">"+message+"</font><br />");
 	    else
-		out.println("<font color=green>"+message+"</font><br>");
+		out.println(message+"<br />");
 	}
 	//
 	// the real table
@@ -235,9 +235,9 @@ public class EvalBudgetServ extends TopServlet{
 	out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	//
 	out.println("<table border=\"1\" align=\"center\">");
+	out.println("<caption>Evaluation Budget</caption>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
 	out.println("<table>");
-	//
 	out.println("<tr><td align=\"right\"><b>Program: ");
 	out.println("</b></td><td align=\"left\">");
 	out.println(prog.getTitle()+" &nbsp;");
@@ -263,6 +263,7 @@ public class EvalBudgetServ extends TopServlet{
 	//
 	out.println("<tr><td>");
 	out.println("<table width=\"100%\" border=\"1\">");
+	out.println("<caption>Budget Table</caption>");
 	//
 	// actual Revenue
 	out.println("<tr><td colspan=\"7\" bgcolor=\"navy\" align=\"center\">"+
@@ -270,13 +271,13 @@ public class EvalBudgetServ extends TopServlet{
 	//
 	out.println("<tr><td colspan=\"4\">&nbsp;</td><td>Revenue $</td>"+
 		    "<td>Expenses $</td><td>&nbsp;</td></tr>");
-	out.println("<tr><td colspan=\"4\"><b>Sponsorship </b></td><td>");
-	out.println("<input type=\"text\" name=\"sponsorship\" value=\""+Helper.formatNumber(budget.getSponsorship())+"\" size=\"10\" /></td><td> &nbsp;</td><td>");
+	out.println("<tr><td colspan=\"4\"><label for=\"spon\">Sponsorship </label></td><td>");
+	out.println("<input type=\"text\" name=\"sponsorship\" value=\""+Helper.formatNumber(budget.getSponsorship())+"\" size=\"10\" id=\"spon\" /></td><td> &nbsp;</td><td>");
 	String checked = budget.isSponsorshipRevenue()?"checked=\"checked\"":"\"\"";
-	out.println("<input type=\"checkbox\" name=\"sponsor_revenue\" value=\"y\" "+checked+" />Mark as Revenue");		
+	out.println("<input type=\"checkbox\" name=\"sponsor_revenue\" value=\"y\" "+checked+" id=\"rev\" /><label for=\"rev\">Mark as Revenue</label>");		
 	out.println("</td></tr>");
-	out.println("<tr><td colspan=\"4\"><b>Donations </b></td><td>");
-	out.println("<input type=\"text\" name=\"donation\" value=\""+Helper.formatNumber(budget.getDonation())+"\" size=\"10\" /></td>"+twoCells);
+	out.println("<tr><td colspan=\"4\"><label for=\"don\">Donations </label></td><td>");
+	out.println("<input type=\"text\" name=\"donation\" value=\""+Helper.formatNumber(budget.getDonation())+"\" size=\"10\" id=\"don\" /></td>"+twoCells);
 	//
 	out.println("<tr><td colspan=\"4\">Add Itemized fees</td>"+threeCells);
 	out.println(row);
@@ -412,11 +413,7 @@ public class EvalBudgetServ extends TopServlet{
 	out.println("<td align=\"right\">"+Helper.formatNumber(budget.getAdmin_fees())+"</td>");
 	out.println("<td><select name=\"admin_percent\">");
 	String ss5 = budget.getAdmin_percent() == 5?"selected=\"selected\"":"";
-	// String ss10 = budget.getAdmin_percent() == 10?"selected=\"selected\"":"";
-	// String ss15 = budget.getAdmin_percent() == 15?"selected=\"selected\"":"";
 	out.println("<option "+ss5+">5</option>");
-	// out.println("<option "+ss10+">10</option>");
-	// out.println("<option "+ss15+">15</option>");
 	out.println("</select>%</td></tr>");
 	out.println(row);
 	out.println("<tr><td colspan=\"4\"><b>TOTAL INDIRECT EXPENSES:</b></td>");
@@ -450,66 +447,59 @@ public class EvalBudgetServ extends TopServlet{
 	out.println("<tr><td colspan=\"3\" align=\"right\">Direct Cost per participant (UDE/attendance):</td><td align=\"right\">$"+Helper.formatNumber(budget.getDirectCostPerParticipant())+"</td>"+threeCells);
 	out.println(row);		
 	//
-	out.println("<tr><td colspan=\"7\"><b>Notes</b><font color=\"green\">"+
+	out.println("<tr><td colspan=\"7\"><label for=\"notes\">Notes</label><font color=\"green\">"+
 		    "Up to 500 characters</font></td></tr>");
 	out.println("<tr><td colspan=\"7\">");		
 	out.print("<textarea name=\"notes\" wrap rows=\"5\" cols=\"80\" "+
-		  " onChange=\"checkTextArea(this, 500)\">");
+		  " onChange=\"checkTextArea(this, 500)\" id=\"notes\" >");
 	out.print(budget.getNotes());
 	out.println("</textarea></td></tr>");
 	//
-	out.println("<tr><td colspan=\"4\" align=\"left\"><b>Prepared By</b>"+
-		    "</td><td colspan=\"3\"><b>Date</b></td></tr>");
+	out.println("<tr><td colspan=\"4\" align=\"left\"><label for=\"wby\">Prepared By</label>"+
+		    "</td><td colspan=\"3\"><label for=\"date\">Date</label></td></tr>");
 	out.println("<tr><td colspan=\"4\" align=\"left\">");
-	out.println("<input type=\"text\" name=\"wby\" size=\"30\" value=\""+budget.getWby()+"\" /></td>");
+	out.println("<input type=\"text\" name=\"wby\" size=\"30\" value=\""+budget.getWby()+"\" id=\"wby\" /></td>");
 	out.println("<td colspan=\"3\" align=\"left\">");
-	out.println("<input type=\"text\" name=\"date\" size=\"10\" value=\""+budget.getDate()+"\" /></td></tr>");		
-	out.println("</table></td></tr>");
+	out.println("<input type=\"text\" name=\"date\" size=\"10\" value=\""+budget.getDate()+"\" id=\"date\" /></td></tr>");		
 	//
 	if(!budget.hasRecord()){
-	    out.println("<tr><td><table width=\"50%\">");
-	    out.println("<tr><td align=right><input type=\"submit\" "+
-			"name=\"action\" value=\"Save\"></td></tr>");
-	    out.println("</table></td></tr>");
+	    out.println("<tr><td colspan=\"7\"><input type=\"submit\" "+
+			"name=\"action\" value=\"Save\" /></td></tr>");
+	    out.println("</td></tr>");
 	}
 	else{ 
-	    out.println("<tr><td><table width=\"80%\">");
 	    out.println("<tr>");
+	    out.println("<td colspan=\"7\">");	    
 	    if(user.canEdit()){
-		out.println("<td valign=\"top\" align=\"right\">"+
-			    "<input type=\"submit\" "+
+		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Update\" /> ");
-		out.println("</td>");
 	    }
 	    out.println("</form>");
 	    //
 	    if(user.canDelete()){
-		out.println("<td valign=\"top\" align=\"right\">");
 		out.println("<form name=\"myForm2\" method=\"post\" "+
-			    "onSubmit=\"return validateDeleteForm()\" >");
+			    "onsubmit=\"return validateDeleteForm()\" >");
 		out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\">");
 		out.println("<input type=\"submit\" name=\"action\" "+
 			    "value=\"Delete\">");
 		out.println("</form>");	
-		out.println("</td>");
 	    }
-	    out.println("</tr></table></td></tr>");
+	    out.println("</td></tr>");
 
 	}	    
-	out.println("</table>");
+	out.println("</table></td></tr></table>");
 	//
-	out.println("<LI><a href="+url+
+	out.println("<li><a href=\""+url+
 		    "Evaluation.do?"+
 		    "&id="+id+
-		    "&action=zoom>Go Back to Evaluation Page</a>");
+		    "&action=zoom\">Go Back to Evaluation Page</a></li>");
 
-	out.println("<LI><a href="+url+
+	out.println("<li><a href=\""+url+
 		    "Program.do?"+
 		    "&id="+id+
-		    "&action=zoom>Go to the Related Program </a>");
+		    "&action=zoom\">Go to the Related Program </a></li>");
 
 	Helper.writeWebFooter(out, url);
-	out.println("</center>");
 	out.print("</body></html>");
 	out.flush();
 	out.close();

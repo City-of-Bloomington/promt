@@ -108,8 +108,6 @@ public class LocationSearch extends TopServlet{
 	// This script validates textareas and facility
 	//
 	Helper.writeWebCss(out, url);
-	out.println("<script type=\"text/javascript\">");
-	out.println("	</script>                          ");   
 	out.println("</head><body>");
 	//
 	out.println("<center>");
@@ -129,42 +127,34 @@ public class LocationSearch extends TopServlet{
 	}
 	out.println("<p>Locations are used in programs and sessions</p>");
 	out.println("<table width=\"90%\" border=\"1\">");
-	out.println("<tr bgcolor=#CDC9A3><td align=\"center\">");
-	out.println("<table>");
-	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
-		    "><h3><font color=\"white\">"+
-		    "Location Search </font></h3></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Location ID: </b></td><td align=\"left\">");
+	out.println("<caption>Location Search</caption>");
+	out.println("<tr><td align=\"right\"><label for=\"id\">Location ID: </label></td><td align=\"left\">");
 	out.println("<input type=\"text\" name=\"id\" "+
-		    "value=\"\" maxlength=\"10\" size=\"10\" /></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Name: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"name\" "+
+		    "value=\"\" maxlength=\"10\" size=\"10\" id=\"id\" /></td></tr>"); 
+	out.println("<tr><td align=\"right\"><label for=\"name\" >Name: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"name\" id=\"name\" "+
 		    "value=\""+name2+"\" maxlength=\"30\" size=\"30\" />*</td></tr>");
 	out.println("<tr><td align=\"right\"><b>Active Status: </b></td><td align=\"left\">");
 	String checked = locs.getActiveStatus().equals("All")?"checked=\"checked\"":"";
 	out.println("<input type=\"radio\" name=\"activeStatus\" "+
-		    "value=\"All\" "+checked+"/>All ");
+		    "value=\"All\" "+checked+" id=\"sall\" /><label for=\"sall\">All </label>");
 	checked = locs.getActiveStatus().equals("active")?"checked=\"checked\"":"";				
 	out.println("<input type=\"radio\" name=\"activeStatus\" "+
-		    "value=\"active\" "+checked+"/>Active Only ");				
-	out.println("</table></td></tr>");
+		    "value=\"active\" "+checked+" id=\"cstatus\"/><label for=\"cstatus\">Active Only</label> ");				
+	out.println("</td></tr>");
 	//
-	out.println("<tr><td><table width=\"100%\">");
 	out.println("<td align=\"right\">");				
 	out.println("<input type=\"submit\" "+
 		    "name=\"action\" value=\"Search\" /></td>");
 	out.println("<td align=\"right\">");			
 	out.println("<input type=\"button\" onclick=\"document.location='"+url+"Location.do';\" value=\"New Location\" /></td>");		
-	out.println("</tr>");
-	out.println("</table></td></tr>");
-			
-	out.println("</table>");
-	out.println("<p>*<font color=\"green\" size=\"-1\"> Notice:you can enter partial name. </font></p>");
+	out.println("</tr></table>");
+	out.println("<p>*<font size=\"-1\"> Notice:you can enter partial name. </font></p>");
 	if(!action.equals("") && locs.size() == 0){
 	    out.println("<h3> No match found </h3>");
 	}
 	else if(locs.size() > 0){
-	    out.println("<h3> Found "+locs.size()+" records </h3>");
+	    out.println("<b> Found "+locs.size()+" records </b>");
 	    out.println("<table border=\"1\"><caption>Search Results</caption>");
 	    out.println("<tr><th>ID</th>"+
 			"<th>Name</th>"+

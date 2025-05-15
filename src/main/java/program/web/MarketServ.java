@@ -381,9 +381,9 @@ public class MarketServ extends TopServlet{
 	out.println("<br />");
 	if(!message.equals("")){
 	    if(success)
-		out.println("<font color=green>"+message+"</font><br>");
+		out.println(message+"<br />");
 	    else
-		out.println("<font color=red>"+message+"</font><br>");
+		out.println("<font color=\"red\">"+message+"</font><br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+
@@ -397,20 +397,19 @@ public class MarketServ extends TopServlet{
 	if(!general_id.equals(""))
 	    out.println("<input type=\"hidden\" name=\"general_id\" value=\"" + general_id + "\" />");
 	out.println("<table border=\"1\" width=\"95%\">");
-	out.println("<tr bgcolor=#CDC9A3><td>");
-	out.println("<table width=\"100%\">");
+	out.println("<caption>Marketing</caption>");
 	//
 	// program, year, season
 	if(program != null){
-	    out.println("<tr><td align=\"right\"><b>Program");
-	    out.println("</b></td><td><a href=\""+url+"Program.do?action=zoom&id="+program.getId()+"\">");
+	    out.println("<tr><td align=\"right\">");
+	    out.println("</td><td><a href=\""+url+"Program.do?action=zoom&id="+program.getId()+"\">Program: ");
 	    out.print(program.getTitle()+", (");
 	    out.print(program.getSeasons());		
 	    out.print("/"+program.getYear()+")");
 	    out.println("</a></td></tr>");
 	}
 	else if(facility != null){
-	    out.println("<tr><td align=\"right\"><b>Facility</b>");
+	    out.println("<tr><td align=\"right\">");
 	    out.println("</td><td>");
 	    String str = "";
 	    if(!season.equals("")){
@@ -421,15 +420,15 @@ public class MarketServ extends TopServlet{
 		str += year;
 	    }
 	    if(!str.equals("")) str =", ("+str+")"; 						
-	    out.println(facility.getName() + str);
+	    out.println("Facility: "+facility.getName() + str);
 	    out.println("</td></tr>");
 	    //
 	    // the user need to pick season and year for facility
 	    //
 	    if(id.equals("")){
-		out.println("<tr><td align=\"right\"><b>Season</b>");
+		out.println("<tr><td align=\"right\"><label for=\"season\">Season</label>");
 		out.println("</td><td>");
-		out.println("<select name=\"season\">");
+		out.println("<select name=\"season\" id=\"season\">");
 		if(season.equals("")){
 		    out.println("<option value=\"-1\" selected=\"selected\">Pick Season</option>");
 		}
@@ -437,8 +436,8 @@ public class MarketServ extends TopServlet{
 		    out.println("<option value=\""+season+"\" selected=\"selected\">"+season+"</option>");
 		}
 		out.println(Helper.allSeasons);
-		out.println("</select><b> Year:</b>");
-		out.println("<select name=\"year\">");
+		out.println("</select><label for=\"year\"> Year:</label>");
+		out.println("<select name=\"year\" id=\"year\">");
 		out.println("<option value=\"-1\">Pick Year</option>");
 		int[] yy = Helper.getFutureYears();
 		for(int y:yy){
@@ -454,17 +453,16 @@ public class MarketServ extends TopServlet{
 						
 	}
 	else if(general != null){
-	    out.println("<tr><td align=\"right\"><b>General Listings ");
-	    out.println("</b></td><td>");
+	    out.println("<tr><td align=\"right\">");
+	    out.println("</td><td>General Listing: ");
 	    out.println(general.getTitle());
-						
 	    out.println("</td></tr>");
 	    if(id.equals("")){
 		season = general.getSeason();
 		year = general.getYear();
-		out.println("<tr><td align=\"right\"><b>Season</b>");
+		out.println("<tr><td align=\"right\"><label for=\"season\">Season</label>");
 		out.println("</td><td>");
-		out.println("<select name=\"season\">");
+		out.println("<select name=\"season\" id=\"season\">");
 		if(season.equals("")){							
 		    out.println("<option value=\"-1\" selected>Pick Season</option>");
 		}
@@ -472,8 +470,8 @@ public class MarketServ extends TopServlet{
 		    out.println("<option value=\""+season+"\" selected=\"selected\">"+season+"</option>");
 		}
 		out.println(Helper.allSeasons);
-		out.println("</select><b> Year:</b>");
-		out.println("<select name=\"year\">");
+		out.println("</select><label for=\"year\"> Year:</label>");
+		out.println("<select name=\"year\" id=\"year\">");
 		out.println("<option value=\"-1\">Pick Year</option>");
 		int[] yy = Helper.getFutureYears();
 		for(int y:yy){
@@ -489,9 +487,9 @@ public class MarketServ extends TopServlet{
 	}
 	//
 	// Program Ad
-	out.println("<tr><td colspan=\"2\" align=\"center\" valign=\"top\"><b>Marketing Ads:</b></td></tr>");
 	out.println("<tr><td colspan=\"2\" align=\"center\">");		
 	out.println("<table border=\"1\" width=\"90%\">");
+	out.println("<caption>Marketing Ads </caption>");
 	out.println("<tr><th>&nbsp;</th><th>Ad Type</th>"+
 		    "<th>Expenses</th><th colspan=\"2\">Expense Type</th><th>Due Date</th><th width=\"25%\">Details</th><th>&nbsp;</th></tr>");		
 	int j=1;
@@ -499,24 +497,22 @@ public class MarketServ extends TopServlet{
 	Set<String> adSet = new HashSet<String>();
 	if(ads != null && ads.size() > 0){
 	    for(MarketAd one:ads){
-		out.println("<tr><td>"+(j++)+"<input type=\"checkbox\" name=\"delAd\" value=\""+one.getId()+"\" /></td>");
+		out.println("<tr><td>"+(j++)+"<input type=\"checkbox\" name=\"delAd\" value=\""+one.getId()+"\" id=\""+one.getId()+"\" /></td>");
 		// adSet.add(one.getType_id());
-		out.println("<td>"+one.getType().getName()+"</td>");
+		out.println("<td><label for=\""+one.getId()+"\">"+one.getType().getName()+"</label></td>");
 		out.println("<td align=\"right\">$"+Helper.formatNumber(one.getExpenses())+"</td>");
 		if(one.isDirect()){
 		    out.println("<td>Direct</td><td>&nbsp;</td>");
-		    // totalDirect += one.getExpenses();
 		}
 		else{
 		    out.println("<td>&nbsp;</td><td>Indirect</td>");
-		    // totalIndirect += one.getExpenses();
 		}
 		out.println("<td>&nbsp;"+one.getDue_date()+"</td>");
 		out.println("<td>&nbsp;"+one.getDetails()+"</td>");				
 		out.println("<td>");
 		out.println("<input "+
 			    "type=\"button\" value=\"Edit\" "+
-			    "onClick=\"window.open('"+
+			    "onclick=\"window.open('"+
 			    url+
 			    "MarketAd.do?id="+one.getId()+
 			    "','MarketAd','toolbar=0,location=0,"+
@@ -527,8 +523,8 @@ public class MarketServ extends TopServlet{
 	    }
 	}
 	for(int i=0;i<3;i++){
-	    out.println("<tr><td>"+(j++)+"</td>");
-	    out.println("<td><select name=\"ad_type_id"+i+"\">");
+	    out.println("<tr><td><label for=\"ad_type_id"+i+"\">"+(j++)+"</label></td>");
+	    out.println("<td><select name=\"ad_type_id"+i+"\" id=\"ad_type_id"+i+"\" >");
 	    out.println("<option value=\"\">Pick one</option>");
 	    if(allAds != null && allAds.size() > 0){
 		for(Type one:allAds){
@@ -537,20 +533,20 @@ public class MarketServ extends TopServlet{
 		}
 	    }
 	    out.println("</select></td>");
-	    out.println("<td><input type=\"text\" name=\"ad_expenses"+i+"\" value=\"\" size=\"6\" maxlength=\"6\" /></td>");
-	    out.println("<td><input type=\"radio\" name=\"ad_direct"+i+"\" value=\"y\" />Direct</td>");
-	    out.println("<td><input type=\"radio\" name=\"ad_direct"+i+"\" value=\"\">Indirect</td>");
+	    out.println("<td><label for=\"exp"+i+"\">Ad Expenses </label><input type=\"text\" name=\"ad_expenses"+i+"\" value=\"\" size=\"6\" maxlength=\"6\" id=\"exp"+i+"\" /></td>");
+	    out.println("<td><input type=\"radio\" name=\"ad_direct"+i+"\" value=\"y\" id=\"dir"+i+"\" /><label for=\"dir"+i+"\">Direct</label></td>");
+	    out.println("<td><input type=\"radio\" name=\"ad_direct"+i+"\" value=\"\" id=\"ind"+i+"\"><label for=\"ind"+i+"\">Indirect</lable></td>");
 	    out.println("<td><input type=\"text\" name=\"ad_due_date"+i+"\" value=\"\" size=\"10\" maxlength=\"10\" id=\"ad_due_date"+i+"\" /></td>");
-	    out.println("<td colspan=\"2\"><textarea name=\"ad_details"+i+"\" rows=\"3\" cols=\"40\"></textarea></td>");			
+	    out.println("<td colspan=\"2\"><textarea name=\"ad_details"+i+"\" rows=\"3\" cols=\"40\" id=\"ad_details"+i+"\"></textarea></td>");			
 	    out.println("</tr>");
 	}
 	out.println("</table></td></tr>");
 	//
-	out.println("<tr><td align=\"right\"><b>Other Ad:</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"other_ad\" value=\""+market.getOther_ad()+"\" size=\"30\" maxlength=\"70\" /></td></tr>");
+	out.println("<tr><td align=\"right\"><label for=\"other_ad\">Other Ad:</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"other_ad\" value=\""+market.getOther_ad()+"\" size=\"30\" maxlength=\"70\" id=\"other_ad\" /></td></tr>");
 	//
 	// marketing pieces
-	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Marketing Pieces:<b></td></tr>");
+	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Marketing Pieces:</b></td></tr>");
 	out.println("<tr><td colspan=\"2\" align=\"center\">Note: due date is required for every marketing piece.</td></tr>");				
 	out.println("<tr><td align=\"center\" colspan=\"2\">");
 	//
@@ -577,7 +573,7 @@ public class MarketServ extends TopServlet{
 		    // totalIndirect += one.getExpenses();
 		}
 		out.println("<td>&nbsp;"+one.getDue_date()+"</td>");
-		out.println("<td>&nbsp;"+one.getDetails()+"</td>");				
+		out.println("<td>&nbsp;"+one.getDetails()+"</td>");
 		out.println("<td><input "+
 			    "type=\"button\" value=\"Edit\" "+
 			    "onClick=\"window.open('"+
@@ -618,12 +614,12 @@ public class MarketServ extends TopServlet{
 		
 	//
 	out.println("<tr><td align=\"right\">");
-	out.println("<b>Does the marketing piece <br />combine classes or programs?<br />Please list which ones should <br />appear </b>(example: two classes sharing <br />one flier):</td><td colspan='2'>");
-	out.print("<textarea name=\"class_list\" rows=\"5\" cols=\"65\" wrap>");
+	out.println("<label for=\"class\">Does the marketing piece <br />combine classes or programs?<br />Please list which ones should appear </label>(example: two classes sharing <br />one flier):</td><td colspan='2'>");
+	out.print("<textarea name=\"class_list\" rows=\"5\" cols=\"65\" id=\"class\" wrap>");
 	out.print(market.getClass_list());
 	out.println("</textarea></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Other Marketing</b></td><td valign=\"top\">(Up to 1000 characters)<br />");
-	out.print("<textarea name=\"other_market\" rows=\"5\" cols=\"65\" wrap>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"other\">Other Marketing</label></td><td valign=\"top\">(Up to 1000 characters)<br />");
+	out.print("<textarea name=\"other_market\" rows=\"5\" cols=\"65\" id=\"other\" wrap>");
 	out.print(market.getOther_market());
 	out.println("</textarea></td></tr>");
 	//
@@ -667,8 +663,8 @@ public class MarketServ extends TopServlet{
 	//		
 	// Special Instruction
 	out.println("<tr><td valign=\"top\" align=\"right\">");
-	out.println("<b>Special Instructions</b></td><td>");
-	out.println("<textarea rows=\"5\" cols=\"65\" name=\"spInstructions\" wrap "+
+	out.println("<label for=\"spe\">Special Instructions</b></td><td>");
+	out.println("<textarea rows=\"5\" cols=\"65\" name=\"spInstructions\" id=\"spe\" wrap "+
 		    "onchange=\"validateTextarea(this)\">"); 
 	out.println(market.getSpInstructions());
 	out.println("</textarea>");
@@ -679,7 +675,7 @@ public class MarketServ extends TopServlet{
 	if(!market.getSignBoard().isEmpty()){
 	    checked="checked=\"checked\"";
 	}
-	out.println("<input type=\"checkbox\" name=\"signBoard\" value=\"y\" "+checked+" />Reserve the digital signboard. Date digital sign needed ");
+	out.println("<input type=\"checkbox\" name=\"signBoard\" value=\"y\" "+checked+" id=\"signb\" /><label for=\"signb\">Reserve the digital signboard.</label>,<label for=\"board_date\"> Date digital sign needed </label>");
 	out.println("<input type=\"text\" name=\"signBoardDate\" value=\""+market.getSignBoardDate()+"\" size=\"10\" id=\"board_date\" />");
 	out.println("</td></tr>");
 	out.println("</table></td></tr>");
@@ -688,10 +684,10 @@ public class MarketServ extends TopServlet{
 	//
 	if(id.equals("")){
 	    if(user.canEdit()){
-		out.println("<tr><td colspan=2 align=right><input type=submit "+
-			    "name=action value=Save>&nbsp;&nbsp;"+
+		out.println("<tr><td colspan=2 align=right><input type=\"submit\" "+
+			    "name=\"action\" value=\"Save\" />&nbsp;&nbsp;"+
 			    "&nbsp;&nbsp;&nbsp;" +
-			    "&nbsp;&nbsp;<input type=reset value=Clear>"+
+			    "&nbsp;&nbsp;<input type=\"reset\" value=\"Clear\" />"+
 			    "</td></tr>");
 	    }
 	    out.println("</table></td></tr>");			
@@ -701,7 +697,7 @@ public class MarketServ extends TopServlet{
 	    out.println("<tr><td><table width=\"80%\"><tr>");
 	    if(user.canEdit()){
 		out.println("<td align=\"right\" valign=\"top\"><input type=submit "+
-			    "name=\"action\" value=\"Update\"> "+
+			    "name=\"action\" value=\"Update\" /> "+
 			    "&nbsp;&nbsp;&nbsp;&nbsp;" +
 			    "</td>");
 		out.println("<td align=\"center\" valign=\"top\">");

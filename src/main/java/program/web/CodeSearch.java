@@ -128,8 +128,9 @@ public class CodeSearch extends TopServlet{
 	}
 	out.println("<center><table align=\"center\" border=\"1\" "+
 		    "cellpadding=\"2\" cellspacing=\"1\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><b>Sort by</b></td>");
-	out.println("<td><select name=\"sortby\">");
+	out.println("<caption>Search Options</caption>");
+	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><label for=\"sortby\">Sort by</label></td>");
+	out.println("<td><select name=\"sortby\" id=\"sortby\">");
 	out.println("<option value=\"area\" selected>Area</option>");
 	out.println("<option value=\"category\">Guide Headings</option>");
 	out.println("<option value=\"program\">Program Title</option>");
@@ -149,9 +150,9 @@ public class CodeSearch extends TopServlet{
 	}		
 	out.println("</select></td></tr>");
 	// area
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><b>");
-	out.println(" Area</b></td><td align=\"left\">");
-	out.println("<select name=\"area_id\">");
+	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><label for=\"area_id\">");
+	out.println(" Area</label></td><td align=\"left\">");
+	out.println("<select name=\"area_id\" id=\"area_id\">");
 	out.println("<option value=\"\"></option>");
 	if(areas != null){
 	    for(Type one:areas){
@@ -163,9 +164,9 @@ public class CodeSearch extends TopServlet{
 
 	// lead
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\">"+
-		    "<b>Lead Programmer");
-	out.println("</td></b><td align=\"left\">");
-	out.println("<select name=\"lead_id\">");
+		    "<label for=\"lead_id\">Lead Programmer");
+	out.println("</td></label><td align=\"left\">");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\"></option>");
 	if(leads != null){
 	    for(Lead one:leads){
@@ -178,9 +179,9 @@ public class CodeSearch extends TopServlet{
 	//
 	// program
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\">"+
-		    "<b>Program");
-	out.println("</td></b><td align=\"left\">");
-	out.println("<select name=\"id\">");
+		    "<label for=\"prog_id\">Program</lable>");
+	out.println("</td><td align=\"left\">");
+	out.println("<select name=\"id\" id=\"prog_id\">");
 	out.println("<option value=\"\"></option>");
 	if(programs != null){
 	    for(Program one:programs){
@@ -191,24 +192,20 @@ public class CodeSearch extends TopServlet{
 	out.println("</td></tr>");
 	//
 	// non-reverting account
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><b>Start Date, from "+
-		    "</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"date_from\" value=\""+
-		    "\" size=\"10\" maxlength=\"10\" class=\"date\" /> to "); 
-	out.println("<input type=\"text\" name=\"date_to\" value=\""+
+	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><label for=\"date_from\">Start Date, from "+
+		    "</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"date_from\" id=\"date_from\" value=\""+
+		    "\" size=\"10\" maxlength=\"10\" class=\"date\" /><label for=\"date_to\"> to</label> "); 
+	out.println("<input type=\"text\" name=\"date_to\" id=\"date_to\" value=\""+
 		    "\" size=\"10\" maxlength=\"10\" class=\"date\"/></td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><b>Non-reverting "+
-		    "Account</b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"nraccount\" value=\""+nraccount+
+	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"right\"><label for=\"account_id\">Non-reverting "+
+		    "Account</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"nraccount\" id=\"account_id\" value=\""+nraccount+
 		    "\" size=\"10\" maxlength=\"10\"></td></tr>");		
 	out.println("</table>");
 	//
-	out.println("<center><table border=\"0\" width=\"70%\">");
-	out.println("<tr><td align=\"right\">");
 	out.println("<input type=\"submit\" name=\"action\" "+
-		    "value=\"Browse\" />");
-	out.println("</td></tr></table>");
-	out.println("<br>");
+		    "value=\"Find\" />");
 	out.println("</center>");
 	out.println("</form>");
 	Helper.writeWebFooter(out, url);

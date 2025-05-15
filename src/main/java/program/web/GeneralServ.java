@@ -351,10 +351,10 @@ public class GeneralServ extends TopServlet{
 	}
 	if(!message.equals("")){
 	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
+		out.println(message);
 	    else
 		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println("<br />");
 	}		
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"return "+
@@ -365,20 +365,19 @@ public class GeneralServ extends TopServlet{
 		out.println("<input type=\"hidden\" name=\"lead_id\" value=\""+pp.getLead_id()+"\" />");
 	    }
 	}
-	out.println("<table width=\"90%\" border>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table>");
+	out.println("<table width=\"90%\" border=\"1\">");
+	out.println("<caption>General Listing Info</caption>");
 	if(id.equals("")){
-	    out.println("<tr><td align=\"left\" colspan=\"2\"><font color=\"green\"><b>Note: </b>Use this form for any listing that is not a 'Program' and you want it to appear in the 'Parks & Recs Brochure'</font></td></tr>");
+	    out.println("<tr><td align=\"left\" colspan=\"2\"><b>Note: </b>Use this form for any listing that is not a 'Program' and you want it to appear in the 'Parks & Recs Brochure'</td></tr>");
 	}
 	//		
-	out.println("<tr><td align=\"right\"><b>Listing Title: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"title\" "+
+	out.println("<tr><td align=\"right\"><label for=\"gtitle\">Listing Title: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"title\" id=\"gtitle\" "+
 		    "value=\""+pp.getTitle()+"\" maxlength=\"100\" size=\"70\" />*</td></tr>");
 	out.println("</td></tr>");
 	if(id.equals("")){
-	    out.println("<tr><td align=\"right\"><b>Listing Season: </b></td><td>");						
-	    out.println("<select name=\"season\">");
+	    out.println("<tr><td align=\"right\"><label for=\"season\">Listing Season: </label></td><td>");						
+	    out.println("<select name=\"season\" id=\"season\">");
 	    out.println("<option value=\"-1\">Pick Season</option>");
 	    out.println(Helper.allSeasons);
 	    out.println("</select>* ");
@@ -389,8 +388,8 @@ public class GeneralServ extends TopServlet{
 	}
 
 	if(id.equals("")){
-	    out.println("<b>Year:</b>");						
-	    out.println("<select name=\"year\">");
+	    out.println("<label for=\"year\">Year:</label>");						
+	    out.println("<select name=\"year\" id=\"year\">");
 	    out.println("<option value=\"-1\">Pick Year</option>");
 	    int[] years = Helper.getFutureYears();
 	    for(int yy:years){
@@ -403,10 +402,10 @@ public class GeneralServ extends TopServlet{
 	    out.println(pp.getYear());	
 	}
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"left\"><b>Lead Programmer:</b></td>");
+	out.println("<tr><td align=\"left\"><label for=\"lead\">Lead Programmer:</label></td>");
 	out.println("<td align=\"left\">");
 	if(id.equals("") || pp.getLead_id().equals("")){
-	    out.println("<select name=\"lead_id\">");
+	    out.println("<select name=\"lead_id\" id=\"lead\">");
 	    out.println("<option value=\"\"></option>");
 	    if(leads != null && leads.size() > 0){
 		for(Lead one:leads){
@@ -423,47 +422,48 @@ public class GeneralServ extends TopServlet{
 		out.println(lead);
 	}
 	out.println("</td></tr>");		
-	out.println("<tr><td align=\"right\"><b>Code: </b></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"code\" "+
+	out.println("<tr><td align=\"right\"><label for=\"code\">Code: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"code\" id=\"code\" "+
 		    "value=\""+pp.getCode()+"\" maxlength=\"10\" size=\"10\" />*&nbsp;&nbsp;");
-	out.println("<input type=\"checkbox\" name=\"codeNeed\" value=\"y\" "+codeNeed+"/> Code Needed");
+	out.println("<input type=\"checkbox\" id=\"coden\" name=\"codeNeed\" value=\"y\" "+codeNeed+"/><label for=\"coden\"> Code Needed</label>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Description: </b></td><td align=\"left\">");		
-	out.println("<textarea name=\"description\" rows=\"8\" cols=\"70\" wrap>"+pp.getDescription()+"</textarea></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Date: </b></td><td align=\"left\">");
+	out.println("<tr><td align=\"right\"><label for=\"desc\">Description: </label></td><td align=\"left\">");		
+	out.println("<textarea name=\"description\" rows=\"8\" cols=\"70\" id=\"desc\" wrap>"+pp.getDescription()+"</textarea></td></tr>");
+	out.println("<tr><td align=\"right\"><label for=\"date\">Date: </label></td><td align=\"left\">");
 	out.println("<input type=\"text\" name=\"date\" id=\"date\" "+
 		    "value=\""+pp.getDate()+"\" maxlength=\"10\" size=\"10\" /></td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"top\"><b>Days: </b></td>");
-	out.println("<td align=\"left\"><table width=\"100%\"><tr><td align=\"left\">");
+	out.println("<td align=\"left\"><table width=\"100%\">");
+	out.println("<caption>Days</caption>");
+	out.println("<tr><td align=\"left\">");
 	out.println("<input type=\"checkbox\" name=\"d_sun\" value=\"y\" "+
-		    d_sun+">Su");
+		    d_sun+" id=\"dsu\"><label for=\"dsu\">Su</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_mon\" value=\"y\" "+
-		    d_mon+">M");
+		    d_mon+" id=\"dmon\"><label for=\"dmon\">M</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_tue\" value=\"y\" "+
-		    d_tue+">Tu");
+		    d_tue+" id=\"dtu\"><label for=\"dtu\">Tu</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_wed\" value=\"y\" "+
-		    d_wed+">W");
+		    d_wed+" id=\"dwed\"><label for=\"dwed\">W</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_thu\" value=\"y\" "+
-		    d_thu+">Th");
+		    d_thu+" id=\"dth\"><label for=\"dth\">Th</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_fri\" value=\"y\" "+
-		    d_fri+">F");
+		    d_fri+" id=\"dfr\"><label for=\"dfr\">F</label>");
 	out.println("</td></tr><tr><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_sat\" value=\"y\" "+
-		    d_sat+">Sa");
+		    d_sat+" id=\"dsa\"><label for=\"dsa\">Sa</label>");
 	out.println("</td><td> </td><td colspan=2 align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_mon_fri\" value=\"y\" "+
-		    d_mon_fri+">M-F");
+		    d_mon_fri+" id=\"dmf\"><label for=\"dmf\">M-F</label>");
 	out.println("</td><td colspan=2 align=left>");
 	out.println("<input type=\"checkbox\" name=d_all value=\"y\" "+
-		    d_all+">M-Su");
+		    d_all+" id=\"dall\"><label for=\"dall\">M-Su</label>");
 	out.println("</td></tr></table></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Start, End Time: </b></td><td align=\"left\">");
-	out.println("<input type=button onclick=\""+
+	out.println("<tr><td align=\"right\"><label for=\"pickt\">Start, End Time: </label></td><td align=\"left\">");
+	out.println("<input type=\"button\" id=\"pickt\" onclick=\""+
 		    "window.open('"+url+"PickTime?id="+id+"&wtime=time&time="+java.net.URLEncoder.encode(pp.getTime())+"','Time',"+
 		    "'toolbar=0,location=0,"+
 		    "directories=0,status=0,menubar=0,"+
@@ -473,19 +473,17 @@ public class GeneralServ extends TopServlet{
 	out.println("<input type=\"text\" name=\"time\" maxlength=\"20\" "+
 		    "value=\""+ pp.getTime() + "\" size=\"16\" readonly=\"readonly\" />");		
 	out.println("</td></tr>");		
-	out.println("<tr><td align=\"right\"><b>Cost: </b></td><td align=\"left\">");
-	out.println("$<input type=\"text\" name=\"cost\" id=\"cost\" "+
+	out.println("<tr><td align=\"right\"><label for=\"cost\">Cost: </label></td><td align=\"left\">");
+	out.println("$<input type=\"text\" name=\"cost\" id=\"cost\" id=\"cost\" "+
 		    "value=\""+pp.getCost()+"\" maxlength=\"8\" size=\"8\" /></td></tr>");		
 	//
 	out.println("</table></td></tr>");
 		
 	//
-	out.println("<tr><td><table width=100%>");
 	out.println("<tr>");
 	if(!id.equals("")){
 	    if(user.canEdit()){
-		out.println("<td valign=top align=\"right\">");				
-		out.println("<input type=\"submit\" "+
+		out.println("<td valign=top align=\"right\">");					out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Update\">");
 		out.println("</form></td>");
 	    }
@@ -495,31 +493,29 @@ public class GeneralServ extends TopServlet{
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateForm2()\">");
 		out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\">");
-		out.println("</td><td valign=\"top\" align=\"right\">");
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Delete\" />&nbsp;");
 		out.println("</form></td>");
 	    }
+	    out.println("</tr>");
 	    List<Market> markets = null;						
 	    if(pp.hasMarkets()){
 		markets = pp.getMarkets();														
 	    }
-	    out.println("<td valign=\"top\" align=\"right\">");
+	    out.println("<tr><td valign=\"top\" align=\"right\">");
 	    out.println("<button  "+
 			"onclick=\"javascript:window.document.location.href='"+url+"Market.do?general_id="+id+"';return false\">Marketing</button>");
-	    out.println("</td>");
+	    out.println("</td></tr>");
 	}
 	else { 
-	    out.println("<td valign=top align=right>");
+	    out.println("<tr><td valign=top align=right>");
 	    if(user.canEdit()){
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Save\" /></td>");
 	    }
-	    out.println("</form></td>");
+	    out.println("</form></td></tr>");
 	}
-	out.println("</tr>");
 	out.println("</table>");
-	out.println("</td></tr></table>");
 	if(pp.hasMarkets()){
 	    List<Market> markets = pp.getMarkets();
 	    for(Market market:markets){

@@ -116,36 +116,37 @@ public class MarketResult extends TopServlet{
 	else{
 	    out.println("Matching total records :"+ markets.size() + "<br />");
 	    out.println("<table width=\"100%\">");
+	    out.println("<caption>Marketing</caption>");
 	    for(Market market:markets){
 		// market id (same as program)
-		out.println("<tr><td align=\"right\"><b>Marketing ID:</b></td>");
+		out.println("<tr><td align=\"right\"><b>Marketing:</b></td>");
 		out.println("<td align=\"left\">");
 		out.print("<a href=\""+url+"Market.do?id="+market.getId()+
-			  "\">"+market.getId()+"</a>");
+			  "\">Marketing "+market.getId()+"</a>");
 		out.println("</td></tr>");
 		Program prog = market.getProgram();
 		Facility facility = market.getFacility();
 		General general = market.getGeneral();
 		if(prog != null){
-		    out.println("<tr><td align=\"right\"><b>Program</b></td>");
+		    out.println("<tr>");
 		    out.println("<td align=\"left\">");
-		    out.println("<a href=\""+url+"Program.do?id="+prog.getId()+"&action=zoom\">"+prog.getTitle()+" ("+prog.getSeason()+"/"+prog.getYear()+")</a></td></tr>");
+		    out.println("<a href=\""+url+"Program.do?id="+prog.getId()+"&action=zoom\">Program: "+prog.getTitle()+" ("+prog.getSeason()+"/"+prog.getYear()+")</a></td></tr>");
 		}
 		else if(facility != null){
-		    out.println("<tr><td align=\"right\"><b>Facility</b></td>");
+		    out.println("<tr>");
 		    out.println("<td align=\"left\">");
-		    out.println("<a href=\""+url+"Facility?id="+facility.getId()+"&action=zoom\">"+facility.getName()+"</a></td></tr>");
+		    out.println("<a href=\""+url+"Facility?id="+facility.getId()+"&action=zoom\"> Facility: "+facility.getName()+"</a></td></tr>");
 		}
 		else if(general != null){
-		    out.println("<tr><td align=\"right\"><b>General Listing</b></td>");
+		    out.println("<tr>");
 		    out.println("<td align=\"left\">");
-		    out.println("<a href=\""+url+"General.do?id="+general.getId()+"&action=zoom\">"+general.getTitle()+"</a></td></tr>");
+		    out.println("<a href=\""+url+"General.do?id="+general.getId()+"&action=zoom\">General Listing: "+general.getTitle()+"</a></td></tr>");
 
 		}
 		//
 		List<MarketAd> ads = market.getAds();
 		if(ads != null && ads.size() > 0){
-		    out.println("<tr><td align=\"right\"><b>Ads</b></td>");
+		    out.println("<tr><td align=\"right\"><b>Marketing Ads</b></td>");
 		    String all = "";
 		    for(MarketAd one:ads){
 			if(!all.equals("")) all += ", ";
@@ -161,7 +162,7 @@ public class MarketResult extends TopServlet{
 		}
 		List<Type> announces = market.getAnnounces();
 		if(announces != null && announces.size() > 0){
-		    out.println("<tr><td align=\"right\"><b>Announcements</b></td>");
+		    out.println("<tr><td align=\"right\"><b>Marketing Announcements</b></td>");
 		    String all = "";
 		    for(Type one:announces){
 			if(!all.isEmpty()) all += ", ";

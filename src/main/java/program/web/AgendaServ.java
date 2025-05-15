@@ -165,25 +165,23 @@ public class AgendaServ extends TopServlet {
 	out.println("a:active   {text-decoration: none; color:"+calColor+";}"); 
 	out.println("a:hover    {text-decoration: none; color:"+calColor+";}"); 
 	out.println("--></style>");
-	out.println("<script type=\"text/javascript\"> ");
-
-	out.println("</script> ");
-	out.println("</head><body >");
+	out.println("</head><body>");
 	//
 	Helper.writeTopMenu(out, url);
 	if(!success){
 	    if(!message.equals(""))
-		out.println("<font color=red>"+message+"</font><br />");
+		out.println("<font color=\"red\">"+message+"</font><br />");
 	}
 	cal.set(Calendar.YEAR, year);
 	cal.set(Calendar.MONTH, month - 1);
 	cal.set(Calendar.DATE, day);
 	out.println("<center>");
-	out.println("<br><font size=+2 color=blue> Activities & Events "+
+	out.println("<br /><font size=\"+2\" color=\"blue\"> Activities & Events "+
 		    "Calendar </font><br>");
-	out.println("<font size=+3> "+Months[month-1]+ " "+year+
-		    "</font><br><br>");
-	out.println("<table border=4 cellspacing=0 cols=7 width=\"90%\" ");
+
+	out.println("<table border=\"4\" cellspacing=\"0\" cols=\"7\" width=\"90%\">");
+	out.println("<caption> "+Months[month-1]+ " "+year+
+		    "</caption>");	
 	String dd = "&nbsp;";
 	int ddd = 0;
 	int nxt = 0;
@@ -213,14 +211,14 @@ public class AgendaServ extends TopServlet {
 		//
 		if (row == 0){ 
 		    if (col == 0 || col == 6) // WS weekends  	
-			out.println("<td bgcolor=" + headerWKBG + 
-				    " align=center valign=top><font color=" + 
-				    headerWKFR + ">" + Days[col] + 
+			out.println("<td bgcolor=\"" + headerWKBG + 
+				    "\' align=\"center\" valign=\"top\"><font color=\"" + 
+				    headerWKFR + "\" >" + Days[col] + 
 				    "</font><b></td>");
 		    else	// other days			
-			out.println("<td bgcolor=" + headerBG +
-				    " align=center valign=top><font color=" +
-				    headerFR + ">" + Days[col] +
+			out.println("<td bgcolor=\"" + headerBG +
+				    "\" align=\"center\" valign=\"top\"><font color=\"" +
+				    headerFR + "\">" + Days[col] +
 				    "</font></td>");
 		} 
 		else{
@@ -229,34 +227,28 @@ public class AgendaServ extends TopServlet {
 		    //
 		    if (dd.equals("&nbsp;")) {	
 			if (col == 0 || col == 6) 
-			    out.println("<td bgcolor=white>"+dd+"</td>"); 
+			    out.println("<td bgcolor=\"white\">"+dd+"</td>"); 
 			else
-			    out.println("<td bgcolor="+calBG+">"+dd+"</td>"); 
+			    out.println("<td bgcolor=\""+calBG+"\">"+dd+"</td>"); 
 		    }
 		    else if(!dd.equals("")) {		
 			String infoSymbol = "&nbsp;&nbsp;";
 			if(info[ddd-1].size() > 0){
 			    infoSymbol = ""+info[ddd-1].size();
-			    /**
-			    for(int i=0; i<info[ddd-1].size(); ++i){
-				infoSymbol += "*";
-				if((i+1)%5 == 0) infoSymbol += " ";
-			    }
-			    */
 			}
 			String str ="";
 			if (col == 0 || col == 6) 
-			    str += "<td bgcolor=white" ;   
+			    str += "<td bgcolor=\"white\"" ;   
 			else 
-			    str += "<td bgcolor="+calBG ; 
-			str += " valign=top align=left><b>"+
+			    str += "<td bgcolor=\""+calBG+"\""; 
+			str += " valign=\"top\" align=\"left\"><b>"+
 			    "<font face=\"Courier new\">" +
 			    dd + 
 			    "&nbsp;&nbsp;&nbsp;&nbsp;"+
-			    "</font></b><br>"+
-			    "<table border=0><tr><td><font color="+
+			    "</font></b><br />"+
+			    "<table border=\"0\"><tr><td><font color=\""+
 			    calColor + 
-			    " face=\"Courier new\"><a href=#"+dd+">"+
+			    "\" face=\"Courier new\"><a href=#"+dd+">"+
 			    infoSymbol+"</a>"+
 			    "</font></td></tr></table>"+
 			    "</td>";
@@ -269,67 +261,68 @@ public class AgendaServ extends TopServlet {
 	}
 	out.println("</table>");
 	out.println("<br>");
-	out.println("<form name=myForm method=post>");
+	out.println("<form name=\"myForm\" method=\"post\">");
 	out.println("<table border=0 width=90%>");
-	out.println("<input type=hidden name=month value=\""+prevMonth+ 
-		    "\">");
-	out.println("<input type=hidden name=year value=\""+prevMonthYear+ 
-		    "\">");
+	out.println("<input type=\"hidden\" name=\"month\" value=\""+prevMonth+ 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"year\" value=\""+prevMonthYear+ 
+		    "\" />");
 	if(!category_id.equals("")){
-	    out.println("<input type=hidden name=category_id value=\"" + 
-			category_id + "\"></input>");
+	    out.println("<input type=\"hidden\" name=\"category_id\" value=\"" + 
+			category_id + "\" />");
 	}
 	if(!area_id.equals("")){
-	    out.println("<input type=hidden name=area_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"area_id\" value=\"" + 
 			area_id + "\"></input>");
 	}
 	if(!lead_id.equals("")){
-	    out.println("<input type=hidden name=lead_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"lead_id\" value=\"" + 
 			lead_id + "\"></input>");
 	}
 	if(!location_id.equals("")){
-	    out.println("<input type=hidden name=location_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"location_id\" value=\"" + 
 			location_id + "\"></input>");
 	}
-	out.println("<tr><td align=left valign=top>");
-	out.println("<input type=submit name=prev value=\"Previous Month\">");
-	out.println("</td><td align=right valign=top>");
+	out.println("<tr><td align=\"left\" valign=\"top\">");
+	out.println("<input type=\"submit\" name=\"prev\" value=\"Previous Month\" />");
+	out.println("</td><td align=\"right\" valign=\"top\">");
 	out.println("</form>");
-	out.println("<form name=myForm2 method=post>");
-	out.println("<input type=hidden name=month value=\""+nextMonth+ 
-		    "\">");
-	out.println("<input type=hidden name=year value=\""+nextMonthYear+ 
-		    "\">");
+	out.println("<form name=\"myForm2\" method=\"post\">");
+	out.println("<input type=\"hidden\" name=\"month\" value=\""+nextMonth+ 
+		    "\" />");
+	out.println("<input type=\"hidden\" name=\"year\" value=\""+nextMonthYear+ 
+		    "\" />");
 	if(!category_id.equals("")){
-	    out.println("<input type=hidden name=category_id value=\"" + 
-			category_id + "\"></input>");
+	    out.println("<input type=\"hidden\" name=\"category_id\" value=\"" + 
+			category_id + "\" />");
 	}
 	if(!area_id.equals("")){
-	    out.println("<input type=hidden name=area_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"area_id\" value=\"" + 
 			area_id + "\"></input>");
 	}
 	if(!lead_id.equals("")){
-	    out.println("<input type=hidden name=lead_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"lead_id\" value=\"" + 
 			lead_id + "\"></input>");
 	}
 	if(!location_id.equals("")){
-	    out.println("<input type=hidden name=location_id value=\"" + 
+	    out.println("<input type=\"hidden\" name=\"location_id\" value=\"" + 
 			location_id + "\"></input>");
 	}
-	out.println("<input type=submit name=next value=\"Next Month\">");
+	out.println("<input type=\"submit\" name=\"next\" value=\"Next Month\" />");
 	out.println("</td></tr></table></center>");
 	out.println("</form>");
 	// 
 	// show the events
 	//
-	out.println("<table border=0 cellspacing=1 width=\"75%\" ");
-	out.println("<tr><th align=right>Day : </th><th align=left> Event</th>"+
+	out.println("<table border=\"0\" cellspacing=\"1\" width=\"75%\" >");
+	out.println("<caption>Events </caption>");
+	out.println("<tr><th align=\"right\">Day : </th><th align=\"left\"> Event</th>"+
 		    "</tr>");
 	for(int i=0; i<days_in_month; ++i){
 	    if(info[i].size() > 0){
-		out.println("<tr><td valign=top align=right><b><a id="+(i+1)+
+		out.println("<tr><td valign=\"top\" align=\"right\"><b><a id="+(i+1)+
 			    ">"+(i+1)+"</a> :</b></td> ");
-		out.println("<left><td align=left>");
+		out.println("<left><td align=\"left\">");
 		for(int j=0;j<info[i].size(); ++j){
 		    String str = (String) info[i].elementAt(j);
 		    out.println(str+"<br>");

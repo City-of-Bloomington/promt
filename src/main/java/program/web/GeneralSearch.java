@@ -146,19 +146,14 @@ public class GeneralSearch extends TopServlet{
 	//
 	out.println("<form name=\"myForm\" method=\"post\" "+
 		    "onSubmit=\"return validateForm()\">");
-	out.println("<table border=\"1\" width=\"70%\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<table width=\"100%\">");
+	out.println("<table width=\"80%\" border=\"1\">");
+	out.println("<caption>Search Options</caption>");
 	//
-	// fields of the train form
-	//
-	// title, year, season
-		
-	out.println("<tr><td align=\"right\"><b>Listing ID:</b></td>");
-	out.println("<td align=\"left\"><input type=\"text\" name=\"id\" size=\"6\" value=\""+gens.getId()+"\" /></td></tr>"); 		
-	out.println("<tr><td align=\"right\"><b>Season:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"id\">Listing ID:</label></td>");
+	out.println("<td align=\"left\"><input type=\"text\" name=\"id\" size=\"6\" value=\""+gens.getId()+"\" id=\"id\" /></td></tr>"); 		
+	out.println("<tr><td align=\"right\"><label for=\"season\">Season:</label></td>");
 	out.print("<td align=\"left\">");		
-	out.println("<select name=\"season\">");
+	out.println("<select name=\"season\" id=\"season\">");
 	out.println("<option value=\"\">All</option>");
 	if(!gens.getSeason().equals("")){
 	    out.println("<option value=\""+gens.getSeason()+"\" selected>"+
@@ -166,8 +161,8 @@ public class GeneralSearch extends TopServlet{
 	}
 	out.println(Helper.allSeasons);
 	out.println("</select> ");
-	out.println("*<b>Year:</b>");
-	out.println("<select name=\"year\">");
+	out.println("*<label for=\"year\">Year:</label>");
+	out.println("<select name=\"year\" id=\"year\">");
 	out.println("<option value=\"\">All</option>");
 	if(!gens.getYear().equals("")){
 	    out.println("<option value=\""+gens.getYear()+"\" selected=\"selected\">"+
@@ -178,9 +173,9 @@ public class GeneralSearch extends TopServlet{
 	    out.println("<option value=\""+yy+"\">"+yy+"</option>");
 	}
        	out.println("</select></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Lead:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"lead\">Lead:</label></td>");
 	out.print("<td align=\"left\">");		
-	out.println("<select name=\"lead_id\">");
+	out.println("<select name=\"lead_id\" id=\"lead\" >");
 	out.println("<option value=\"\">All</option>");
 	if(leads != null){
 	    for(Lead one:leads){
@@ -191,23 +186,21 @@ public class GeneralSearch extends TopServlet{
 	out.println("</select></td></tr>");		
 	//
 	// Date
-	out.println("<tr><td align=\"right\"><b>Date From:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"dateFrom\">Date From:</label></td>");
 	out.println("<td align=\"left\">");
 	out.println("<input type=\"text\" name=\"dateFrom\" maxlength=\"10\" value=\""+gens.getDateFrom()+"\" size=\"10\" id=\"dateFrom\" />");
-	out.println("<b> to: </b>");
+	out.println("<label for=\"dateTo\"> to: </label>");
 	out.println("<input type=\"text\" name=\"dateTo\" maxlength=\"10\" value=\""+gens.getDateTo()+"\" size=\"10\" id=\"dateTo\" />");
 	out.println("</td></tr>");
 	//
-	out.println("</table></td></tr>");
-	out.println("<tr><td align=\"right\">"+
-		    "<table width=\"90%\"><tr>");
+	out.println("<tr>");
 	out.println("<td align=\"right\"><input type=\"submit\" "+
 		    "name=\"action\" value=\"Submit\"></td>");
-	out.println("<td align=\"right\">");
+	out.println("<td>");
 	out.println("<input type=button value=\"New General Listing\""+
 		    " onclick=\"document.location='"+url+
 		    "General.do?';\"></input></td>");		
-	out.println("</tr></table></td></tr>");
+	out.println("</tr>");
 	out.println("</table>");
 	out.println("<br />");
 	if(!action.equals("")){

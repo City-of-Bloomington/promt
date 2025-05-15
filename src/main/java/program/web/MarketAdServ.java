@@ -125,10 +125,9 @@ public class MarketAdServ extends TopServlet {
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\">");
 	out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	out.println("<table border=\"1\" width=\"90%\">");
-	out.println("<tr><td>");
-	out.println("<table width=\"100%\">");
-	out.println("<tr><th>Ad Type:</th>");
-	out.println("<td align=\"left\"><select name=\"type_id\">");
+	out.println("<caption>Marketing Ad</caption>");
+	out.println("<tr><td><label for=\"type\">Ad Type:</label></td>");
+	out.println("<td align=\"left\"><select name=\"type_id\" id=\"type\">");
 	String selected = "";
 	if(allAds != null && allAds.size() > 0){
 	    for(Type one:allAds){
@@ -137,28 +136,27 @@ public class MarketAdServ extends TopServlet {
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><th>Expenses:</th>");
+	out.println("<tr><td><label for=\"exp\">Expenses:</label></td>");
 	out.println("<td align=\"left\">");
-	out.println("<input type=\"text\" name=\"expenses\" value=\""+ad.getExpenses()+"\" size=\"10\" />");
+	out.println("<input type=\"text\" id=\"exp\" name=\"expenses\" value=\""+ad.getExpenses()+"\" size=\"10\" />");
 	out.println("</td></tr>");	
-	out.println("<tr><th>Expenses Type:</th>");
+	out.println("<tr><td><b>Expenses Type:</b></td>");
 	out.println("<td align=\"left\">");
 	selected = !ad.getDirect().equals("")?"checked=\"checked\"":"";
-	out.println("<input type=\"radio\" name=\"direct\" value=\"y\" "+selected+" />Direct");
+	out.println("<input type=\"radio\" name=\"direct\" value=\"y\" "+selected+" id=\"dir\" /><label for=\"dir\">Direct</label>");
 	selected = ad.getDirect().equals("")?"checked=\"checked\"":"";
-	out.println("<input type=\"radio\" name=\"direct\" value=\"\" "+selected+" />Indirect");		
+	out.println("<input type=\"radio\" id=\"ind\" name=\"direct\" value=\"\" "+selected+" /><label for=\"ind\">Indirect</label>");		
 	out.println("</td></tr>");
-	out.println("<tr><th>Due Date:</th>");
+	out.println("<tr><td><label for=\"due_date\">Due Date:</label></td>");
 	out.println("<td align=\"left\">");
 	out.println("<input type=\"text\" name=\"due_date\" value=\""+ad.getDue_date()+"\" size=\"10\" id=\"due_date\" class=\"date\" />");
 	out.println("</td></tr>");
-	out.println("<tr><th>Details:</th>");
+	out.println("<tr><td><label for=\"det\">Details:</label></td>");
 	out.println("<td align=\"left\">");
-	out.println("<textarea name=\"details\" rows=\"5\" cols=\"40\" />");
+	out.println("<textarea name=\"details\" rows=\"5\" cols=\"40\" id=\"det\" />");
 	out.println(ad.getDetails());
 	out.println("</textarea></td></tr>");		
-	out.println("</table></td></tr>");
-	out.println("<tr><td align=\"right\">");
+	out.println("<tr><td>");
 	out.println("<input type=\"submit\" name=\"action\" value=\"Update\">");
 	out.println("</td></tr>");
 	out.println("</table>");

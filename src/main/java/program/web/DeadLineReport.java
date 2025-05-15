@@ -119,7 +119,7 @@ public class DeadLineReport extends TopServlet{
 	//
 	String today = Helper.getToday2();
 	pl.setDeadLineFrom(today);
-	os.println("<head><title>Browsing Programs " + 
+	os.println("<head><title>Deadline Report " + 
 		   "</title>");
 	Helper.writeWebCss(os, url);
 	os.println("</head><body><center>");
@@ -142,6 +142,7 @@ public class DeadLineReport extends TopServlet{
 	    for(Program prog:pl){
 				
 		os.println("<table width=\"100%\">");
+		os.println("<caption>Deadline report </caption>");
 		os.println("<tr><td colspan=\"2\" align=\"center\">");
 		os.println(prog.getTitle());
 		os.println("</td></tr>");

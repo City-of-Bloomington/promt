@@ -72,25 +72,26 @@ public class FacilitySearch extends TopServlet{
 	// get the options for the select widgets
 	//
 	out.println("<center><h2>Facilities Search</h2></center>");
-	out.println("<form method=post action="+url+"FacilityTable>");
+	out.println("<form method=\"post\" action=\""+url+"FacilityTable\">");
 	out.println("<center><table border=\"1\" width=\"80%\">");
+	out.println("<caption>Search Options</caption>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
 	out.println("<table width=\"100%\">");
 	out.println("<tr><td align=\"right\">");
-	out.println("<strong>Sort by </strong></td><td align=left>");
-	out.println("<select name=sortby>");
-	out.println("<option selected value=id>ID");
-	out.println("<option value=facility>Facility");
+	out.println("<label for=\"sort_id\">Sort by </label></td><td align=left>");
+	out.println("<select name=\"sortby\" id=\"sort_id\">");
+	out.println("<option selected value=\"id\">ID</option>");
+	out.println("<option value=\"facility\">Facility</option>");
 	out.println("</select></td></tr>");
-	out.println("<tr bgcolor=#CDC9A3><td align=right><strong>Show "+
-		    "Records From </strong>"+
+	out.println("<tr bgcolor=#CDC9A3><td align=right><label for=\"min_id\">Show "+
+		    "Records From </label>"+
 		    "</td><td><left>");
-	out.println("<input type=text name=minRecords value=0 size=6><strong>"
-		    +" To </strong>");
-	out.println("<input type=text name=maxRecords value=100 size=6></td></tr>");
-	out.println("<tr><td align=right><strong>Lead "+
-		    "</strong></td><td>");
-	out.println("<select name=\"lead_id\">");
+	out.println("<input type=\"text\" name=\"minRecords\" value=\"0\" size=\"6\"  id=\"min_id\"/><strong>"
+		    +"<label for=\"max_id\"> To </label>");
+	out.println("<input type=\"text\" name=\"maxRecords\" value=\"100\" size=\"6\" id=\"max_id\" //></td></tr>");
+	out.println("<tr><td align=right><label for=\"lead_id\">Lead "+
+		    "</label></td><td>");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">All</option>");
 	if(leads != null){
 	    for(Lead one:leads){
@@ -99,9 +100,9 @@ public class FacilitySearch extends TopServlet{
 	    }
 	}
 	out.println("</select></td></tr>");				
-	out.println("<tr><td align=right><strong>Facility Name "+
-		    "</strong></td><td><left>");
-	out.println("<select name=\"id\">");
+	out.println("<tr><td align=right><label for=\"name_id\">Facility Name "+
+		    "</label></td><td><left>");
+	out.println("<select name=\"id\" id=\"name_id\">");
 	out.println("<option value=\"\">All</option>");
 	if(facils != null && facils.size() > 0){
 	    for(Facility one:facils){
@@ -109,19 +110,14 @@ public class FacilitySearch extends TopServlet{
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><td align=right><strong>Type "+
-		    "</strong></td><td><left>");
-	out.println("<select name=\"type\">");
+	out.println("<tr><td align=right><label for=\"type_id\">Type "+
+		    "</label></td><td><left>");
+	out.println("<select name=\"type\" id=\"type_id\">");
 	out.println("<option value=\"\">All</option>");
 	for(String str:Facility.facility_types){
 	    out.println("<option value=\""+str+"\">"+str+"</option>");
 	}
-	out.println("</select></td></tr>");							
-				
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td>");
-	out.println("<table width=\"100%\">");
+	out.println("</select></td></tr>");
 	out.println("<tr><td align=\"left\">");
 	out.println("<input type=\"submit\" value=\"Search\" /></td>");
 	out.println("<td align=\"right\">");

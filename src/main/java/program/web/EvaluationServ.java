@@ -167,7 +167,7 @@ public class EvaluationServ extends TopServlet{
 	//
 	// else start empty form, startNew
 	//
-	out.println("<html><head><title>Promt Evaluation</title>");
+	out.println("<html><head><title>Program Evaluation</title>");
 	Helper.writeWebCss(out, url);
 	out.println("<script type='text/javascript'>");
 	out.println("/*<![CDATA[*/");						
@@ -239,7 +239,7 @@ public class EvaluationServ extends TopServlet{
 	    out.println("<h3>Edit Evaluation</h3>");
 	}
 	if(prog != null){
-	    out.println("<h2>"+prog.getTitle()+"</h2>");
+	    out.println("<h2>Program: "+prog.getTitle()+"</h2>");
 	    out.println("<br>");
 	}
 	if(!message.equals("")){
@@ -248,13 +248,13 @@ public class EvaluationServ extends TopServlet{
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+
-		    "onSubmit=\"return validateForm();\">");
+		    "onsubmit=\"return validateForm();\">");
 	out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	//the real table
+	out.println("* indicates a required field.");	
 	out.println("<table width=\"90%\" border=\"1\" >");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"left\">");
-	out.println("* indicates a required field.");
-	out.println("</td></tr>");
+	out.println("<caption>Program Evaluation</caption>");
+	
 	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
 	out.println("<table>");
 	//
@@ -270,10 +270,6 @@ public class EvaluationServ extends TopServlet{
 	}
 	out.println("<tr><td align=\"right\"><b>Program ID:"); //same as program
 	out.println("</b></td><td><left><a href=\""+url+"Program.do?id="+id+"&action=zoom\">"+id+"</a></td></tr>");
-	out.println("</table></td></tr>");
-
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");		
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Program Objectives </font></h3></td></tr>");
@@ -341,8 +337,8 @@ public class EvaluationServ extends TopServlet{
 	out.println("</td><td>");
 	out.println("<input name=\"attendance\" size=\"6\" maxlength=\"6\" value=\""+eval.getAttendance()+"\" />");
 	out.println("</td></tr></table></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Life Cycle:</b></td><td>");
-	out.println("<select name=\"life_cycle\">");
+	out.println("<tr><td align=\"right\"><label for=\"life_cycle_id\">Life Cycle:</label></td><td>");
+	out.println("<select name=\"life_cycle\" id=\"life_cycle_id\">");
 	out.println("<option value=\"\"></option>");
 	for(String one:Evaluation.life_cycle_options){
 	    String selected = one.equals(eval.getLife_cycle())?"selected=\"selected\"":"";
@@ -350,22 +346,16 @@ public class EvaluationServ extends TopServlet{
 	}
 	out.println("</select>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"top\"><b>Life Cycle Comments:</b></td><td>");
-	out.println("<textarea name=\"life_cycle_info\" rows=\"5\" cols=\"50\" onchange=\"validateTextarea(this,500);\">");
+	out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"life_info\">Life Cycle Comments:</label></td><td>");
+	out.println("<textarea name=\"life_cycle_info\" rows=\"5\" cols=\"50\" onchange=\"validateTextarea(this,500);\" id=\"life_info\">");
 	out.println(eval.getLife_cycle_info());
 	out.println("</textarea>");
 	out.println("</td></tr>");				
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");
-		
 	// staff consideration
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Staff Consideration </font></h3></td></tr>");
-	out.println("<tr><td width=\"40%\"></td><td align=\"left\"><table border=\"1\" width=\"50%\">"); 
-	out.println("<tr><th>Staff</th><th>Planned </th><th>"+
+	out.println("<tr><th>Staff Planned </th><th>"+
 		    "Actual</th></tr>");
 	if(eval.hasRecord()){
 	    int jj=1;
@@ -373,96 +363,87 @@ public class EvaluationServ extends TopServlet{
 	    if(estaffs != null && estaffs.size() >  0){
 		for(EvalStaff one:estaffs){
 		    Staff staff = one.getStaff();
-		    out.println("<tr><td>"+(jj++)+" - "+staff.getStaff_type().getName()+"</td>");
-		    out.println("<td>"+staff.getQuantity()+"</td>");
-		    out.println("<td><input type=\"text\" name=\"update-quantity_"+one.getId()+"\" value=\""+one.getQuantity()+"\" size=\"4\" /></td></tr>");
+		    out.println("<tr><td><label for=\"q"+one.getId()+"\">"+(jj++)+" - "+staff.getStaff_type().getName());
+		    out.println(" - "+staff.getQuantity()+"</label></td>");
+		    out.println("<td><input type=\"text\" name=\"update-quantity_"+one.getId()+"\" value=\""+one.getQuantity()+"\" size=\"4\" id=\"q"+one.getId()+"\"/></td></tr>");
 		}
 	    }
 	}
 	else if(staffs != null && staffs.size() > 0){
 	    int jj=1;
 	    for(Staff one:staffs){
-		out.println("<tr><td>"+(jj++)+" - "+one.getStaff_type().getName()+"</td>");
-		out.println("<td>"+one.getQuantity()+"</td>");
-		out.println("<td><input type=\"text\" name=\"quantity_"+one.getId()+"\" value=\"\" size=\"4\" /></td></tr>");
+		out.println("<tr><td><label for=\"qq"+one.getId()+"\">"+(jj++)+" - "+one.getStaff_type().getName());
+		out.println(" - "+one.getQuantity()+"</td>");
+		out.println("<td><input type=\"text\" name=\"quantity_"+one.getId()+"\" value=\"\" size=\"4\" id=\"qq"+one.getId()+"\"/></td></tr>");
 	    }
 	}
-	out.println("</table></td></tr>");
 	//
 	// staff assignments
-	out.println("<tr><td align=\"right\" valign=\"top\"><b><br>*Staff Assignments:");
-	out.println("</b></td><td align=\"left\">");
-	out.println("<font color=\"green\" size=\"-1\">1000 characters maximum<br></font>");
+	out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"assign_i\">*Staff Assignments:");
+	out.println("</label></td><td align=\"left\">");
+	out.println("1000 characters maximum<br></font>");
 	out.print("<textarea name=\"assignment\" rows=\"8\" cols=\"60\" "+
-		  "wrap onchange=\"validateTextarea(this,1000);\">");
+		  "wrap onchange=\"validateTextarea(this,1000);\" id=\"assign_id\">");
 	out.print(eval.getAssignment());
 	out.println("</textarea>");
-	out.println("</td></tr></table></td></tr>");
+	out.println("</td></tr>");
 	//
 	// General Recommendation
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");
 	//
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Partnership & Sponsorship </font></h3></td></tr>");
 	//
 	// partnerships
-	out.println("<tr><td align=\"right\" valign=\"top\" width=\"40%\"><br>*<b>Partnerships:<b>");
-	out.println("</td><td align=\"left\"><font size=\"-1\" color=\"green\">500 characters maximum<br /></font>");
-	out.print("<textarea name=\"partnership\" wrap rows=\"7\" cols=\"60\" onChange=\"validateTextarea(this,500);\">");
+	out.println("<tr><td align=\"right\" valign=\"top\'>*<label for=\"part_id\">Partnerships:</label>");
+	out.println("</td><td align=\"left\">500 characters maximum<br /></font>");
+	out.print("<textarea name=\"partnership\" wrap rows=\"7\" cols=\"60\" onChange=\"validateTextarea(this,500);\" id=\"part_id\">");
 	out.print(eval.getPartnership());
 	out.println("</textarea>");
 	out.println("</td></tr>");
 	//
 	// sponsors
-	out.println("<tr><td align=\"right\" valign=\"top\"><br>*<b>Sponsorships:<b>");
-	out.println("</td><td align=\"left\"><font size=\"-1\" color=\"green\">1000 characters maximum<br /></font>");
+	out.println("<tr><td align=\"right\" valign=\"top\">*<b>Sponsorships:<b>");
+	out.println("</td><td align=\"left\"><font size=\"-1\">1000 characters maximum<br /></font>");
 	out.print("<textarea name=\"sponsorship\" wrap rows=\"7\" cols=\"60\" onChange=\"validateTextarea(this,1000);\">");
 	out.print(eval.getSponsorship());
 	out.println("</textarea></td></tr>");
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Other Considerations </font></h3></td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"top\" width=\"40%\"><b>*General"+
+	out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"rec_id\">*General"+
 		    " Recommendations: ");
-	out.println("</b></td><td align=\"left\">");
+	out.println("</label></td><td align=\"left\">");
 	out.print("<textarea name=\"recommend\" rows=\"12\" cols=\"60\" "+
-		  "wrap>");
+		  "wrap id=\"rec_id\">");
 	out.print(eval.getRecommend());
 	out.println("</textarea>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"top\"><br>*<b>Flyer "+
+	out.println("<tr><td align=\"right\" valign=\"top\">*<label for=\"flyer_id\">Flyer "+
 		    "Distribution Points: ");
 	out.println("</b></td><td align=\"left\">");
-	out.println("<font color=\"green\" size=\"-1\">180 characters maximum. Please specify location for poster distribution list<br /></font>");
+	out.println("180 characters maximum. Please specify location for poster distribution list<br />");
 	out.print("<textarea name=\"flier_points\" rows=\"3\" cols=\"60\" "+
-		  "wrap onChange=\"validateTextarea(this,180);\">");
+		  "wrap onchange=\"validateTextarea(this,180);\" id=\"flyer_id\">");
 	out.print(eval.getFlier_points());
 	out.println("</textarea>");
-	out.println("</left></td></tr>");
+	out.println("</td></tr>");
 	//
 	// Other
-	out.println("<tr><td align=\"right\" valign=\"top\"><br /><b>Other:");
-	out.println("</b></td><td align=\"left\">");
-	out.println("<font color=\"green\" size=\"-1\">1500 characters maximum<br></font>");
+	out.println("<tr><td align=\"right\" valign=\"top\"><br /><label for=\"other_id\">Other:");
+	out.println("</label></td><td align=\"left\">");
+	out.println("1500 characters maximum<br />");
 	out.print("<textarea name=\"other\" rows=\"12\" cols=\"60\" "+ 
-		  "wrap onChange=\"validateTextarea(this,1500);\">");
+		  "wrap onChange=\"validateTextarea(this,1500);\" id=\"other_id\">");
 	out.print(eval.getOther());
 	out.println("</textarea>");
 	out.println("</td></tr>");
 	//
-	out.println("</table>");
-	out.println("</td></tr>");
-	out.println("<tr><td>"); 
-	out.println("*<b>Completed by:</b>");
+	out.println("<tr><td colspan=\"2\">"); 
+	out.println("*<label for=\"wby_id\">Completed by:</label>");
 	out.println("<input type=\"text\" name=\"wby\" value=\""+eval.getWby()+
-		    "\" size=\"40\" maxlingth=\"60\"></input>");
-	out.println("<b>Date </b>:");
+		    "\" size=\"40\" maxlingth=\"60\" id=\"wby_id\"></input>");
+	out.println("<label for=\"date\">Date </label>:");
 	out.print("<input type=\"text\" name=\"date\" value=\""+eval.getDate()+
 		  "\" size=\"10\" maxlingth=\"10\" "+
 		  "id=\"date\" /></input>");
@@ -470,7 +451,7 @@ public class EvaluationServ extends TopServlet{
 	//
 	if(!eval.hasRecord()){
 	    if(user.canEdit()){
-		out.println("<tr><td align=\"right\"><input type=\"submit\" "+
+		out.println("<tr><td colspan=\"2\"><input type=\"submit\" "+
 			    "name=\"action\" value=\"Save\">&nbsp;&nbsp;"+
 			    "&nbsp;&nbsp;&nbsp;" +
 			    "&nbsp;&nbsp;<input type=\"reset\" value=\"Clear\">"+
@@ -479,40 +460,37 @@ public class EvaluationServ extends TopServlet{
 	    out.println("</form>");
 	}
 	else{ // add zoom update
-	    out.println("<tr><td><table width=\"100%\"><tr>");
+	    out.println("<tr><td colspan=\"2\">");
 	    if(user.canEdit()){
-		out.println("<td valign=top><input type=\"submit\" "+
-			    "name=\"action\" value=\"Update\"> "+
-			    "</td>");
+		out.println("<input type=\"submit\" "+
+			    "name=\"action\" value=\"Update\" /> ");
 	    }
-	    out.println("<td valign=top>"+
+	    out.println(
 			"<input type=\"button\" "+
 			" value=\"Printable Report\" "+
 			" onClick=\"window.open('"+url+"EvaluationPrint?id="+id+
-			"','report');\" /></td>");
-	    out.println("<td valign=\"top\">"+
-			"<input type=\"button\" "+
+			"','report');\" />");
+	    out.println("<input type=\"button\" "+
 			" value=\"Budget\" "+
 			" onClick=\"document.location='"+url+
 			"EvalBudget.do?id="+id+
-			"'\"; /></td>");
+			"'\"; />");
 	    //  
-	    out.println("<td valign=\"top\">"+
-			"<input type=\"button\" "+
+	    out.println("<input type=\"button\" "+
 			" value=\"Marketing\" "+
 			" onClick=\"document.location='"+url+
 			"Market.do?prog_id="+id+
-			"'\"; /></td>");
-	    out.println("<td align=\"center\" valign=\"top\">");
+			"'\"; />");
 	    out.println("<input type=\"button\" value=\"Upload File\""+
 			" onclick=\"document.location='"+url+
 			"PromtFile.do?type=Evaluation&related_id="+id+
-			"';\" /></td>");	    
+			"';\" />");	    
 	    //
 	    out.println("</form>");
+	    out.println("</td></tr>");
 	    //
 	    if(user.canDelete()){
-		out.println("<td valign=\"top\">");
+		out.println("<tr><td valign=\"top\" colspan=\"2\">");
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateDeleteForm()\">");
 		out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\">");
@@ -520,9 +498,9 @@ public class EvaluationServ extends TopServlet{
 		out.println("<input type=\"submit\" name=\"action\" "+
 			    "value=\"Delete\">");
 		out.println("</form>");
-		out.println("</td>");
+		out.println("</td></tr>");
 	    }
-	    out.println("</tr></table>");
+	    out.println("</table>");
 	    out.println("</td></tr>");
 	}
 	
@@ -534,6 +512,7 @@ public class EvaluationServ extends TopServlet{
 	out.println("<hr />");
 	Helper.writeWebFooter(out, url);
 	out.println("</center>");
+
 	out.print("</body></html>");
 	out.flush();
 	out.close();

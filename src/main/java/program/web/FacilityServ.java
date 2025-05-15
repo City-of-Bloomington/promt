@@ -252,19 +252,18 @@ public class FacilityServ extends TopServlet{
 	    out.println("<input type=\"hidden\" name=\"id\" value=\"" + fc.getId()+"\" />");
 	// facility
 	out.println("<center><table border align=\"center\" width=\"90%\">");
+	out.println("<caption>facility Info</caption>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<h3>Facility Name* </h3>");
+	out.println("<label for=\"f_name\">Facility Name* </label>");
 	out.println("<input type=\"text\" name=\"name\" "+
 		    "value=\""+fc.getName()+"\" maxlength=\"80\" size=\"80\" "+
-		    " required=\"required\" />"); 
+		    " required=\"required\" id=\"f_name\" />"); 
 	out.println("</td></tr>");
 	//
 	// statement
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");				
-	out.println("<table width=\"100%\">");
 	out.println("<tr><td align=\"left\">");
-	out.println("<b>Facility Type </b>");
-	out.println("<select name=\"type\">");
+	out.println("<label for=\"type\">Facility Type </label>");
+	out.println("<select name=\"type\" id=\"type\">");
 	for(String str:Facility.facility_types){
 	    String selected = "";
 	    if(fc.getType().equals(str)){
@@ -273,8 +272,8 @@ public class FacilityServ extends TopServlet{
 	    out.println("<option value=\""+str+"\" "+selected+">"+str+"</option>");
 	}
 	out.println("</select></td></tr>");				
-	out.println("<tr><td align=\"left\"><b>Lead Programmer:</b>");
-	out.println("<select name=\"lead_id\">");
+	out.println("<tr><td align=\"left\"><label for=\"lead_id\">Lead Programmer:</label>");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\"></option>");
 	if(leads != null && leads.size() > 0){
 	    for(Lead one:leads){
@@ -288,115 +287,88 @@ public class FacilityServ extends TopServlet{
 	}
 	out.println("</select></td></tr>");
 	out.println("<tr><td>");
-	out.println("<h3>Brochure Statement</h3>");
-	out.println("<center>");
-	out.println("<font color=\"green\" size=\"-1\">Limit: No more than 10,000 "+
-		    " characters </font>"); 
-	out.println("</center>");
-	out.println("<br>");
+	out.println("<label for=\"broch\">Brochure Statement</label>");
+	out.println("Limit: No more than 10,000 "+
+		    " characters <br />"); 
+	out.println("<br />");
 	out.print("<textarea name=\"statement\" rows=\"20\" cols=\"80\" wrap"+
-		  " onkeyup =\"validateTextarea(this)\">");
+		  " onkeyup =\"validateTextarea(this)\" id=\"broch\">");
 	out.print(fc.getStatement()); 
 	out.println("</textarea>");
-	out.println("</td></tr></table>");
 	out.println("</td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");				
-	//
-	// schedule
-	out.println("<table width=\"100%\">");
 	out.println("<tr><td>");
-	out.println("<h3>Operations Schedule</h3>");
-	out.println("<center>");
-	out.println("<font color=\"green\" size=\"-1\">Limit:No more than 4,000 "+
-		    " characters </font>"); 
-	out.println("</center>");
-	out.println("<br>");
+	out.println("<label for=\"sched\">Operations Schedule</label>");
+	out.println("Limit:No more than 4,000 "+
+		    " characters"); 
+	out.println("<br />");
 	out.print("<textarea name=\"schedule\" rows=\"10\" cols=\"80\" wrap"+
-		  " onkeyup=\"validateTextarea3(this)\">");
+		  " onkeyup=\"validateTextarea3(this)\" id=\"sched\">");
 	out.print(fc.getSchedule()); /* The pre-existing comment, if any */
 	out.println("</textarea>");
 	out.println("</td></tr></table>");
 	out.println("</td></tr>");
 	//
 	// closings
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<table width=\"100%\">");
 	out.println("<tr><td>");
-	out.println("<h3>Closings</h3>");
-	out.println("<center>");
+	out.println("<label for=\"close\">Closings</label>");
 	out.println("<font color=\"green\" size=\"-1\">Limit: No more than 4000 "+
 		    " characters </font>"); 
-	out.println("</center>");
-	out.println("<br>");
+	out.println("<br />");
 	out.print("<textarea name=\"closings\" rows=\"10\" cols=\"80\" wrap"+
-		  " onkeyup=\"validateTextarea3(this)\">");
+		  " onkeyup=\"validateTextarea3(this)\" id=\"close\">");
 	out.print(fc.getClosings()); /* The pre-existing comment, if any */
 	out.println("</textarea>");
-	out.println("</td></tr></table>");
 	out.println("</td></tr>");
 	//
 	// other
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<center><table width=\"100%\">");
 	out.println("<tr><td>");
-	out.println("<h3>Other</h3>");
-	out.println("<font color=\"green\" size=\"-1\">Limit:No more than 10,000 "+
-		    " characters </font>"); 
+	out.println("<label for=\"other\">Other</label>");
+	out.println("Limit:No more than 10,000 "+
+		    " characters"); 
 	out.println("<br />");
 	out.print("<textarea name=\"other\" rows=\"10\" cols=\"80\" wrap"+
-		  " onkeyup=\"validateTextarea(this)\">");
+		  " onkeyup=\"validateTextarea(this)\" id=\"other\">");
 	out.print(fc.getOther()); 
 	out.println("</textarea>");
-	out.println("</td></tr></table>");
 	out.println("</td></tr>");
 								
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<table width=\"100%\">");
-	out.println("<tr>");
+	out.println("<tr><td>");
 	//
 	if(!id.equals("")){
 	    if(user.canEdit()){
-		out.println("<td valign=\"top\" align=\"right\"><input type=\"submit\" "+
-			    "name=\"action\" value=\"Update\"></td>");
+		out.println("<input type=\"submit\" "+
+			    "name=\"action\" value=\"Update\">");
 	    }
-	    out.println("<td align=\"center\" valign=\"top\">");
 	    out.println("<input type=\"button\" value=\"New Media Request\" "+
 			" onclick=\"document.location='"+url+
 			"MediaRequest?facility_id="+fc.getId()+
-			"';\" /></td>");
-	    out.println("<td valign=\"top\" align=\"center\">");
+			"';\" />");
 	    out.println("<input type=button value=\"New Marketing\""+
 			" onclick=\"document.location='"+url+
 			"Market.do?facility_id="+fc.getId()+
-			"';\"></input></td>");			
-	    out.println("<td valign=\"top\" align=\"right\">"+
-			"<input type=\"submit\" "+
+			"';\"></input>");			
+	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Start New\">" +
 			"&nbsp;&nbsp;"); 
 	    out.println("</form>");
-	    out.println("</td>");
-						
 	    //
 	    // delete
 	    if(user.canDelete()){
-		out.println("<td align=\"right\" valign=\"top\">");
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateForm2()\">");
 		out.println("<input type=\"hidden\" name=\"id\" value=\""+fc.getId()+"\" />");
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Delete\" />"+
 			    "&nbsp;");
-		out.println("</form></td>");
+		out.println("</form>");
 	    }
-	    out.println("<td align=\"center\" valign=\"top\">");
 	    out.println("<input type=\"button\" value=\"Add Attachments\""+
 			" onclick=\"document.location='"+url+
 			"PromtFile.do?type=Facility&related_id="+fc.getId()+
-			"';\" /></td>");
+			"';\" />");
 						
 	}
 	else { // Save
-	    out.println("<td valign=\"top\" align=\"right\">");
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Save\"></td>" +
 			"<td valign=\"top\" align=\"right\">"+
@@ -405,9 +377,8 @@ public class FacilityServ extends TopServlet{
 			"&nbsp;</td>"); 
 	    out.println("</form>");
 	}
-	out.println("</tr>");
+	out.println("</td></tr>");
 	out.println("</table>");
-	out.println("</td></tr></table>");
 	if(!id.equals("")){
 	    List<Market> markets = fc.getMarkets();
 	    Market lastMarket = null;
@@ -460,11 +431,7 @@ public class FacilityServ extends TopServlet{
 	    out.println("</div>");
 	}
 	out.println("</div>");
-	out.println("<script>");
-	out.println("  $( \"#accordion\" ).accordion({collapsible:true, autoHeight: false,animated : false, icons:icons}); ");
-	out.println("</script>");	
 	Helper.writeWebFooter(out, url);
-	out.println("<br />");
 	out.println("<br />");
 	out.print("</body></html>");
 	out.close();
