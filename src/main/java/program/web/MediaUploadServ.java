@@ -310,52 +310,48 @@ public class MediaUploadServ extends TopServlet{
 				
 	//
 	out.println("<table border width=\"80%\">");
+	out.println("<caption>Upload New Media</caption>");
 	//
 	//
-	out.println("<tr><td align=\"center\"><b>Upload New Media</b></td></tr>");
 	//
 	// 1st block
 	//
-	out.println("<tr><td>");
-	out.println("<table width=100%>");
 	if(media.getObj_type().equals("Program")){
 	    out.println("<tr><td align=\"left\"><b>Related "+media.getObj_type()+":</b></td><td><a href=\""+url+media.getObjectLink()+"\">"+media.getObj_id()+"</a></td></tr>");
 	}
-	out.println("<tr><td colspan=\"2\"><font color=\"green\">To upload a new file, please consider the following:<uL>"+
+	out.println("<tr><td colspan=\"2\">To upload a new file, please consider the following:<uL>"+
 		    " <li>You can upload media files</li>"+
 		    " <li>You may get an error if the file is too big to upload or unsuppored type</li>"+
 		    " <li>If the upload is successful, a link to the uploaded file will show in the list belw</li>"+
 		    " <li>To make sure it is successful, click on the new link to see the file</li>");
-	out.println("</ul></font></td></tr>");
-	out.println("<tr><td width=\"30%\"><b>Pick File to Upload: </b></td>"); 
+	out.println("</ul></td></tr>");
+	out.println("<tr><td width=\"30%\"><label for=\"file\">Pick File to Upload: </label></td>"); 
 	out.println("<td><input type=\"file\" name=\"old_file_name\" "+
-		    " size=\"30\" /></td></tr>");
-	out.println("<tr><td colspan=\"2\"><b>Notes </b><font color=\"green\" "+
-		    "size=-1>(optional) up to 500 characters</font></td></tr>");
+		    " size=\"30\" id=\"file\"/></td></tr>");
+	out.println("<tr><td colspan=\"2\"><label for=\"notes\">Notes </label>"+
+		    "(optional) up to 500 characters</td></tr>");
 	out.println("<tr><td colspan=\"2\">");				
-	out.println("<textarea rows=\"5\" cols=\"80\" wrap name=\"notes\"></textarea>");
+	out.println("<textarea rows=\"5\" cols=\"80\" wrap name=\"notes\"></textarea id=\"notes\">");
 	out.println("</td></tr>");
-	out.println("</table></td></tr>");
-	out.println("<tr><td><table width=\"80%\">");				
 	out.println("<tr><td align=\"right\">"+
 		    "<input type=\"submit\" "+
 		    "name=\"action\" "+
 		    "value=\"Save\" />"+
 		    "</td></tr>");
-	out.println("</table></td></tr>");
-	out.println("</table><br>");
+	out.println("</table><br />");
 	out.println("</form>");
 	//
 	// show what we have so far
 	//
+	/**
 	if(!obj_id.equals("") && !obj_type.equals("")){
 	    MediaFileList mfl = new MediaFileList(debug, obj_id, obj_type);
 	    String back = mfl.find();
 	    if(back.equals("")){
 		List<MediaFile> ones = mfl.getMediaFiles();
-		// Helper.writeMedia(ones, out, url);
 	    }
 	}
+	*/
 	out.print("</body></html>");
 	out.close();
     }

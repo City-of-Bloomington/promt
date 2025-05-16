@@ -147,8 +147,6 @@ public class PickTime extends TopServlet {
 	    out.println("</head><body>");
 	}
 	out.println("<center>");
-	out.println("<font color=blue><b> Pick Time </b></font><br>");
-
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"composeTime();\">");
 	if(!whichForm.equals(""))
 	    out.println("<input type=hidden name=\"whichForm\" value=\""+whichForm+"\" />");
@@ -156,31 +154,32 @@ public class PickTime extends TopServlet {
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	out.println("<input type=\"hidden\" name=\"time\" value=\"\" />");
 	out.println("<table border=\"1\" width=\"90%\">");
-	out.println("<tr><td>");
+	out.println("<caption>Pick Time</caption>");
 	out.println("<table width=\"100%\">");
-	out.println("<tr><th></th><th>Hour</th><th>Minute</th><th>am/pm</th></tr>");
+	out.println("<tr><th></th><th><label for=\"in_hh\">Hour</label></th>"+
+		    "<th><label for=\"in_mm\">Minute</label></th>"+
+		    "<th><b>am/pm</b></th></tr>");
 	out.println("<tr><th>Time</th>");
 				
-	out.println("<td><select name=\"in_hh\">");
+	out.println("<td><select name=\"in_hh\" id=\"in_hh\">");
 	for(String hh:hours){
 	    String selected = (in_hh.equals(hh))?"selected=\"selected\'":"";
 	    out.println("<option "+selected+" value=\""+hh+"\">"+hh+"</option>");
 	}
 	out.println("</select>:");
 	out.println("</td><td>");
-	out.println("<select name=\"in_mm\">");
+	out.println("<select name=\"in_mm\" id=\"in_mm\">");
 	for(String mm:mins){
 	    String selected = (in_mm.equals(mm))?"selected=\"selected\'":"";
 	    out.println("<option "+selected+" value=\""+mm+"\">"+mm+"</option>");
 	}
 	out.println("</select>:</td><td> ");
 	String checked = in_ampm.equals("a.m.")?"checked=\"checked\"":"";
-	out.println("<input type=\"radio\" id=\"radio_am\" name=\"in_ampm\" value=\"a.m.\" "+checked+" />A.M.");
+	out.println("<input type=\"radio\" id=\"radio_am\" name=\"in_ampm\" value=\"a.m.\" "+checked+"/><label for=\"radio_am\">A.M.</label>");
 	checked = "";
 	checked = in_ampm.equals("p.m.")?"checked=\"checked\"":"";		
-	out.println("<input type=\"radio\" id=\"radio_pm\" name=\"in_ampm\" value=\"p.m.\" "+checked+" />P.M.");		
+	out.println("<input type=\"radio\" id=\"radio_pm\" name=\"in_ampm\" value=\"p.m.\" "+checked+" /><label for=\"radio_pm\">P.M.</label>");		
 	out.println("</td></tr>");	
-	out.println("</table></td></tr>");
 	out.println("<tr><td align=\"right\">");
 	if(id.equals("")){
 	    out.println("<input type=\"submit\" name=\"action\" value=\"Copy to Form\">");

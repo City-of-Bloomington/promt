@@ -258,7 +258,7 @@ public class MediaRequestServ extends TopServlet{
 	}
 	if(!message.equals("")){
 	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
+		out.println(message);
 	    else
 		out.println("<font color=\"red\">"+message+"</font>");
 	    out.println("<br>");
@@ -278,10 +278,9 @@ public class MediaRequestServ extends TopServlet{
 	}
 	out.println("<input type=\"hidden\" name=\"program_id\" value=\""+request.getProgram_id()+"\" />");
 	out.println("<input type=\"hidden\" name=\"facility_id\" value=\""+request.getFacility_id()+"\" />");	    
-	out.println("<table width=\"90%\" border>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table>");
-	out.println("<tr><td align=\"left\" width=\"30%\"><b>Request Date: </b></td><td align=\"left\">");
+	out.println("<table width=\"90%\" border=\"1\">");
+	out.println("<caption>Media Request</caption>");
+	out.println("<tr><td align=\"left\" width=\"30%\"><label for=\"requestDate\">Request Date: </label></td><td align=\"left\">");
 	out.println("<input type=\"text\" name=\"requestDate\" value=\""+request.getRequestDate()+"\" size=\"10\" maxlength=\"10\' class=\"date\" id=\"requestDate\" />");
 	out.println("</td></tr>");
 	if(request.hasProgram()){
@@ -301,8 +300,8 @@ public class MediaRequestServ extends TopServlet{
 	    out.println("<option value=\""+request.getSeason()+"\" selected>"+
 			request.getSeason()+"\n");
 	    out.println(Helper.allSeasons);
-	    out.println("</select><b> Year: </b>");
-	    out.println("<select name=\"requestYear\">");
+	    out.println("</select><label for=\"ryear\"> Year: </label>");
+	    out.println("<select name=\"requestYear\" id=\"ryear\">");
 	    int years[] = Helper.getPrevYears();
 	    for(int yy:years){
 		String selected="";
@@ -312,8 +311,8 @@ public class MediaRequestServ extends TopServlet{
 	    }
 	    out.println("</select></td></tr>");	    
 	}	
-	out.println("<tr><td align=\"left\"><b>Lead: </b></td><td align=\"left\">");
-	out.println("<select name=\"lead_id\">");
+	out.println("<tr><td align=\"left\"><label for=\"lead_id\">Lead: </label></td><td align=\"left\">");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">Pick a Lead*</option>");	
 	if(leads != null){
 	    for(Lead one:leads){
@@ -327,8 +326,8 @@ public class MediaRequestServ extends TopServlet{
 	}	
 	out.println("</select>");
 	out.println("</td></tr>");	
-	out.println("<tr><td align=\"left\"><b>Location/Parks Initiative:</b></td><td align=\"left\">");
-	out.println("<select name=\"location_id\">");
+	out.println("<tr><td align=\"left\"><label for=\"loc_id\">Location/Parks Initiative:</label></td><td align=\"left\">");
+	out.println("<select name=\"location_id\" id=\"loc_id\">");
 	out.println("<option value=\"\">Pick a Location</option>");		
 	if(locations != null){
 	    for(Location one:locations){
@@ -341,14 +340,14 @@ public class MediaRequestServ extends TopServlet{
 	}
 	out.println("</select>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Location Specifics </b><br> (such as 'near the playground')</td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"loc_sp\">Location Specifics </label><br> (such as 'near the playground')</td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"locationDescription\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
+	out.println("<textarea name=\"locationDescription\" row=\"5\" cols=\"60\" wrap=\"wrap\" id=\"loc_sp\">");
 	out.println(request.getLocationDescription());
 	out.println("</textarea></td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Content Specific </b> <br />Indicate if you need a specific season or date/time. Examples would be 'Griffy in the snow' or 'during program hours 5-7pm on mm/dd/yy', or even 'of staff helping guests'. </td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"cont\">Content Specific </label> <br />Indicate if you need a specific season or date/time. Examples would be 'Griffy in the snow' or 'during program hours 5-7pm on mm/dd/yy', or even 'of staff helping guests'. </td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"contentSepecific\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
+	out.println("<textarea name=\"contentSepecific\" row=\"5\" cols=\"60\" wrap=\"wrap\" id=\"cont\">");
 	out.println(request.getContentSpecific());
 	out.println("</textarea></td></tr>");
 	out.println("</td></tr>");	
@@ -364,7 +363,7 @@ public class MediaRequestServ extends TopServlet{
 	    if(typeSet != null && typeSet.contains(type)){
 		checked="checked=\"checked\"";
 	    }
-	    out.println("<input type=\"checkbox\" name=\"requestType\" id=\""+type+"\" value=\""+type+"\" "+checked+" /><label for=\""+type+"\" >"+type+"</label>");
+	    out.println("<input type=\"checkbox\" name=\"requestType\" id=\""+type+"\" value=\""+type+"\" "+checked+" id=\""+type+"\"/><label for=\""+type+"\" >"+type+"</label>");
 	}
 	out.println("</td></tr>");
 	out.println("<tr><td align=\"left\"><b>What orientation is needed </b> </td><td align=\"left\">");			
@@ -374,31 +373,28 @@ public class MediaRequestServ extends TopServlet{
 	    if(str.equals(request.getOrientation())){
 		checked = "checked=\"checked\"";
 	    }
-	    out.println("<input type=\"radio\" name=\"orientation\" value=\""+str+"\" "+checked+" /> "+str);
+	    out.println("<input type=\"radio\" name=\"orientation\" value=\""+str+"\" id=\""+str+"\" "+checked+" />Label for=\""+str+"\">"+str+"</label>");
 	}
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Other Media Type </b></td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"other\">Other Media Type </label></td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"otherType\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
+	out.println("<textarea name=\"otherType\" row=\"5\" cols=\"60\" wrap=\"wrap\" id=\"other\">");
 	out.println(request.getOtherType());
 	out.println("</textarea></td></tr>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Notes </b><br /> We will be contacting you if there are any questions or clarifications. Please include any helpful details here:</td></tr>");
+	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"note\">Notes <br /> We will be contacting you if there are any questions or clarifications. Please include any helpful details here:</label></td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"notes\" row=\"5\" cols=\"60\" wrap=\"wrap\">");
+	out.println("<textarea name=\"notes\" row=\"5\" cols=\"60\" wrap=\"wrap\" id=\"notes|">");
 	out.println(request.getNotes());
 	out.println("</textarea></td></tr>");
 	out.println("</td></tr>");	
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td><table width=100%>");
 	out.println("<tr>");
 	if(!id.equals("")){
 	    //
 	    // if no program yet (it is new plan)
 	    // can be duplicated only when a program is linked to it
 	    //
-	    out.println("<td valign=top align=right>");				
+	    out.println("<td valign=top align=\"right\">");				
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Update\" /></td>");
 	    if(user.canDelete()){
@@ -419,11 +415,11 @@ public class MediaRequestServ extends TopServlet{
 			    "name=\"action\" value=\"Save\" /></td>"+
 			    "<td align=\"right\" valign=\"top\">" );
 	    }
-	    out.println("</form></td>");
+	    out.println("</td>");
 	}
 	out.println("</tr>");
 	out.println("</table>");
-	out.println("</td></tr></table>");
+	out.println("</form>");
 	out.println("<br />");
 	if(fromBrowse.equals("")){
 	    out.println("<a href=javascript:window.close();>Close</a>");

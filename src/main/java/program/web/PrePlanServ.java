@@ -260,24 +260,16 @@ public class PrePlanServ extends TopServlet{
 	}
 	out.println("<input type=\"hidden\" name=\"prev_id\" value=\""+pp.getPrev_id()+"\" />");		
 
-	out.println("<table width=\"90%\" border>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"left\">");
-	out.println("* indicates a required field</td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");				
-	out.println("<table width=\"100%\">");
-	out.println("<tr><td align=\"right\" width=\"30%\"><b>Program Title: </b></td><td>");
+	out.println("* indicates a required field<br />");	
+	out.println("<table width=\"90%\" border=\"1\">");
+	out.println("<caption>PrePlan Info</caption>");
+
 	if(id.equals("")){
+	    out.println("<tr><td align=\"right\" width=\"30%\"><label for=\"pid\">Program Title: </label></td><td>");	    
 	    out.println("<input type=\"text\" name=\"name\" "+
-			"value=\""+pp.getName()+"\" maxlength=\"128\" size=\"70\" /></td></tr>");
-	}
-	else{
-	    out.println(pp.getName()+"</td></tr>");
-	    out.println("<tr><td align=\"right\"><b>Lead: </b></td><td>");
-	    out.println(pp.getLead()+"</td></tr>");
-	}
-	if(id.equals("")){
-	    out.println("<tr><td align=\"right\"><b>Program Lead: </b></td><td>");
-	    out.println("<select name=\"lead_id\">");
+			"value=\""+pp.getName()+"\" maxlength=\"128\" size=\"70\" id=\"pid\"/></td></tr>");
+	    out.println("<tr><td align=\"right\"><label for=\"lead_id\">Program Lead: </label></td><td>");
+	    out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	    out.println("<option value=\"\">Pick One</option>");
 	    if(leads != null){
 		for(Lead one:leads){
@@ -286,16 +278,22 @@ public class PrePlanServ extends TopServlet{
 		    }
 		}
 	    }
-	    out.println("</select></td></tr>");			
+	    out.println("</select></td></tr>");				    
 	}
-	out.println("<tr><td align=\"right\">*<b>Program Season: </b></td><td>");
-	out.println("<select name=\"season\">");
+	else{
+	    out.println("<tr><td align=\"right\" width=\"30%\"><b>Program Title: </b></td><td>");	    
+	    out.println(pp.getName()+"</td></tr>");
+	    out.println("<tr><td align=\"right\"><b>Lead: </b></td><td>");
+	    out.println(pp.getLead()+"</td></tr>");
+	}
+	out.println("<tr><td align=\"right\">*<label for=\"season\">Program Season: </label></td><td>");
+	out.println("<select name=\"season\" id=\"season\">");
 	out.println("<option value=\""+pp.getSeason()+"\" selected>"+
 		    pp.getSeason()+"\n");
 	out.println(Helper.allSeasons);
 	out.println("</select> ");
-	out.println("*<b>Year:</b>");
-	out.println("<select name=\"year\">");
+	out.println("*<label for=\"year\">Year:</label>");
+	out.println("<select name=\"year\" id=\"year\">");
 	out.println("<option value=\""+pp.getYear()+"\" selected=\"selected\">"+
 		    pp.getYear()+"</option>");					
 	int[] years = Helper.getFutureYears();
@@ -303,51 +301,42 @@ public class PrePlanServ extends TopServlet{
 	    out.println("<option value=\""+yy+"\">"+yy+"</option>");
 	}
        	out.println("</select></td></tr>");
-       	out.println("</table></td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");				
-	out.println("<table width=\"100%\">");				
 	out.println("<tr><td colspan=\"2\">Note: The following list of determinants must be checked off before adding or editing the plan:</td></tr> ");
 	out.println("<tr><td valign=\"top\" align=\"right\" width=\"30%\">* <b>Is your program based on:</b></td><td>");
 	String chk = (pp.getDeterminants().indexOf("1") > -1)?"checked=\"checked\"":"";
-	out.println("<input type=\"checkbox\" name=\"determinants\" "+chk+" value=\"1\"  />Conceptual foundations of play, recreation and leisure.<br />");
+	out.println("<input type=\"checkbox\" name=\"determinants\" "+chk+" value=\"1\"  id=\"c1\"/><label for=\"c1\">Conceptual foundations of play, recreation and leisure.</label><br />");
 	chk = (pp.getDeterminants().indexOf("2") > -1)?"checked=\"checked\"":"";		
-	out.println("<input type=\"checkbox\" name=\"determinants\" "+chk+" value=\"2\"  />Organizational agency philosophy, mission and vision, and goals and objectives.<br />");
+	out.println("<input type=\"checkbox\" name=\"determinants\" "+chk+" value=\"2\" id=\"c2\" /><label for=\"c2\">Organizational agency philosophy, mission and vision, and goals and objectives.</label><br />");
 	chk = (pp.getDeterminants().indexOf("3") > -1)?"checked=\"checked\"":"";		
-	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"3\"  />Constituent interests and desired needs.<br />");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"3\"  id=\"c3\"/><label for=\"c3\">Constituent interests and desired needs.</label><br />");
 	chk = (pp.getDeterminants().indexOf("4") > -1)?"checked=\"checked\"":"";		
-	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"4\"  />Creation of a constituent-centered culture. <br />");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"4\"  id=\"c4\"/><label for=\"c4\">Creation of a constituent-centered culture.</label> <br />");
 	chk = (pp.getDeterminants().indexOf("5") > -1)?"checked=\"checked\"":"";		
-	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"5\"  />Experiences desirable for clientele.<br />");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"5\" id=\"c5\" /><label for=\"c5\">Experiences desirable for clientele.</label><br />");
 	chk = (pp.getDeterminants().indexOf("6") > -1)?"checked=\"checked\"":"";	 
-	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"6\"  />Community opportunity.<br /></td></tr>");
-       	out.println("</table></td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");				
-	out.println("<table width=\"100%\">");					
-	out.println("<tr><td colspan=\"2\">* <b>Pre Evaluation Notes:</b> Based on previous evaluations, what did you change for this year and how did you use your marketing materials</td></tr>");
-	out.println("<tr><td width=\"30%\">&nbsp;</td><td>");		
-	out.println("<textarea name=\"pre_eval_text\" rows=\"8\" cols=\"70\" wrap>"+pp.getPre_eval_text()+"</textarea></td></tr>");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"determinants\" value=\"6\"  id=\"c6\" /><label for=\"c6\">Community opportunity.</label><br /></td></tr>");
+	out.println("<tr><td colspan=\"2\">* <label for=\"pre_eval\">Pre Evaluation Notes:</b> Based on previous evaluations, what did you change for this year and how did you use your marketing materials</label></td></tr>");
+	out.println("<tr><td colspan=\"2\">");		
+	out.println("<textarea name=\"pre_eval_text\" rows=\"8\" cols=\"70\" wrap id=\"pre_eval\">"+pp.getPre_eval_text()+"</textarea></td></tr>");
 	out.println("<tr><td valign=\"top\" align=\"right\">* <b>Have you considered?</b></td><td>");
 	chk = (pp.getMarket_considers().indexOf("1") > -1)?"checked=\"checked\"":"";		
-	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"1\" />Tracking trends.<br />");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"1\" id=\"m1\" /><label for=\"m1\">Tracking trends.</label><br />");
 	chk = (pp.getMarket_considers().indexOf("2") > -1)?"checked=\"checked\"":"";				
-	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"2\" />Reviewing previous evaluations.<br />");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"2\" id=\"m2\"/><label for=\"m2\">Reviewing previous evaluations.</label><br />");
 	chk = (pp.getMarket_considers().indexOf("3") > -1)?"checked=\"checked\"":"";				
-	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"3\" />Duplication of service.<br />");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"3\" id=\"m3\"/><label for=\"m3\">Duplication of service.</label><br />");
 	chk = (pp.getMarket_considers().indexOf("4") > -1)?"checked=\"checked\"":"";				
-	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"4\" />Cost recovery.</td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\">* <b>Explain:</b></td>");
+	out.println("<input type=\"checkbox\" "+chk+" name=\"market_considers\" value=\"4\" id=\"m4\"/><label for=\"m4\">Cost recovery.</label></td></tr>");
+	out.println("<tr><td valign=\"top\" align=\"right\">* <label for=\"exp\">Explain:</label></td>");
 	out.println("<td align=\"left\">");
-	out.println("<textarea name=\"explained\" rows=\"8\" cols=\"70\" wrap>"+pp.getExplained()+"</textarea></td></tr>");		
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td><table width=100%>");
+	out.println("<textarea name=\"explained\" rows=\"8\" id=\"exp\" cols=\"70\" wrap>"+pp.getExplained()+"</textarea></td></tr>");		
 	out.println("<tr>");
 	if(!id.equals("")){
 	    if(user.canEdit()){
 		out.println("<td valign=top align=right>");				
 		out.println("<input type=submit "+
 			    "name=\"action\" value=\"Update\">");
-		out.println("</form></td>");
+		out.println("</td>");
 		if(pp.isFulfilled()){
 		    out.println("<td valign=top "+
 				"align=right><input type=\"button\" "+
@@ -375,11 +364,11 @@ public class PrePlanServ extends TopServlet{
 			    "<td align=\"right\" valign=\"top\">" +
 			    "<input type=\"reset\" name=\"reset\" value=\"Clear\" />");
 	    }
-	    out.println("</form></td>");
+	    out.println("</td>");
 	}
 	out.println("</tr>");
 	out.println("</table>");
-	out.println("</td></tr></table>");
+	out.println("</form>");
 	Helper.writeWebFooter(out, url);
 	out.print("</body></html>");
 	out.close();

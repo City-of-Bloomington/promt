@@ -356,10 +356,10 @@ public class ProgPlan extends TopServlet{
 	}
 	if(!message.equals("")){
 	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
+		out.println(message);
 	    else
 		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println("<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" id=\"form_id\" method=\"post\" onsubmit=\"return validateForm()\" id=\"form_id\" >");
@@ -372,24 +372,21 @@ public class ProgPlan extends TopServlet{
 	//
 	out.println("<input type=\"hidden\" id=\"cont_id\" name=\"cont_id\" value=\"\" />");
 	// Plan
+	out.println("* indicates a required field.<br />");	
 	out.println("<table width=\"90%\" border=\"1\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td left=\"center\">");
-	out.println("* indicates a required field.");
-	out.println("</td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");
-	out.println("<tr><td "+tdWidth+" align=\"right\"><b>*Program Title: </b></td><td>");
-	out.println("<input type=\"text\" name=\"program_title\" "+
+	out.println("<caption>Plan Info</caption>");
+	out.println("<tr><td "+tdWidth+" align=\"right\"><label for=\"ptitile\">*Program Title: </label></td><td>");
+	out.println("<input type=\"text\" name=\"program_title\" id=\"ptitle\" "+
 		    "value=\""+pp.getProgram_title()+"\" maxlength=\"128\" size=\"70\" required=\"required\" /></td></tr>");
 	
-	out.println("<tr><td align=\"right\"><b>Program Season:</b> </td><td>");
-	out.println("<select name=\"season\">");
+	out.println("<tr><td align=\"right\"><label for=\"season\">Program Season:</label> </td><td>");
+	out.println("<select name=\"season\" id=\"season\">");
 	out.println("<option value=\""+pp.getSeason()+"\" selected>"+
 		    pp.getSeason()+"\n");
 	out.println(Helper.allSeasons);
 	out.println("</select> ");	
-	out.println(" <b>Year:</b>");
-	out.println("<select name=\"program_year\">");
+	out.println(" <label for=\"year\">Year:</label>");
+	out.println("<select name=\"program_year\" id=\"year\">");
 	out.println("<option value=\"\">\n");
 	int[] years = Helper.getFutureYears();
 	for(int yy:years){
@@ -401,8 +398,8 @@ public class ProgPlan extends TopServlet{
 	out.println("</select>&nbsp;&nbsp;");
 	//
 	// lead
-	out.println("<tr><td align=\"right\"><b>Program Lead: </b></td><td>");
-	out.println("<select name=\"lead_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"lead\">Program Lead: </label></td><td>");
+	out.println("<select name=\"lead_id\" id=\"lead\">");
 	out.println("<option value=\"\"></option>");
 	if(leads != null){
 	    for(Lead one:leads){
@@ -414,14 +411,9 @@ public class ProgPlan extends TopServlet{
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("</table></td></tr>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	//
-	// instructor info
-	out.println("<table width=\"100%\">");
-	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
-		    "><h3><font color=\"white\">"+
-		    "Instructor Contact Info </font></h3></td></tr>");
+	out.println("<tr><td colspan=\"2\" align=\"center\" "+
+		    "><b>"+
+		    "Instructor Contact Info </b></td></tr>");
 	if(!id.equals("") && pp.hasInstructors()){
 	    List<Contact> ones = pp.getInstructors();
 	    if(ones != null && ones.size() > 0){
@@ -448,46 +440,43 @@ public class ProgPlan extends TopServlet{
 	    }
 	}
 	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Add New Instructor</b></td></tr>");
-	out.println("<tr><td colspan=\"2\"><font color=\"green\" size=\"-1\">If the instructor info is already in the system, type the first few letters of the name in the name field below to select from the list.</font></td></tr>");
-	out.println("<tr><td "+tdWidth+" align=\"right\"><b>Name: </b></td><td>");
+	out.println("<tr><td colspan=\"2\">If the instructor info is already in the system, type the first few letters of the name in the name field below to select from the list.</td></tr>");
+	out.println("<tr><td "+tdWidth+" align=\"right\"><label for=\"instr_n\">Name: </label></td><td>");
 	out.println("<input type=\"text\" name=\"instructor\" id=\"instructor\" "+
-		    "value=\"\" maxlength=\"60\" size=\"30\" /></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Work Phone:</b></td><td>");
+		    "value=\"\" maxlength=\"60\" size=\"30\" id=\"instr_n\"/></td></tr>"); 
+	out.println("<tr><td align=\"right\"><label for=\"phone_w\">Work Phone:</label></td><td>");
 	out.println("<input type=\"text\" name=\"phone_w\" id=\"phone_w\" "+
-		    "value=\"\" maxlength=\"12\" size=\"12\" /><b>Cell:</b>");
+		    "value=\"\" maxlength=\"12\" size=\"12\" /><label for=\"phone_c\">Cell:</label>");
 	out.println("<input type=\"text\" name=\"phone_c\" id=\"phone_c\" "+
 		    "value=\"\" maxlength=\"12\" size=\"12\" />");
-	out.println(" <b>Home:</b>");
+	out.println(" <label for=\"phone_h\">Home:</label>");
 	out.println("<input type=\"text\" name=\"phone_h\" id=\"phone_h\" "+
 		    "value=\"\" maxlength=\"12\" size=\"12\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Email:</b></td><td>");
+	out.println("<tr><td align=\"right\"><label for=\"email\">Email:</label></td><td>");
 	out.println("<input type=\"text\" name=\"email\" id=\"email\" "+
 		    "value=\"\" maxlength=\"50\" size=\"50\" /></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Address:</b></td><td>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"address\">Address:</label></td><td>");
 	out.print("<textarea name=\"address\" id=\"address\" cols=\"50\" rows=\"4\" "+
-		  " onChange='checkTextLen(this,200)' wrap>");
+		  " onchange='checkTextLen(this,200)' wrap>");
 	out.println("</textarea></td></tr>");
 	out.println("</table></td></tr>");
 		
-	//
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-       	out.println("<table width=\"100%\">");
 	//
 	// Plan Objectives 
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\">");
 	out.println("<h3><font color=\"white\">Plan Objectives</font>"+
 		    "</h3></td></tr>");
 	//
-	out.println("<tr><td valign=\"top\" "+tdWidth+" align=\"right\"><b>Ideas to Program: </b></td><td>");
-	out.println("<textarea name=\"ideas\" cols=\"50\" rows=\"4\" "+
-		    " onChange='checkTextLen(this,2000)' wrap>");
+	out.println("<tr><td valign=\"top\" "+tdWidth+" align=\"right\"><label for=\"obj\">Ideas to Program: </label></td><td>");
+	out.println("<textarea name=\"ideas\" cols=\"50\" rows=\"4\" id=\"obj\""+
+		    " onchange='checkTextLen(this,2000)' wrap>");
 	out.println(pp.getIdeas());
 	out.println("</textarea></td></tr>");
 	//
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>*Program Goals: </b></td><td>");
-	out.println("<font color=\"green\" size=\"-1\">goal is defined as one that is specific, measurable, achievable, results-focused, and time-bound 'S.M.A.R.T.'</font><br />");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"goals\">*Program Goals: </label></td><td>");
+	out.println("goal is defined as one that is specific, measurable, achievable, results-focused, and time-bound 'S.M.A.R.T.'<br />");
 	out.println("<textarea name=\"goals\" cols=\"50\" rows=\"4\" "+
-		    " onChange=\"checkTextLen(this,1000)\" wrap required=\"required\">");
+		    " onChange=\"checkTextLen(this,1000)\" wrap=\"wrap\" required=\"required\" id=\"goals\">");
 	out.println(pp.getGoals());
 	out.println("</textarea></td></tr>");
 	out.println("<tr><td valign=\"top\" colspan=\"2\" align=\"center\"><b>*Program Objectives </b></td></tr>");
@@ -495,9 +484,8 @@ public class ProgPlan extends TopServlet{
 	int jj=1;
 	if(objectives != null && objectives.size() > 0){
 	    out.println("<tr><td valign=\"top\" align=\"right\"><b>Current Objectives:</b></td><td>");
-	    out.println("<table>");
 	    for(Objective one:objectives){
-		out.println("<tr><td>"+(jj++)+" - <input type=\"checkbox\" name=\"del_obj\" value=\""+one.getId()+"\" /></td><td>"+one+"</td></tr>");
+		out.println("<tr><td>"+(jj++)+" - <input type=\"checkbox\" name=\"del_obj\" value=\""+one.getId()+"\" id=\"obj"+one.getId()+"\"/></td><td><label for=\"obj"+one.getId()+"\">"+one+"</label></td></tr>");
 	    }
 	    out.println("</table></td></tr>");
 	}
@@ -506,35 +494,35 @@ public class ProgPlan extends TopServlet{
 	for(int i=0;i<3;i++){
 	    out.println("<tr><td valign=top>"+(jj++)+" - </td><td>");
 	    out.print("<textarea name=\"objective\" cols=\"50\" rows=\"4\" "+
-		      " onChange=\"checkTextLen(this,1000)\" wrap>");
+		      " onchange=\"checkTextLen(this,1000)\" wrap>");
 	    out.println("</textarea></td></tr>");
 	}
 	out.println("</table></td></tr>");
 	//
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Profit Objective: </b></td><td>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"prof\">Profit Objective: </label></td><td>");
 	out.println("<textarea name=\"profit_obj\" cols=\"50\" rows=\"4\" "+
-		    " onChange=\"checkTextLen(this,200)\" wrap>");
+		    " onChange=\"checkTextLen(this,200)\" wrap id=\"prof\">");
 	out.println(pp.getProfit_obj());
 	out.println("</textarea></td></tr>");
 	//
 	// partner
-	out.println("<tr><td align=\"right\"><b>Potential Partnership:</b></td><td>");
+	out.println("<tr><td align=\"right\"><label for=\"part\">Potential Partnership:</label></td><td>");
 	out.println("<input type=\"text\" name=\"partner\" "+
-		    "value=\""+pp.getPartner()+"\" maxlength=\"80\" size=\"50\" /></td></tr>");
+		    "value=\""+pp.getPartner()+"\" maxlength=\"80\" id=\"part\" size=\"50\" /></td></tr>");
 	//
 	// sponsor
-	out.println("<tr><td align=\"right\"><b>Potential Sponsorship:</b></td><td>");
-	out.println("<input type=\"text\" name=\"sponsor\" "+
+	out.println("<tr><td align=\"right\"><label for=\"spon\">Potential Sponsorship:</label></td><td>");
+	out.println("<input type=\"text\" name=\"sponsor\" id=\"spn\" "+
 		    "value=\""+pp.getSponsor()+"\" maxlength=\"70\" size=\"50\" /></td></tr>");
 	//
 	// market
-	out.println("<tr><td align=\"right\"><b>Target Market:</b></td><td>");
-	out.println("<input type=\"text\" name=\"market\" "+
+	out.println("<tr><td align=\"right\"><label for=\"target\">Target Market:</label></td><td>");
+	out.println("<input type=\"text\" name=\"market\" id=\"target\" "+
 		    "value=\""+pp.getMarket()+"\" maxlength=\"80\" size=\"50\" /></td></tr>");
 	//
 	// frequency
-	out.println("<tr><td align=\"right\"><b>Intended Frequency:</b></td><td>");
-	out.println("<select name=\"frequency\">");
+	out.println("<tr><td align=\"right\"><label for=\"freq\">Intended Frequency:</label></td><td>");
+	out.println("<select name=\"frequency\" id=\"freq\">");
 	out.println("<option selected>"+pp.getFrequency()+"\n");
 	for(int i=0;i<allFreqArr.length;i++){
 	    out.println("<option>"+allFreqArr[i]+"\n");
@@ -543,46 +531,39 @@ public class ProgPlan extends TopServlet{
 	out.println("</td></tr>");
 	//
 	// # attendance
-	out.println("<tr><td align=\"right\"><b>Estimated # Attendance:</b></td><td>");
-	out.println("<input type=\"text\" name=\"attendCount\" "+
+	out.println("<tr><td align=\"right\"><label for=\"att\">Estimated # Attendance:</label></td><td>");
+	out.println("<input type=\"text\" name=\"attendCount\" id=\"att\" "+
 		    "value=\""+pp.getAttendCount()+"\" maxlength=\"10\" size=\"10\" />"+
 		    "<font color=\"green\" size=\"-1\">(e.g. in events)"+
 		    "</font>");
-	out.println("&nbsp;&nbsp;or <b> Min/Max: </b>");
-	out.println("<input type=\"text\" name=\"min_max\" "+
+	out.println("&nbsp;&nbsp;or <label for=\"min_max\"> Min/Max: </label>");
+	out.println("<input type=\"text\" name=\"min_max\" id=\"min_max\" "+
 		    "value=\""+pp.getMin_max()+"\" maxlength=\"20\" size=\"20\" />"+
-		    "<font color=green size=-1>(e.g. in a class)"+
-		    "</font></td></tr>");
+		    "(e.g. in a class)</td></tr>");
 	//
 	// Event time
-	out.println("<tr><td align=\"right\"><b>Program Date:</b></td><td>");
-	out.println("<input type=\"text\" name=\"program_date\" "+
+	out.println("<tr><td align=\"right\"><label for=\"pdate\">Program Date:</label></td><td>");
+	out.println("<input type=\"text\" name=\"program_date\" id=\"pdate\" "+
 		    "value=\""+pp.getProgram_date()+"\" maxlength=\"10\" size=\"10\" class=\"date\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Program Time:</b></td><td>");
-	out.println("<input type=\"text\" name=\"event_time\" "+
+	out.println("<tr><td align=\"right\"><label for=\"ptime\">Program Time:</label></td><td>");
+	out.println("<input type=\"text\" name=\"event_time\" id=\"ptime\" "+
 		    "value=\""+pp.getEvent_time()+"\" maxlength=\"20\" size=\"20\" />&nbsp;");
 	//
 	// duration
-	out.println("<b>Program Duration:</b>");
-	out.println("<input type=\"text\" name=\"p_duration\" "+
+	out.println("<label for=\"pdur\">Program Duration:</label>");
+	out.println("<input type=\"text\" name=\"p_duration\" id=\"pdur\" "+
 		    "value=\""+pp.getP_duration()+
 		    "\" maxlength=\"20\" size=\"20\" /></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Total Estimated Time:</b></td><td>");
-	out.println("<input type=\"text\" name=\"est_time\" "+
+	out.println("<tr><td align=\"right\"><label for=\"ttotal\">Total Estimated Time:</label></td><td>");
+	out.println("<input type=\"text\" name=\"est_time\" id=\"ttotal\" "+
 		    "value=\""+pp.getEst_time()+"\" maxlength=\"20\" size=\"20\" />"+
-		    "<font color=\"green\">(include setup to cleanup)"+
-		    "</font></td></tr>");
+		    "(include setup to cleanup)"+
+		    "</td></tr>");
 	//
-	out.println("</table></td></tr>");
-	//
-	// Staff table
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");
 	out.println("<tr><td colspan=\"2\" bgcolor=\"navy\" "+
-		    "align=\"center\"><h3><font color=\"white\">"+
-		    "Staff Consideration</font></h3></td></tr>");
+		    "align=\"center\"><b><font color=\"white\">"+
+		    "Staff Consideration</font></b></td></tr>");
 	out.println("<tr><td colspan=\"2\" align=\"center\"><table>");
-	out.println("<tr><th> Staff </th><th> Count </th></tr>");
 	List<Staff> staffs = pp.getStaffs();
 	jj=1;
 	Set<Type> staffHash = new HashSet<Type>();
@@ -612,19 +593,13 @@ public class ProgPlan extends TopServlet{
 	    }
 	}
 	//
-	out.println("</table></td></tr></table></td></tr>");
 	//
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table width=\"100%\">");
-	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\"><h3>"+
-		    "<font color=\"white\">Other Details</font></h3></td></tr>");
-	// 
 	// Event history
-	out.println("<tr><td "+tdWidth+">&nbsp;</td><td><font color=\"green\">");
-	out.println("No more than 10,000 characters</font></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Event History: </b></td><td>");
+	out.println("<tr><td>&nbsp;</td><td>");
+	out.println("No more than 10,000 characters</td></tr>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"hist\">Event History: </label></td><td>");
 	out.println("<textarea name=\"history\" rows=\"20\" cols=\"70\" "+
-		    " onChange=\"checkTextLen(this,10000)\" wrap>");
+		    " onchange=\"checkTextLen(this,10000)\" id=\"hist\" wrap>");
 	out.println(pp.getHistory());
 	out.println("</textarea></td></tr>");
 	if(!(id.equals("") || pp.getHistory().equals(""))){
@@ -636,42 +611,38 @@ public class ProgPlan extends TopServlet{
 	}
 	//
 	// Supplies
-	out.println("<tr><td></td><td><font color=\"green\">");
-	out.println("No more than 5,000 characters</font></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Supplies: </b></td><td>");				
+	out.println("<tr><td></td><td>");
+	out.println("No more than 5,000 characters</td></tr>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"supp\">Supplies: </label></td><td>");				
 	out.println("<textarea name=\"supply\" rows=\"10\" cols=\"70\" "+
-		    " onChange=\"checkTextLen(this,5000)\" wrap>");
+		    " onChange=\"checkTextLen(this,5000)\" id=\"supp\" wrap>");
 	out.println(pp.getSupply());
 	out.println("</textarea></td></tr>");
 	if(!(id.equals("") || pp.getSupply().equals(""))){
 	    out.println("<tr><td></td><td align=\"center\">");
 	    out.println("<input type=\"button\" "+
 			" value=\"Printable Supplies\" "+
-			" onClick=\"javascript:if(checkNavigator()){window.open('javascript:document.write(opener.document.myForm.supply.value);'"+
+			" onclick=\"javascript:if(checkNavigator()){window.open('javascript:document.write(opener.document.myForm.supply.value);'"+
 			",'Printable');}\" /></td></tr>");
 	}
 	//
 	// timeline
-	out.println("<tr><td></td><td><font color=\"green\">");
-	out.println("No more than 5,000 characters</font></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><b>Timeline:</b></td>");				
+	out.println("<tr><td></td><td>");
+	out.println("No more than 5,000 characters</td></tr>");
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\tline\">Timeline:</label></td>");				
 	out.println("<td>");
 	out.println("<textarea name=\"timeline\" rows=\"10\" cols=\"70\" "+
-		    " onChange=\"checkTextLen(this,5000)\" wrap>");
+		    " onChange=\"checkTextLen(this,5000)\" id=\"tline\" wrap>");
 	out.println(pp.getTimeline());
 	out.println("</textarea></td></tr>");
 	if(!(id.equals("") || pp.getTimeline().equals(""))){
 	    out.println("<tr><td></td><td align=\"center\">");
 	    out.println("<input type=\"button\" "+
 			" value=\"Printable Timeline\" "+
-			" onClick=\"javascript:if(checkNavigator()){window.open('javascript:document.write(opener.document.myForm.timeline.value);'"+
+			" onclick=\"javascript:if(checkNavigator()){window.open('javascript:document.write(opener.document.myForm.timeline.value);'"+
 			",'Printable');}\" /></td></tr>");
 	}
 	//
-	out.println("<tr><td>&nbsp;</td></tr>"); // extra space
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td align=\"center\"><table width=\"80%\">");
 	if(pp.isNew()){
 	    out.println("<tr>");
 	    out.println("<td valign=\"top\" align=\"right\">");				
@@ -689,27 +660,23 @@ public class ProgPlan extends TopServlet{
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Update\" /></td>");
 	    //
+	    out.println("</td><td>");	    
 	    if(user.canDelete()){
-		out.println("</td><td align=\"right\">");
 		out.println("<input type=\"button\" "+
-			    "name=\"action\" value=\"Delete\" onclick=\"return validateDelete();\" /></td>");
+			    "name=\"action\" value=\"Delete\" onclick=\"return validateDelete();\" />");
 	    }
 	    // if no program is linked yet, user can add one
 	    if(!pp.hasProgram()){
-		out.println("<td align=\"right\">");
-		out.println("<input type=\"button\" onclick=\"document.location.href='"+url+"Program.do?plan_id="+id+"'\" value=\"New Program\" /></td>");
-		out.println("<td align=\"right\">");
-		out.println("<input type=\"button\" onclick=\"document.location.href='"+url+"Browse?plan_id="+id+"&needDuplication=y'\" value=\"New Program from Duplicate\" /></td>");								
+		out.println("<input type=\"button\" onclick=\"document.location.href='"+url+"Program.do?plan_id="+id+"'\" value=\"New Program\" />");
+		out.println("<input type=\"button\" onclick=\"document.location.href='"+url+"Browse?plan_id="+id+"&needDuplication=y'\" value=\"New Program from Duplicate\" />");								
 	    }
-	    out.println("<td align=\"center\" valign=\"top\">");
 	    out.println("<input type=\"button\" value=\"Add Attachments\""+
 			" onclick=\"document.location='"+url+
 			"PromtFile.do?type=Plan&related_id="+id+
-			"';\" /></td>");						
-	    out.println("</tr>");
+			"';\" />");						
+	    out.println("</td></tr>");
 	}
 	out.println("</table>");
-	out.println("</td></tr></table>");
 	out.println("</form>");
 	//
 	// list the last program linked to this plan (if any)

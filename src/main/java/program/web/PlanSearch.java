@@ -127,34 +127,33 @@ public class PlanSearch extends TopServlet{
 	out.println("<input type=\"hidden\" name=\"minRecords\" value=\"0\" />");
 	out.println("<table align=\"center\" border=\"1\" width=\"90%\">");
 	// sortby
-        out.println("<tr bgcolor=\"#CDC9A3\"><td><table width=\"90%\">");
 	out.println("<tr><td align=\"right\">");
-	out.println("<b>Sort by: </b></td><td align=\"left\">");
-	out.println("<select name=\"sortby\">");
+	out.println("<label for=\"sortby\">Sort by: </label></td><td align=\"left\">");
+	out.println("<select name=\"sortby\" id=\"sortby\">");
 	out.println("<option value=\"pl.id\" selected>ID</option>");
 	out.println("<option value=\"program\">Program Title</option>");
 	out.println("</select></td></tr>");
 	//
-	out.println("<tr><td align=\"right\"><b>Show: "+
-		    "</b></td><td align=\"left\">");
+	out.println("<tr><td align=\"right\">");
 
 	out.println("<input type=\"text\" name=\"maxRecords\" value=\"100\" "+
-		    "size=\"6\" /> &nbsp;records/page </td></tr>");
-	out.println("<tr><td align=\"right\"><b>Plan/Pre Plan ID: </b>"+
+		    "size=\"6\" id=\"maxr\"/> <label for=\"maxr\">Show records/page </label></td></tr>");
+	out.println("<tr><td align=\"right\">");	
+	out.println("<label for=\"id\">Plan/Pre Plan ID: </label>"+
 		    "</td><td>");
 	out.println("<input type=\"text\" name=\"id\" value=\""+id+
-		    "\" size=\"8\" /></td></tr>");
+		    "\" size=\"8\" id=\"id\" /></td></tr>");
 	//
 	out.println("<tr><td align=\"right\">");				
-	out.println("<b>Season: </b></td><td align=\"left\">");
-	out.println("<select name=\"season\"> ");
+	out.println("<label for=\"season\">Season: </label></td><td align=\"left\">");
+	out.println("<select name=\"season\" id=\"season\"> ");
 	out.println("<option value=\"\">All</otion>");
 	if(!season.equals(""))
 	    out.println("<option value=\""+season+"\" selected=\"selected\">"+season+"</option>\n");
 	out.println(Helper.allSeasons);
 	out.println("</select>");
-	out.println("<b>Year: </b>");
-	out.println("<select name=\"year\"> ");
+	out.println("<label for=\"year\">Year: </label>");
+	out.println("<select name=\"year\" id=\"year\"> ");
 	int years[] = Helper.getPrevYears();
 	out.println("<option value=\"\">All\n");		
 	for(int yy:years){
@@ -163,9 +162,9 @@ public class PlanSearch extends TopServlet{
 	out.println("</select>");
 	out.println("</td></tr>");				
 	out.println("<tr><td align=right>"+
-		    "<b>Lead: </b></td>");
+		    "<label for=\"lead_id\">Lead: </label></td>");
 	out.println("<td align=\"left\">");
-	out.println("<select name=\"lead_id\">");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">All</option>");
 	if(leads != null){
 	    for(Type one:leads){
@@ -176,51 +175,44 @@ public class PlanSearch extends TopServlet{
 	out.println("</select></td></tr>");
 				
 	out.println("<tr><td align=\"right\" valign=\"bottom\">");
-	out.println("<b>Plan Program Title: </b></td><td align=\"left\">");
-	out.println("<font color=\"green\" size=\"-1\">"+
-		    "Key word <br /></font>");				
-	out.println("<input type=\"text\" name=\"program\" maxlength=\"70\" size=\"40\" />");
+	out.println("<label for=\"ptitle\">Plan Program Title: </label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"program\" maxlength=\"70\" size=\"40\" id=\"ptitle\" />");
 	out.println("</td></tr>");
 	//
 	// instructor
 	out.println("<tr><td align=\"right\" valign=\"bottom\">");				
-	out.println("<b>Instructor Name: </b>");
-	out.println("</td><td align=\"left\"><font color=\"green\" size=\"-1\">"+
-		    "Key word <br></font>");
-	out.println("<input type=\"text\" name=\"instructor\" maxlength=\"50\" size=\"30\" />");
+	out.println("<label for=\"instr\">Instructor Name: </label>");
+	out.println("</td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"instructor\" maxlength=\"50\" size=\"30\" id=\"instr\" />");
 	out.println("</td></tr>");
 	//
 	// 
 	// objective
 	out.println("<tr><td align=\"right\" valign=\"bottom\">");
-	out.println("<b>Program Objective: </b>");
-	out.println("</td><td align=\"left\"><font color=\"green\" size=\"-1\">"+
-		    "Key word or a phrase<br></font>");
+	out.println("<label for=\"obj\">Program Objective: </label>");
+	out.println("</td><td align=\"left\">");
 
 	out.println("<input type=\"text\" name=\"objective\" "+
-		    " maxlength=\"50\" size=\"30\" />");
+		    " maxlength=\"50\" size=\"30\" id=\"obj\" />");
 	out.println("</td></tr>");
 	// 
 	// target market
 	out.println("<tr><td align=\"right\" valign=\"bottom\">");
-	out.println("<b>Target Market: </b>");
+	out.println("<label for=\"target\">Target Market: </label>");
 	out.println("</td><td><font color=\"green\" size=\"-1\">"+
 		    "Key word or a phrase<br></font>");
 	out.println("<input type=\"text\" name=\"market\" maxlength=\"50\" "+
-		    " size=\"30\" />");
+		    " size=\"30\" id=\"target\"/>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Pre Plan Date: </b>");
+	out.println("<tr><td align=\"right\"><label for=\"date_from\">Pre Plan Date, from </label>");
 	out.println("</td><td align=\"left\">");
-	out.println(" from ");
 	out.println("<input type=\"text\" name=\"date_from\" maxlength=\"10\" "+
-		    "value=\"\" size=\"10\" class=\"date\" />");
-	out.println(" to ");
+		    "value=\"\" id=\"date_from\" size=\"10\" class=\"date\" />");
+	out.println("<label for=\"date_to\"> to </label>");
 	out.println("<input type=\"text\" name=\"date_to\" maxlength=\"10\" "+
-		    "value=\"\" size=\"10\" class=\"date\" />");
+		    "value=\"\" size=\"10\" class=\"date\" id=\"date_to\" />");
 	out.println("(mm/dd/yyyy)</td></tr>");
 	// 		
-	out.println("</table></td></tr>");
-	// 
 	out.println("<tr><td align=right><input type=\"submit\" value=\"Search\" "+
 		    "></tr></table>");
 	out.println("<br />");
@@ -379,6 +371,7 @@ public class PlanSearch extends TopServlet{
 	    }
 	    for(Plan plan:pl){
 		os.println("<table width=\"90%\">");
+		os.println("<caption> Search Results</caption>");
 		os.println("<tr><td align=\"right\" width=\"20%\"><b>ID:");
 		os.println("</b></td><left><td>");
 		plan.doSelect();

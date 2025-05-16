@@ -204,10 +204,10 @@ public class ProgramNoteServ extends TopServlet{
 	}
 	if(!message.equals("")){
 	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
+		out.println(message);
 	    else
 		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println("<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"return "+
@@ -218,12 +218,8 @@ public class ProgramNoteServ extends TopServlet{
 	if(!id.equals("")){
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	}
-	out.println("<table width=\"90%\" border>");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td align=\"center\">");
-	out.println("<table>");
-	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
-		    "><h3><font color=\"white\">"+
-		    "Program Notes </font></h3></td></tr>");
+	out.println("<table width=\"90%\" border=\"1\">");
+	out.println("<caption>Program Notes</caption>");
 	if(!id.isEmpty()){
 	    out.println("<tr><td align=\"right\"><b>Added by:</b></td><td align=\"left\">");
 	    out.println(cont.getUser());
@@ -232,34 +228,29 @@ public class ProgramNoteServ extends TopServlet{
 	    out.println(cont.getDate_time());
 	    out.println("</td></tr>");
 	}	
-	out.println("<tr><td align=\"left\" colspan=\"2\"><b>Notes </b></td></tr>");	
+	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"notes\">Notes </label></td></tr>");	
 	out.println("<tr><td align=\"left\" colspan=\"2\">");	
-	out.println("<textarea name=\"notes\" rows=\"10\" cols=\"50\" >");
+	out.println("<textarea name=\"notes\" rows=\"10\" cols=\"50\" id=\"notes\" >");
 	out.println(cont.getNotes());
 	out.println("</textarea></td</tr>");
-
-	out.println("</table></td></tr>");
-	//
-	out.println("<tr><td><table width=100%>");
 	out.println("<tr>");
 	if(!id.equals("")){
 	    //
 	    // if no program yet (it is new plan)
 	    // can be duplicated only when a program is linked to it
 	    //
-	    out.println("<td valign=top align=right>");				
+	    out.println("<td valign=top>");				
 	    out.println("<input type=\"submit\" "+
-			"name=\"action\" value=\"Update\" /></td>");
+			"name=\"action\" value=\"Update\" />");
 	    if(user.canDelete()){
-		out.println("<td valign=\"top\" align=\"right\">");				
 		out.println("<form name=\"myForm2\" method=\"post\" "+
 			    "onSubmit=\"return validateForm2()\">");
 		out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
-		out.println("</td><td valign=\"top\" align=\"right\">");
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Delete\">&nbsp;");
-		out.println("</form></td>");
+		out.println("</form>");
 	    }
+	    out.println("</td>");
 	}
 	else { // delete startNew
 	    out.println("<td valign=\"top\" align=\"right\">");
@@ -268,11 +259,11 @@ public class ProgramNoteServ extends TopServlet{
 			    "name=\"action\" value=\"Save\" /></td>"+
 			    "<td align=\"right\" valign=\"top\">" );
 	    }
-	    out.println("</form></td>");
+	    out.println("</td>");
 	}
 	out.println("</tr>");
 	out.println("</table>");
-	out.println("</td></tr></table>");
+	out.println("</form>");
 	out.println("<br /> ");
 	out.println("<a href=\""+url+"Program.do?id="+program_id+
 			    "\"> Back to Program "+program_id+"</a>");
