@@ -380,10 +380,7 @@ public class MarketServ extends TopServlet{
 	}
 	out.println("<br />");
 	if(!message.equals("")){
-	    if(success)
-		out.println(message+"<br />");
-	    else
-		out.println("<font color=\"red\">"+message+"</font><br />");
+	    out.println(message+"<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+

@@ -126,7 +126,7 @@ public class DeadLineReport extends TopServlet{
 	Helper.writeTopMenu(os, url);		
 	message = pl.find();
 	if(!message.equals("")){
-	    os.println("<font color=\"red\"> Error "+message+"</font><br />");
+	    os.println(message+"<br />");
 	}
 	if(pl.size() == 0){
 	    os.println("<h3> No record found </h3>");

@@ -113,10 +113,8 @@ public class CodeSearch extends TopServlet{
 	out.println("</head><body><center>");
 	Helper.writeTopMenu(out, url);	
 	out.println("<h2>Code Search</h2>");
-	if(!success){
-	    if(!message.equals(""))
-		out.println("<font color=\"red\">"+message+"</font><br />");
-	}
+	if(!message.equals(""))
+	    out.println(message+"<br />");
 	out.println("<form method=\"post\" action=\""+url+"CodeResult\" >");
 	if(!year.equals("")){
 	    out.println("<input type=\"hidden\" name=\"year\" value=\""+year+ 

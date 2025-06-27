@@ -306,14 +306,8 @@ public class PromtFileServ extends TopServlet{
 	out.println(" </head><body><center>                          ");
 	Helper.writeTopMenu(out, url);
 	out.println(" <h3>File Attachments</h3>");
-	if(success){
-	    if(!message.equals(""))
-		out.println("<h3>"+message+"</h3>");
-	}
-	else{
-	    if(!message.equals(""))
-		out.println("<h3><font color=\"red\">"+message+"</font></h3>");
-	}
+	if(!message.equals(""))
+	    out.println("<h3>"+message+"</h3>");
 	out.println("<form name=\"myForm\" method=\"post\" "+
 		    "ENCTYPE=\"multipart/form-data\" >");
 	if(!id.equals("")){
@@ -324,8 +318,9 @@ public class PromtFileServ extends TopServlet{
 	    out.println("<input type=\"hidden\" name=\"type\" value=\""+type+"\" />");						
 	}	
 	//
-	out.println("<fieldset><legend>Upload Files</legend>");
+
 	out.println("<table border=\"1\" width=\"75%\">");
+	out.println("<caption>Upload Files</caption>");	
 	out.println("<tr><td>");
 	//
 	out.println("<table width=\"100%\">");
@@ -350,12 +345,12 @@ public class PromtFileServ extends TopServlet{
 			"<li> Supported documents are images, MS Documents, PDF;s, web pages, spread sheets, etc </li>"+
 			"</ul>");
 	    out.println("</td></tr>");
-	    out.println("<tr><td><label>File </label> "); 
-	    out.println("<input type=\"file\" name=\"load_file\" "+
+	    out.println("<tr><td><label for=\"file_up\">File </label> "); 
+	    out.println("<input type=\"file\" name=\"load_file\" id=\"file_up\" "+
 			" size=\"30\"></td></tr>");
-	    out.println("<tr><td class=\"left\"><label>Notes </label></td></tr>");
+	    out.println("<tr><td class=\"left\"><label for=\"notes\">Notes </label></td></tr>");
 	    out.println("<tr><td class=\"left\">"); 
-	    out.println("<textarea name=\"notes\" cols=\"70\" rows=\"5\" wrap=\"wrap\">");
+	    out.println("<textarea id=\"notes\" name=\"notes\" cols=\"70\" rows=\"5\" wrap=\"wrap\">");
 	    out.println("</textarea></td></tr>");
 	    out.println("</table></td></tr>");												
 	    out.println("<tr><td align=\"right\">  "+
@@ -367,7 +362,7 @@ public class PromtFileServ extends TopServlet{
 	else{
 	    out.println("<tr><td><label>Date: </label>"+promtFile.getDate()+"</td></tr>");
 	    out.println("<tr><td><label>Added By: </label>"+promtFile.getAddedBy()+"</td></tr>");						
-	    out.println("<tr><td><label>File: </label> <a href=\""+url+"PromtFile.do?id="+id+"&action=download\"> "+promtFile.getOldName()+"</a> </td></tr>");
+	    out.println("<tr><td><label>File Download: </label> <a href=\""+url+"PromtFile.do?id="+id+"&action=download\"> "+promtFile.getOldName()+"</a> </td></tr>");
 	    if(promtFile.hasNotes()){
 		out.println("<tr><td><label>Notes: </label>"+promtFile.getNotes()+"</td></tr>");
 	    }
@@ -380,9 +375,7 @@ public class PromtFileServ extends TopServlet{
 	    out.println("</tr>");				
 	}
 
-	out.println("</table></td></tr>");
-	out.println("</table>");				
-	out.println("</fieldset>");
+	out.println("</table>");
 	out.println("</form>");
 	if(files != null && files.size() > 0){
 	    Helper.printFiles(out, url, files);

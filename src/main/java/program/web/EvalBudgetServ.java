@@ -223,10 +223,7 @@ public class EvalBudgetServ extends TopServlet{
 	else // add update
 	    out.println("<h3>Edit Evaluation Budget </h3>");
 	if(!message.equals("")){
-	    if(!success)
-		out.println("<font size=\"+1\" color=\"red\">"+message+"</font><br />");
-	    else
-		out.println(message+"<br />");
+	    out.println(message+"<br />");
 	}
 	//
 	// the real table

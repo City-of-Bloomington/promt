@@ -355,10 +355,7 @@ public class ProgPlan extends TopServlet{
 	    out.println("<h2>Edit Plan "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println(message);
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
+	    out.println(message);
 	    out.println("<br />");
 	}
 	//

@@ -155,7 +155,6 @@ public class PickTime extends TopServlet {
 	out.println("<input type=\"hidden\" name=\"time\" value=\"\" />");
 	out.println("<table border=\"1\" width=\"90%\">");
 	out.println("<caption>Pick Time</caption>");
-	out.println("<table width=\"100%\">");
 	out.println("<tr><th></th><th><label for=\"in_hh\">Hour</label></th>"+
 		    "<th><label for=\"in_mm\">Minute</label></th>"+
 		    "<th><b>am/pm</b></th></tr>");

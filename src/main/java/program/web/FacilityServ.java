@@ -60,7 +60,7 @@ public class FacilityServ extends TopServlet{
 	//
 	LeadList leads = null;
 	out.println("<html><head><title>City of Bloomington Parks and "+
-		    "Recreation</title>"); 
+		    "Recs</title>"); 
 	boolean success = true;
         String [] vals;
 	HttpSession session = null;
@@ -203,7 +203,7 @@ public class FacilityServ extends TopServlet{
 	//
 	out.println("     function validateForm2() {                  ");     
 	out.println("				                                  ");
-	out.println("    answer = window.confirm (\"Delete this record ?\") ");	
+	out.println("    answer = window.confirm (\"Are you sure you want to Delete ?\") ");	
 	out.println("	 return answer;		                            ");
 	out.println("	 }		                                        ");
 	out.println("    function validateTextarea2(ss) {               ");
@@ -237,10 +237,7 @@ public class FacilityServ extends TopServlet{
 	    out.println("<h2>Edit Facility "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=\"green\">"+message+"</font><br>");
-	    else
-		out.println("<font color=\"red\" size=\"+1\">"+message+"</font><br>");
+	    out.println(message+"<br />");
 	}
 	out.println("<b>* indicates required field</b><br />");
 
@@ -251,7 +248,7 @@ public class FacilityServ extends TopServlet{
 	if(!fc.getId().equals(""))
 	    out.println("<input type=\"hidden\" name=\"id\" value=\"" + fc.getId()+"\" />");
 	// facility
-	out.println("<center><table border align=\"center\" width=\"90%\">");
+	out.println("<center><table border=\"1\" align=\"center\" width=\"90%\">");
 	out.println("<caption>facility Info</caption>");
 	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
 	out.println("<label for=\"f_name\">Facility Name* </label>");
@@ -261,7 +258,7 @@ public class FacilityServ extends TopServlet{
 	out.println("</td></tr>");
 	//
 	// statement
-	out.println("<tr><td align=\"left\">");
+	out.println("<tr><td>");
 	out.println("<label for=\"type\">Facility Type </label>");
 	out.println("<select name=\"type\" id=\"type\">");
 	for(String str:Facility.facility_types){
@@ -272,7 +269,7 @@ public class FacilityServ extends TopServlet{
 	    out.println("<option value=\""+str+"\" "+selected+">"+str+"</option>");
 	}
 	out.println("</select></td></tr>");				
-	out.println("<tr><td align=\"left\"><label for=\"lead_id\">Lead Programmer:</label>");
+	out.println("<tr><td><label for=\"lead_id\">Lead Programmer:</label>");
 	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\"></option>");
 	if(leads != null && leads.size() > 0){

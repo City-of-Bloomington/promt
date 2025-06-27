@@ -57,7 +57,7 @@ public class LocationSearch extends TopServlet{
 	String message = "", finalMessage="";
 
 	out.println("<html><head><title>City of Bloomington Parks and "+
-		    "Recreation</title>"); 
+		    "Recs</title>"); 
 	boolean actionSet = false, success=true;
 	User user = null;
 	HttpSession	session = req.getSession(false);
@@ -114,11 +114,8 @@ public class LocationSearch extends TopServlet{
 	Helper.writeTopMenu(out, url);		
 	out.println("<h2>Locations Search</h2>");
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=green>"+message+"</font>");
-	    else
-		out.println("<font color=red>"+message+"</font>");
-	    out.println("<br>");
+	    out.println(+message);
+	    out.println("<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\">");

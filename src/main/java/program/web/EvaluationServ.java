@@ -243,8 +243,7 @@ public class EvaluationServ extends TopServlet{
 	    out.println("<br>");
 	}
 	if(!message.equals("")){
-	    if(!success)
-		out.println("<font color=\"red\">"+message+"</font><br />");
+	    out.println(message+"<br />);
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+
@@ -269,7 +268,7 @@ public class EvaluationServ extends TopServlet{
 	    out.println("</td></tr>");
 	}
 	out.println("<tr><td align=\"right\"><b>Program ID:"); //same as program
-	out.println("</b></td><td><left><a href=\""+url+"Program.do?id="+id+"&action=zoom\">"+id+"</a></td></tr>");
+	out.println("</b></td><td><a href=\""+url+"Program.do?id="+id+"&action=zoom\">"+id+"</a></td></tr>");
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><h3><font color=\"white\">"+
 		    "Program Objectives </font></h3></td></tr>");

@@ -205,8 +205,8 @@ public class Duplicate extends TopServlet{
 	out.println(" </script>                                ");   
 	out.println("</head><body><center>    ");
 	Helper.writeTopMenu(out, url);		
-	if(!success){
-	    out.println("<p><font color=red>"+message+"</font></p>");
+	if(!message.isEmpty()){
+	    out.println(message+"<br />");
 	}
 	if(action.equals("")){
 	    out.println("<h2>Duplicate Program</h2>");

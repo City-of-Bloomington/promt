@@ -164,8 +164,8 @@ public class ReportSpon extends TopServlet{
 	    title2 = title.substring(0,title.indexOf("$")-1);
 	    that2 = "$"+that;
 	}
-	out.println("<tr><td align=right valign=top><b>");
-	out.println(title2+":&nbsp;</b></td><td valign=bottom>");
+	out.println("<tr><td align=\"right\" valign=\"top\"><b>");
+	out.println(title2+":&nbsp;</b></td><td valign=\"bottom\">");
 	out.println(that2+"</td></tr>");
     }
 

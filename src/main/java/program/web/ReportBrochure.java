@@ -120,8 +120,8 @@ public class ReportBrochure extends TopServlet{
 	out.println("</head><body>");
 	Helper.writeTopMenu(out, url);	
 	if(!message.equals("")){
-	    out.println("<h3>Error "+message+"</h3>");
-	    out.println("</center></body></html>");
+	    out.println("<b>Error "+message+"</b>");
+	    out.println("<br /></body></html>");
 	    out.close();
 	    return;
 	}

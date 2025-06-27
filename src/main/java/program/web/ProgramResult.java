@@ -354,27 +354,27 @@ public class ProgramResult extends TopServlet{
 	    os.println("<h4>Error: "+message+"</h4>");
 	}
 	os.println("<center>");
-	os.println("<form name=anyform>");
+	os.println("<form name=\"anyform\">");
 	os.println("<h2>Programs </h2>");
 	//
 	os.println("Matching total records :"+total+"<br>");
 	if(total < maxRecords && minRecords == 0){ 
 	    os.println("Showing all the: "+ total + 
-		       " records <br>");
+		       " records <br />");
 	}
 	else if(total <= maxRecords && total > minRecords)
 	    os.println("Showing the records from:"+ minRecords +
-		       " to " + total+ "<br>");
+		       " to " + total+ "<br />");
 	else if(total > maxRecords && total > minRecords){
 	    os.println("Showing the records from:"+ minRecords +
-		       " to " + maxRecords+ "<br>");
+		       " to " + maxRecords+ "<br />");
 	    showNext = true;
 	    incr = maxRecords - minRecords;
 	}
 	else if(total < minRecords){
 	    os.println("Error in setting the \"From\" field in "+
 		       "\"Show Records\", go back and "+
-		       "reset this field. <br>");
+		       "reset this field. <br />");
 	    rangeFlag = false;
 	}
 	if(rangeFlag){
@@ -384,13 +384,8 @@ public class ProgramResult extends TopServlet{
 		if(row >= minRecords && row <= maxRecords){
 		    Program pr = pl.get(row);
 		    os.println("<table width=\"90%\">");
-		    if(showAll){
-			os.println("<tr><td colspan=\"2\" align=\"center\" "+
-				   "bgcolor=\"black\">");
-			os.println("<font color=\"white\" size=\"+2\">"+
-				   pr.getTitle()+"</font>");
-			os.println("</td></tr>");
-		    }
+		    os.println("<caption"+pr.getTitle()+"</caption>");
+		    os.println("</td></tr>");
 		    os.println("<tr><td align=\"right\" width=\"20%\"><strong>ID:");
 		    os.println("</strong></right></td><td align=\"left\">");
 		    if(needDuplication.equals("")){
@@ -621,149 +616,149 @@ public class ProgramResult extends TopServlet{
 		os.println("<input type=\"hidden\" name=\"showType\" "+
 			   "value=\"" + showType + "\" />");
 	    }
-	    os.println("<input type=hidden name=minRecords "+
+	    os.println("<input type=\"hidden\" name=\"minRecords\" "+
 		       "value=" + (minRecords+incr) + "></input>");
-	    os.println("<input type=hidden name=maxRecords "+
+	    os.println("<input type=\"hidden\" name=\"maxRecords\" "+
 		       "value=" + (maxRecords+incr) + "></input>");
 	    if(!id.equals("")){
-		os.println("<input type=hidden name=id "+
+		os.println("<input type=\"hidden\" name=\"id\" "+
 			   "value=" + id +"></input>");
 	    }
 	    if(!codeTask.equals("")){
-		os.println("<input type=hidden name=codeTask "+
+		os.println("<input type=\"hidden\" name=\"codeTask\" "+
 			   "value=\""+ codeTask +"\"></input>");
 	    }
 	    if(!marketTask.equals("")){
-		os.println("<input type=hidden name=marketTask "+
+		os.println("<input type=\"hidden\" name=\"marketTask\" "+
 			   "value=\""+ marketTask +"\"></input>");
 	    }
 	    if(!volTask.equals("")){
-		os.println("<input type=hidden name=volTask "+
+		os.println("<input type=\"hidden\" name=\"volTask\" "+
 			   "value=\""+ volTask +"\"></input>");
 	    }
 	    if(!budgetTask.equals("")){
-		os.println("<input type=hidden name=budgetTask "+
+		os.println("<input type=\"hidden\" name=\"budgetTask\" "+
 			   "value=\""+ budgetTask +"\"></input>");
 	    }
 	    if(!evalTask.equals("")){
-		os.println("<input type=hidden name=evalTask "+
+		os.println("<input type=\"hidden\" name=\"evalTask\" "+
 			   "value=\""+ evalTask +"\"></input>");
 	    }
 	    if(!code.equals("")){
-		os.println("<input type=hidden name=pCode "+
+		os.println("<input type=\"hidden\" name=\"pCode\" "+
 			   "value=\""+ code +"\"></input>");
 	    }
 	    if(!sponTask.equals("")){
-		os.println("<input type=hidden name=sponTask "+
+		os.println("<input type=\"hidden\" name=\"sponTask\" "+
 			   "value=\""+ sponTask +"\"></input>");
 	    }
 	    if(!dateFrom.equals("")){
-		os.println("<input type=hidden name=dateFrom "+
+		os.println("<input type=\"hidden\" name=\"dateFrom\" "+
 			   "value=\""+ dateFrom +"\"></input>");
 	    }
 	    if(!dateTo.equals("")){
-		os.println("<input type=hidden name=dateTo "+
+		os.println("<input type=\"hidden\" name=\"dateTo\" "+
 			   "value=\""+ dateTo +"\"></input>");
 	    }
 	    if(!dateAt.equals("")){
-		os.println("<input type=hidden name=dateAt "+
+		os.println("<input type=\"hidden\" name=\"dateAt\" "+
 			   "value=\""+ dateAt +"\"></input>");
 	    }
 	    if(!whichDate.equals("")){
-		os.println("<input type=hidden name=whichDate "+
+		os.println("<input type=\"hidden\" name=\"whichDate\" "+
 			   "value=\""+ whichDate +"\"></input>");
 	    }
 	    if(!days.equals("")){
-		os.println("<input type=hidden name=days "+
+		os.println("<input type=\"hidden\" name=\"days\" "+
 			   "value=\"" + days +"\"></input>");
 	    }
 	    if(!lead_id.equals("")){
-		os.println("<input type=hidden name=lead_id "+
+		os.println("<input type=\"hidden\" name=\"lead_id\" "+
 			   "value=\"" + lead_id +"\"></input>");
 	    }
 	    if(!ageFrom.equals("")){
-		os.println("<input type=hidden name=ageFrom "+
+		os.println("<input type=\"hidden\" name=\"ageFrom\" "+
 			   "value=\"" + ageFrom +"\"></input>");
 	    }
 	    if(!ageTo.equals("")){
-		os.println("<input type=hidden name=pAgeTo "+
+		os.println("<input type=\"hidden\" name=\"pAgeTo\" "+
 			   "value=\"" + ageTo +"\"></input>");
 	    }
 	    if(!title.equals("")){
-		os.println("<input type=hidden name=ptitle "+
+		os.println("<input type=\"hidden\" name=\"ptitle\" "+
 			   "value=\"" + title +"\"></input>");
 	    }
 	    if(!year.equals("")){
-		os.println("<input type=hidden name=pyear "+
+		os.println("<input type=\"hidden\" name=\"pyear\" "+
 			   "value=\"" + year +"\"></input>");
 	    }
 	    if(!season.equals("")){
-		os.println("<input type=hidden name=season "+
+		os.println("<input type=\"hidden\" name=\"season\" "+
 			   "value=\"" + season +"\"></input>");
 	    }
 	    if(!category_id.equals("")){
-		os.println("<input type=hidden name=category_id "+
+		os.println("<input type=\"hidden\" name=\"category_id\" "+
 			   "value=\"" + category_id +"\"></input>");
 	    }
 	    if(!statement.equals("")){
-		os.println("<input type=hidden name=statement "+
+		os.println("<input type=\"hidden\" name=\"statement\" "+
 			   "value=\"" + statement +"\"></input>");
 	    }
 	    if(!oginfo.equals("")){
-		os.println("<input type=hidden name=oginfo "+
+		os.println("<input type=\"hidden\" name=\"oginfo\" "+
 			   "value=\"" + oginfo +"\"></input>");
 	    }
 	    if(!fee.equals("")){
-		os.println("<input type=hidden name=fee "+
+		os.println("<input type=\"hidden\" name=\"fee\" "+
 			   "value=\"" + fee +"\"></input>");
 	    }
 	    if(!inCityFee.equals("")){
-		os.println("<input type=hidden name=inCityFee "+
+		os.println("<input type=\"hidden\" name=\"inCityFee\" "+
 			   "value=\"" + inCityFee +"\"></input>");
 	    }
 	    if(!nonCityFee.equals("")){
-		os.println("<input type=hidden name=nonCityFee "+
+		os.println("<input type=\"hidden\" name=\"nonCityFee\" "+
 			   "value=\"" + nonCityFee +"\"></input>");
 	    }
 
 	    if(!regDeadLine.equals("")){
-		os.println("<input type=hidden name=regDeadLine "+
+		os.println("<input type=\"hidden\" name=\"regDeadLine\" "+
 			   "value=\"" + regDeadLine +"\"></input>");
 	    }
 	    if(!location_id.equals("")){
-		os.println("<input type=hidden name=location_id "+
+		os.println("<input type=\"hidden\" name=\"location_id\" "+
 			   "value=\"" + location_id +"\"></input>");
 	    }
 	    if(!instructor.equals("")){
-		os.println("<input type=hidden name=instructor "+
+		os.println("<input type=\"hidden\" name=\"instructor\" "+
 			   "value=\"" + instructor +"\"></input>");
 	    }
 	    if(!codeNeed.equals("")){
-		os.println("<input type=hidden name=codeNeed "+
+		os.println("<input type=\"hidden\" name=\"codeNeed\" "+
 			   "value=\"" + codeNeed +"\"></input>");
 	    }
 	    if(!area_id.equals("")){
-		os.println("<input type=hidden name=area_id "+
+		os.println("<input type=\"hidden\" name=\"area_id\" "+
 			   "value=\"" + area_id +"\"></input>");
 	    }
 	    if(!unCode.equals("")){
-		os.println("<input type=hidden name=unCode "+
+		os.println("<input type=\"hidden\" name=\"unCode\" "+
 			   "value=\"" + unCode +"\"></input>");
 	    }
 	    if(!unMarket.equals("")){
-		os.println("<input type=hidden name=unMarket "+
+		os.println("<input type=\"hidden\" name=\"unMarket\" "+
 			   "value=\"" + unMarket +"\"></input>");
 	    }
 	    if(!unVol.equals("")){
-		os.println("<input type=hidden name=unVol "+
+		os.println("<input type=\"hidden\" name=\"unVol\" "+
 			   "value=\"" + unVol +"\"></input>");
 	    }
 	    if(!unSpon.equals("")){
-		os.println("<input type=hidden name=unSpon "+
+		os.println("<input type=\"hidden\" name=\"unSpon\" "+
 			   "value=\"" + unSpon +"\"></input>");
 	    }
 	    if(!nraccount.equals("")){
-		os.println("<input type=hidden name=nraccount "+
+		os.println("<input type=\"hidden\" name=\"nraccount\" "+
 			   "value=\"" + nraccount +"\"></input>");
 	    }
 	    os.println("<center><table ><tr><td>"); 
@@ -786,8 +781,8 @@ public class ProgramResult extends TopServlet{
      */
     void writeItem(String that, String title, PrintWriter os){
 	if(!that.equals("")){
-	    os.println("<tr><td align=right valign=top><strong>");
-	    os.println(title+":&nbsp;</strong></td><td valign=top>");
+	    os.println("<tr><td align=\"right\" valign=\"top\"><b>");
+	    os.println(title+":&nbsp;</b></td><td valign=\"top\">");
 	    os.println(that+"</td></tr>");
 	}
     }

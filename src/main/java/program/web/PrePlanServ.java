@@ -241,14 +241,11 @@ public class PrePlanServ extends TopServlet{
 	    out.println("<h2>Edit Pre Plan "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println(message);
+	    out.println("<br />");
 	}		
 	if(!pp.isFulfilled()){
-	    out.println("<p><font color=\"red\">These are some determinants need to be fulfilled before you move to the plan page</font></p>");
+	    out.println("<p><b>These are some determinants need to be fulfilled before you move to the plan page</b></p>");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"return "+

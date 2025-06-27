@@ -137,7 +137,7 @@ public class ReportInclusive extends TopServlet{
 		//
 		// inclusive
 		//
-		out.println("<hr width='75%'>");
+		out.println("<hr width=\"75%\" />");
 	    }
 	}
 	out.println("</center>");

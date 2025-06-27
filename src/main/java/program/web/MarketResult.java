@@ -104,8 +104,8 @@ public class MarketResult extends TopServlet{
 		    "</title>");
 	Helper.writeWebCss(out, url);
 	out.println("</head><body><center>");
-	out.println("<font size=+2>Parks and Recreation"+
-		    "</font><br>");	
+	out.println("<font size=\"+2\">Parks and Recreation"+
+		    "</font><br />");	
 	Helper.writeTopMenu(out, url);
 	out.println("<h2>Marketing Search Results</h2>");
 	if(!success){		
@@ -114,9 +114,10 @@ public class MarketResult extends TopServlet{
 	    }
 	}
 	else{
-	    out.println("Matching total records :"+ markets.size() + "<br />");
+
 	    out.println("<table width=\"100%\">");
-	    out.println("<caption>Marketing</caption>");
+	    out.println("<caption>Marketing, ");
+	    out.println("matching records :"+ markets.size() + "</caption>");	    
 	    for(Market market:markets){
 		// market id (same as program)
 		out.println("<tr><td align=\"right\"><b>Marketing:</b></td>");

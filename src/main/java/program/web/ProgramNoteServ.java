@@ -71,7 +71,7 @@ public class ProgramNoteServ extends TopServlet{
 	    res.sendRedirect(str);
 	    return;
 	}
-	ProgramNote cont = new ProgramNote(debug);
+	ProgramNote pnote = new ProgramNote(debug);
 	Program prog = null;
         String [] vals;
 	while (values.hasMoreElements()){
@@ -80,17 +80,17 @@ public class ProgramNoteServ extends TopServlet{
 	    value = vals[vals.length-1].trim();
 
 	    if(name.equals("id")){
-		cont.setId(value);
+		pnote.setId(value);
 		id = value;
 	    }
 	    else if(name.equals("notes")){
-		cont.setNotes(value);
+		pnote.setNotes(value);
 	    }
 	    else if(name.equals("fromBrowse")){
 		fromBrowse = value;
 	    }			
 	    else if(name.equals("program_id")){
-		cont.setProgram_id (value);
+		pnote.setProgram_id (value);
 		program_id = value;
 	    }
 	    else if(name.equals("action")){
@@ -100,9 +100,9 @@ public class ProgramNoteServ extends TopServlet{
 	//
        	if(action.equals("Delete")){
 	    if(user.canDelete()){
-		cont.doSelect();
-		program_id = cont.getProgram_id();
-		String back = cont.doDelete();
+		pnote.doSelect();
+		program_id = pnote.getProgram_id();
+		String back = pnote.doDelete();
 		if(back.equals("")){
 		    id="";
 		}
@@ -119,10 +119,10 @@ public class ProgramNoteServ extends TopServlet{
 	else if(action.equals("Save")){
 	    //
 	    if(user.canEdit()){
-		cont.setAdded_by(user.getId());
-		String back = cont.doSave();
+		pnote.setAdded_by(user.getId());
+		String back = pnote.doSave();
 		if(back.isEmpty()){
-		    id = cont.getId();
+		    id = pnote.getId();
 		    message = "Saved successfully";
 		}
 		else{
@@ -138,17 +138,17 @@ public class ProgramNoteServ extends TopServlet{
 	else if(action.equals("Update")){
 	    //
 	    if(user.canEdit()){
-		cont.setAdded_by(user.getId());
-		String back = cont.doUpdate();
+		pnote.setAdded_by(user.getId());
+		String back = pnote.doUpdate();
 		if(back.equals("")){
-		    id = cont.getId();
+		    id = pnote.getId();
 		    message = "Saved successfully";
 		}
 		else{
 		    message += back ;
 		    success = false;
-		    cont.doSelect();
-		    program_id = cont.getProgram_id();
+		    pnote.doSelect();
+		    program_id = pnote.getProgram_id();
 		}
 	    }
 	    else{
@@ -157,12 +157,12 @@ public class ProgramNoteServ extends TopServlet{
 	    }						
 	}	
 	else if(!id.equals("")){
-	    String back = cont.doSelect();
+	    String back = pnote.doSelect();
 	    if(!back.equals("")){
 		message += back;
 		success = false;
 	    }
-	    program_id = cont.getProgram_id();
+	    program_id = pnote.getProgram_id();
 	}
 	//
 	// This script validates textareas and facility
@@ -203,10 +203,7 @@ public class ProgramNoteServ extends TopServlet{
 	    out.println("<h2>Notes Id: "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println(message);
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
+	    out.println(message);
 	    out.println("<br />");
 	}
 	//
@@ -222,16 +219,16 @@ public class ProgramNoteServ extends TopServlet{
 	out.println("<caption>Program Notes</caption>");
 	if(!id.isEmpty()){
 	    out.println("<tr><td align=\"right\"><b>Added by:</b></td><td align=\"left\">");
-	    out.println(cont.getUser());
+	    out.println(pnote.getUser());
 	    out.println("</td></tr>");
 	    out.println("<tr><td align=\"right\"><b>Date & Time:</b></td><td align=\"left\">");
-	    out.println(cont.getDate_time());
+	    out.println(pnote.getDate_time());
 	    out.println("</td></tr>");
 	}	
 	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"notes\">Notes </label></td></tr>");	
 	out.println("<tr><td align=\"left\" colspan=\"2\">");	
 	out.println("<textarea name=\"notes\" rows=\"10\" cols=\"50\" id=\"notes\" >");
-	out.println(cont.getNotes());
+	out.println(pnote.getNotes());
 	out.println("</textarea></td</tr>");
 	out.println("<tr>");
 	if(!id.equals("")){

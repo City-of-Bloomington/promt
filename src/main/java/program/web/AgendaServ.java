@@ -168,10 +168,8 @@ public class AgendaServ extends TopServlet {
 	out.println("</head><body>");
 	//
 	Helper.writeTopMenu(out, url);
-	if(!success){
-	    if(!message.equals(""))
-		out.println("<font color=\"red\">"+message+"</font><br />");
-	}
+	if(!message.equals(""))
+	    out.println(+message+"<br />");
 	cal.set(Calendar.YEAR, year);
 	cal.set(Calendar.MONTH, month - 1);
 	cal.set(Calendar.DATE, day);

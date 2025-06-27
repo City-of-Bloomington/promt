@@ -57,7 +57,7 @@ public class LocationServ extends TopServlet{
 	String message = "", finalMessage="";
 
 	out.println("<html><head><title>City of Bloomington Parks and "+
-		    "Recreation</title>"); 
+		    "Recs</title>"); 
 	boolean actionSet = false, success=true;
 
 	User user = null;
@@ -166,11 +166,6 @@ public class LocationServ extends TopServlet{
 		
 	//
 	Helper.writeWebCss(out, url);
-	out.println("<script type=\"text/javascript\">");
-	out.println("  function validateForm(){                          "); 
-	out.println("	     return true;	           ");
-	out.println(" 	 }                                 ");
-	out.println("	</script>                          ");   
 	out.println("</head><body>");
 	//
 	out.println("<center>");
@@ -182,11 +177,8 @@ public class LocationServ extends TopServlet{
 	    out.println("<h2>Edit Location "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println(message);
+	    out.println("<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"return "+

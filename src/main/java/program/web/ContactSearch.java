@@ -122,11 +122,7 @@ public class ContactSearch extends TopServlet{
 	out.println("<center>");
 	out.println("<h2>Instructors Search</h2>");
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=\"green\">"+message+"</font>");
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println(message+"<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\">");

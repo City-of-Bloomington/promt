@@ -42,7 +42,7 @@ public class MediaRequestServ extends TopServlet{
 	String message = "", finalMessage="";
 
 	out.println("<html><head><title>City of Bloomington Parks and "+
-		    "Recreation</title>"); 
+		    "Recs</title>"); 
 	boolean actionSet = false, success=true;
 	User user = null;
 	HttpSession	session = req.getSession(false);
@@ -257,11 +257,8 @@ public class MediaRequestServ extends TopServlet{
 	    out.println("<h2>Edit Media Request "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println(message);
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println(message);
+	    out.println("<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"return "+

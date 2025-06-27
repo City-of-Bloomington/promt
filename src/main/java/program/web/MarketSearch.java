@@ -112,12 +112,12 @@ public class MarketSearch extends TopServlet{
 	//
 	out.println("<h2>Marketing Search</h2>");
 	if(!message.equals("")){
-	    if(!success)
-		out.println("<font color=\"red\">"+message+"</font><br />");
+	    out.println(message+"<br />");
 	}
 	out.println("<form method=\"post\" name=\"myForm\" "+
 		    " action=\""+url+"MarketTable\" >");
 	out.println("<center><table border=\"1\" width=\"90%\">");
+	out.println("<caption>Search Options</caption>");
 	out.println("<tr><td align=\"right\"><label for=\"sortby\">");
 	out.println("Sort by: </label></td><td align=\"left\">");
 	out.println("<select name=\"sortBy\" id=\"sortby\">");
@@ -203,7 +203,7 @@ public class MarketSearch extends TopServlet{
 	out.println("<br />");
 	out.println("</form>");		
 	out.println("</center>");
-	out.println("</body>\n</html>");
+	out.println("</body></html>");
 	out.close();
 
     }

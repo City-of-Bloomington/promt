@@ -215,8 +215,8 @@ public class DuplicatePlan extends TopServlet{
 	out.println("</head>   ");	
 	out.println("<body onLoad=\"showStatus();\">    ");
 	Helper.writeTopMenu(out, url);		
-	if(!success){
-	    out.println("<p><font color=\"red\">"+message+"</font></p>");
+	if(!message.isEmpty()){
+	    out.println(message+"<br />");
 	}
 	out.println("<h2>Duplicate Plan</h2>");
 	out.println("<form name=\"myForm\" method=\"post\" "+

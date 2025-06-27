@@ -117,9 +117,9 @@ public class ReportManager extends TopServlet{
 	}
 	out.println("<html>");
 	out.println("<head><title>City of Bloomington Parks and "+
-		    "Recreation</title>");
+		    "Recs</title>");
 	Helper.writeWebCss(out, url);
-	out.println("</head><body><center>");
+	out.println("</head><body>");
 	Helper.writeTopMenu(out, url);
 	int progCount = 0;
 	//
@@ -204,14 +204,6 @@ public class ReportManager extends TopServlet{
 			    Helper.printFiles(out, url, market.getFiles());
 			}												
 		    }					
-		    //
-		    /*
-		      Evaluation eval = new Evaluation(debug, id);
-		      eval.doSelect();
-		      if(eval.hasRecord()){
-		      Helper.writeEvaluation(out, eval, debug);
-		      }
-		    */
 		    //
 		    // volunteer shifts
 		    //

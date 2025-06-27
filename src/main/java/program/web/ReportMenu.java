@@ -206,17 +206,12 @@ public class ReportMenu extends TopServlet{
 	out.println("<center>");
 	Helper.writeTopMenu(out, url);
 	out.println("<form name=\"cForm\" method=\"get\">");
-	out.println("<h2>Reports Menu</h2>");
 	out.println("<b>Reports for "+season+" - "+year);
 	out.println("<br /><br />");
 	out.println("<table border=\"1\" width=\"90%\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");			
-	out.println("<table width=\"100%\">");
-	out.println("<tr><td align=\"center\" colspan=\"2\">");
-	out.println("<b>Additional Query Options</b> "+
-		    "<br /><br />");
-	out.println("<tr><td align=\"right\"><b>Area/Division</b></td><td align=\"left\">");
-	out.println("<select name=\"area_id\">");
+	out.println("<caption>Report Menu</caption>");
+	out.println("<tr><td align=\"right\"><label for=\"area_id\">Area/Division</label></td><td align=\"left\">");
+	out.println("<select name=\"area_id\" id=\"area_id\">");
 	out.println("<option value=\"\">All</option>");
 	if(areas != null){
 	    for(Type one:areas){
@@ -228,8 +223,8 @@ public class ReportMenu extends TopServlet{
 	}				
 	out.println("</select>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Guide Heading:</b></td><td align=\"left\">");
-	out.println("<select name=\"category_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"cat_id\">Guide Heading:</label></td><td align=\"left\">");
+	out.println("<select name=\"category_id\" id=\"cat_id\">");
 	out.println("<option value=\"\">All</option>");
 	if(categories != null){
 	    for(Type one:categories){
@@ -242,17 +237,17 @@ public class ReportMenu extends TopServlet{
 	out.println("</select>");
 	out.println("</td></tr>");
 	//
-	out.println("<tr><td align=\"right\"><b>Program:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"prog_id\">Program:</label></td>");
 	out.print("<td align=\"left\">");
-	out.println("<select name=\"id\">");
+	out.println("<select name=\"id\" id=\"prog_id\">");
 	out.println("<option selected value=\"\">All</option>");
 	out.println(allPrograms);
 	out.println("</select>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=right><b>Lead Programmer:"+
-		    "</b></td>");
+	out.println("<tr><td align=right><label for=\"lead_id\">Lead Programmer:"+
+		    "</label></td>");
 	out.print("<td align=\"left\">");		
-	out.println("<select name=\"lead_id\">");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">All</option>");
 	if(leads != null){
 	    for(Type one:leads){
@@ -264,15 +259,15 @@ public class ReportMenu extends TopServlet{
 	}
 	out.println("</select>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Non-Reverting Account:"+
-		    "</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"nrv_id\">Non-Reverting Account:"+
+		    "</label></td>");
 	out.print("<td align=\"left\">");		
 	out.println("<input type=\"text\" name=\"nraccount\" size=\"10\" "+
-		    " value=\"\" maxlength=\"20\">");
+		    " value=\"\" maxlength=\"20\" id=\"nrv_id\" />");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Sort by:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"sort_by\">Sort by:</label></td>");
 	out.print("<td align=\"left\">");		
-	out.println("<select name=\"sortby\">");
+	out.println("<select name=\"sortby\" id=\"sort_by\">");
 	out.println("<option value=\"\"></option>");
 	out.println("<option value=\"p.id\">ID</option>");
 	out.println("<option value=\"p.startDate\">Date</option>");
@@ -286,6 +281,7 @@ public class ReportMenu extends TopServlet{
 	out.println("<br />");
 	//
 	out.println("<fieldset style=\"width:85%;background-color:#CDC9A3;\">");
+	out.println("<legend>Report Options</legend>");
 	//
 	// form 4
 	out.println("<form name=\"mForm4\" method=\"post\" action=\""+
@@ -308,12 +304,9 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Brochure:</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=\"submit\" value=\"Click here\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li>");
+	out.println("<input type=\"submit\" value=\"Brochure\" />");
+	out.println("</li>");
 	out.println("</form>");
 	//
 	//
@@ -337,14 +330,10 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");		
-	out.println("<tr><td align=\"left\"><li><b>Marketing: </b> ");
+	out.println("<li> ");
 	out.println("<input type=\"checkbox\" name=\"csvOutput\" value=\"y\" />CSV Output");
-	out.println("</li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");		
-	out.println("<input type=\"submit\" value=\"Click here\" />");
-	out.println("</td></tr>");
-	out.println("</table>");		
+	out.println("<input type=\"submit\" value=\"Marketing\" />");
+	out.println("</li>");
 	out.println("</form>");
 	//
 	// form 12
@@ -367,14 +356,10 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");		
-	out.println("<tr><td align=\"left\"><li><b>Media Requests: </b> ");
-	out.println("<input type=\"checkbox\" name=\"csvOutput\" value=\"y\" />CSV Output");
-	out.println("</li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");		
-	out.println("<input type=\"submit\" value=\"Click here\" />");
-	out.println("</td></tr>");
-	out.println("</table>");		
+	out.println("<li><input type=\"checkbox\" name=\"csvOutput\" value=\"y\" />CSV Output");
+	out.println("
+	out.println("<input type=\"submit\" value=\"Media Report\" />");
+	out.println("</li>");
 	out.println("</form>");
 	
 	//
@@ -398,12 +383,9 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");				
-	out.println("<tr><td align=\"left\"><li><b>Manager:</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=\"submit\" value=\"Click here\"\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li>");
+	out.println("<input type=\"submit\" value=\"Manager\"\" />");
+	out.println("</li>");
 	out.println("</form>");
 	//
 	// form 3
@@ -426,12 +408,9 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Sponsorships:</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=submit value=\"Click here\"\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+
+	out.println("<li><input type=submit value=\"Sponsorships\" />");
+	out.println("</li>");
 	out.println("</form>");
 	//
 	// form 8
@@ -455,12 +434,7 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Code Needed Programs:</b></li></td><td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=\"submit\" value=\"Click here\"\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li><input type=\"submit\" value=\"Code Needed Programs\" /></li>");
 	out.println("</form>");
 	//
 	// form 9
@@ -484,12 +458,8 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Programs Code Title List:</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=\"submit\" value=\"Click here\"\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li><input type=\"submit\" value=\"Programs Code Title List\" />");
+	out.println("</li>");
 	out.println("</form>");
 	//
 	// This report will not work on the old data (before 2004)
@@ -529,12 +499,8 @@ public class ReportMenu extends TopServlet{
 			"\" />");
 	    out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 			"\" />");
-	    out.println("<table width=\"75%\">");
-	    out.println("<tr><td align=\"left\"><li><b>Registration Deadline Report</b></li></td>");
-	    out.println("<td align=\"left\" width=\"50%\">");
-	    out.println("<INPUT type=submit value=\"Click here\"\" />");
-	    out.println("</td></tr>");
-	    out.println("</table>");
+	    out.println("<li><INPUT type=submit value=\"Registration Deadline\" />");
+	    out.println("</li>");
 	    out.println("</form>");
 	}
 	// form 10
@@ -557,12 +523,8 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Volunteer</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=\"submit\" value=\"Click here\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li><input type=\"submit\" value=\"Volunteering\" />");
+	out.println("</li>");
 	out.println("</form>");
 	//
 	// form 11
@@ -587,12 +549,8 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Inclusion Recreation Report</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=submit value=\"Click here\"\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li><input type=submit value=\"Inclusion Recreation\" />");
+	out.println("</li>");
 	out.println("</form>");
 	// form 5
 	out.println("<form name=\"mForm5\" method=\"post\" action=\""+
@@ -614,12 +572,8 @@ public class ReportMenu extends TopServlet{
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
-	out.println("<table width=\"75%\">");
-	out.println("<tr><td align=\"left\"><li><b>Facility</b></li></td>");
-	out.println("<td align=\"left\" width=\"50%\">");
-	out.println("<input type=\"submit\" value=\"Click here\" />");
-	out.println("</td></tr>");
-	out.println("</table>");
+	out.println("<li><input type=\"submit\" value=\"Facilities\" />");
+	out.println("</li>");
 	out.println("</form>");
 	
 	out.println("</fieldset><br />");

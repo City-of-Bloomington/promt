@@ -56,7 +56,7 @@ public class GeneralServ extends TopServlet{
 	//
 	// reinitialize to blank
 	//
-	out.println("<html><head><title>Promt</title>"); 
+	out.println("<html><head><title>General Listing</title>"); 
 	boolean actionSet = false, success = true;
 	User user = null;
 	HttpSession	session = req.getSession(false);
@@ -350,10 +350,7 @@ public class GeneralServ extends TopServlet{
 	    out.println("<h2>Edit General Listing "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
-		out.println(message);
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
+	    out.println(message);
 	    out.println("<br />");
 	}		
 	//

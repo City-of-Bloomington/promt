@@ -126,6 +126,7 @@ public class PlanSearch extends TopServlet{
 	out.println("<form name=\"myForm\" method=\"post\">");
 	out.println("<input type=\"hidden\" name=\"minRecords\" value=\"0\" />");
 	out.println("<table align=\"center\" border=\"1\" width=\"90%\">");
+	out.println("<caption>Search Options</caption>");
 	// sortby
 	out.println("<tr><td align=\"right\">");
 	out.println("<label for=\"sortby\">Sort by: </label></td><td align=\"left\">");

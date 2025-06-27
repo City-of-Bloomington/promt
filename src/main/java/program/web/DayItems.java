@@ -351,10 +351,8 @@ public class DayItems extends TopServlet{
 	out.println("<h2><center>Add/Edit Day Event</center></h2>");
 
 	out.println("<br />");
-	if(!success){
-	    if(!message.equals(""))
-		out.println("<font color=red>"+message+"</font><br />");
-	}
+	if(!message.equals(""))
+	    out.println(message+"<br />");
 
 	//box it in 
 	out.println("<center><table border=\"1\" align=\"center\">");

@@ -211,11 +211,8 @@ public class ContactServ extends TopServlet{
 	    out.println("<h2>Edit Instructor "+id+"</h2>");
 	}
 	if(!message.equals("")){
-	    if(success)
 		out.println(message);
-	    else
-		out.println("<font color=\"red\">"+message+"</font>");
-	    out.println("<br>");
+	    out.println("<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" onsubmit=\"return "+

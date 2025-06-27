@@ -113,14 +113,14 @@ public class ReportCode extends TopServlet{
 	}
 	out.println("<html>");
 	out.println("<head><title>City of Bloomington Parks and "+
-		    "Recreation</title>");
+		    "Recs</title>");
 	Helper.writeWebCss(out, url);
 	out.println("</head><body><center>");
 	Helper.writeTopMenu(out, url);	
 	message = pcList.find();
 	if(!message.isEmpty()){
 	    out.println("<h3>Error "+message+"</h3>");
-	    out.println("</center></body></html>");
+	    out.println("<br /></body></html>");
 	    out.close();
 	    return;
 	}
@@ -128,7 +128,7 @@ public class ReportCode extends TopServlet{
 	if(list == null || list.size() == 0){
 	    //
 	    out.println("<p>No match found </p>");
-	    out.println("</center></body></html>");
+	    out.println("</body></html>");
 	    out.close();
 	    return;	    
 	}
@@ -137,7 +137,9 @@ public class ReportCode extends TopServlet{
 	    writeFirstPage(out,"Code Programs Report", year, season);
 	    out.println("<h3>Total Matching "+list.size()+"</h3>");
 	    out.println("<h4>Note: sorting by program code will bring all programs with sessions first followed by programs without sessions</h4>");
-	    out.println("<table border=\"1\"><tr><th>Code</th><th>Program</th><th>ID</th></tr>");
+	    out.println("<table border=\"1\">");
+	    out.println("<caption>Program Codes</caption>");
+	    out.println("<tr><th>Code</th><th>Program</th><th>ID</th></tr>");
 	    //
 	    for(ProgCode one:list){
 		String str = "<a href=\""+url+"Program.do?action=zoom&id="+one.getId()+"\">"+one.getTitle()+"</a>";				
@@ -150,7 +152,7 @@ public class ReportCode extends TopServlet{
 	    }
 	    out.println("</table>");
 	}
-	out.println("</center></body></html>");
+	out.println("</body></html>");
 	out.close();
 		
     }
@@ -163,13 +165,12 @@ public class ReportCode extends TopServlet{
      */
     void writeFirstPage(PrintWriter out, String reportTitle,
 			String year,String season){
-	out.println("<center><font size=+2>Parks and Recreation</font><br>");
-	out.println("<font size=+1>"+reportTitle+"</font><br />");
+	out.println("<center><bParks and Recreation</b><br />");
+	out.println("<b>"+reportTitle+"</b><br />");
 	out.println("<b> "+season+" "+year+ "</b><br /><br />");
-	out.println("<hr width=75% size=4><br />");
-	out.println("<font color=red size=-1>Note: \"Total In City Fee\" and other fees do include transaction fee <br></font>"); 
+	out.println("<hr width=\"75%\" size=\"4\" /><br />");
+	out.println("<b>Note: \"Total In City Fee\" and other fees do include transaction fee <br /></b>"); 
 	out.println("</center>");
-
     }
 
 }

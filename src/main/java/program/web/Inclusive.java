@@ -243,10 +243,7 @@ public class Inclusive extends TopServlet{
 	else 
 	    out.println("<h2>Edit Inclusive Recreation Request</h2>");
 	if(!message.equals("")){
-	    if(success)
-		out.println(message+"<br>");
-	    else
-		out.println("<font color='red'>"+message+"</font><br>");
+		out.println(message+"<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+

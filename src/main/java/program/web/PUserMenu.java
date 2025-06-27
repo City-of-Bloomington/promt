@@ -144,7 +144,7 @@ public class PUserMenu extends TopServlet{
 	//
 	out.println("<HTML><HEAD><TITLE>Programs Management Menu </TITLE>");
 	Helper.writeWebCss(out,url);
-	out.println(" <script language=javascript>");
+	out.println(" <script language=\"javascript\">");
 	out.println("  function validateForm(){            ");    
 	out.println("  var x=\"\" ;                        ");
 	out.println("   x = document.myForm.pyear.options[document.myForm.pyear.options.selectedIndex].text; ");
@@ -164,30 +164,32 @@ public class PUserMenu extends TopServlet{
 	out.println("</head><body><center>");
 	Helper.writeTopMenu(out, url);
 	out.println("<center><h1> "+title+" </h1>");
-	out.println("<table border><tr><td>");
+
 	if(choice.equals("report")){
+	    out.println("<form name=\"myForm\" action="+
+			url + "ReportMenu "+
+			"onSubmit=\"return validateForm()\">");
+	    out.println("<input type=\"hidden\" name=\"choice\" value=\"" + 
+			choice + "\" />");
 	    //
 	    // vol table
-	    out.println("<table border=0><tr><td align=center>");
+	    out.println("<table border=\"1\"><tr><td>");
+	    out.println("<caption>Options</caption>");	    
+	    out.println("<tr><td align=center>");
 	    out.println("</td></tr><tr><td align=center>");
 	    out.println("Select the year and season then click on Next");
 
-	    out.println("<form name=myForm action="+
-			url + "ReportMenu "+
-			"onSubmit=\"return validateForm()\">");
-	    
-	    out.println("<input type=hidden name=choice value=" + 
-			choice + "></input>");
+
 	    if(pyear.equals("") && season.equals("")){
-		out.println("<tr><td align=center><strong>Year");
-		out.println("<select name=pyear>");
+		out.println("<tr><td align=\"center\"><label for=\"year\">Year</label>");
+		out.println("<select name=\"pyear\" id=\"year\">");
 		out.println("<option></option>");
 		for(int yy:years){
 		    out.println("<option>"+yy+"</option>");
 		}				
 		out.println("</select>");
-		out.println("&nbsp;&nbsp;<strong>Season");
-		out.println("<select name=season>");
+		out.println("&nbsp;&nbsp;<strong><label for=\"season\">Season</label>");
+		out.println("<select name=\"season\" id=\"season\">");
 		out.println("<option selected>"+season+"\n");
 		out.println(Helper.allSeasons);
 		out.println("</select></td></tr>");
@@ -206,37 +208,36 @@ public class PUserMenu extends TopServlet{
 	    GregorianCalendar cal = new GregorianCalendar();
 	    String year2 =  "" + cal.get(Calendar.YEAR);  
 	    //
-	    out.println("<form name=myForm method=POST action="+url +
-			"CodeBrowse?"+
-			" onSubmit=\"return validateForm()\">");			
-	    out.println("<table border=0><tr><td align=center>"); 
-	    out.println("<FONT color=#000099 size=+2>Code Entry"+
-			"</FONT></td></tr>");
-	    out.println("<tr><td><FONT color=green> Use this option to add "+
-			"codes to programs and sessions that need codes.<br>");
+	    out.println("<form name=\"myForm\" method=\"post\" action=\""+url+
+			"CodeBrowse?\""+
+			" onsubmit=\"return validateForm()\">");			
+	    out.println("<table>");
+	    out.println("<caption>Code Entry</caption>");
+	    out.println("<tr><td><b> Use this option to add "+
+			"codes to programs and sessions that need codes.</b><br />");
 	    out.println("Select the year and season then click on the "+
 			"Submit button");
 
-	    out.println("</td></tr><tr><td align=center>");
-	    out.println("<b>Year: </b>");
-	    out.println("<select name=pyear>");
+	    out.println("</td></tr>");
+	    out.println("<tr><td><label for=\"year\">Year: </label>");
+	    out.println("<select name=\"pyear\" id=\"year\">");
 	    if(pyear.equals("")) pyear = year2;
 	    out.println("<option selected>"+pyear+"\n");
 	    for(int yy:years){
 		out.println("<option>"+yy+"</option>");
 	    }					
 	    out.println("</select>");
-	    out.println("&nbsp;&nbsp;&nbsp;<b>Season: </b>");
-	    out.println("<select name=season>");
+	    out.println("&nbsp;&nbsp;&nbsp;<label for=\"season\">Season: </label>");
+	    out.println("<select name=\"season\" id=\"season\">");
 	    out.println("<option selected>"+season+"\n");
 	    out.println(Helper.allSeasons);
 	    out.println("</select></td></tr>");
-	    out.println("<tr><td align=right>");
-	    out.println("<INPUT type=submit name=action value=\"Submit\" "+
+	    out.println("<tr><td align=\"right\">");
+	    out.println("<input type=\"submit\" name=\"action\" value=\"Submit\" "+
 			" ></input>");
-	    out.println("</td></tr></form>");
-	    out.println("</td></tr></table>");
-	    out.println("</td></tr>"); // end of code
+	    out.println("</td></tr>");
+	    out.println("</table>");
+	    out.println("</form>"); // end of code
 	    //
 	}
 	else if(choice.equals("calendar")){

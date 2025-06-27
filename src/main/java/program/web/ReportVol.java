@@ -110,7 +110,7 @@ public class ReportVol extends TopServlet{
 	out.println("<head><title>City of Bloomington Parks and "+
 		    "Recreation</title>");
 	Helper.writeWebCss(out, url);
-	out.println("</head><body><center>");	
+	out.println("</head><body>");	
 	Helper.writeTopMenu(out, url);
 	//
 	// first count the number of programs for this (season, year)
