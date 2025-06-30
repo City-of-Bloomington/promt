@@ -357,7 +357,6 @@ public class ReportMenu extends TopServlet{
 	out.println("<input type=\"hidden\" name=\"sortby\" value=\"" + sortby + 
 		    "\" />");
 	out.println("<li><input type=\"checkbox\" name=\"csvOutput\" value=\"y\" />CSV Output");
-	out.println("
 	out.println("<input type=\"submit\" value=\"Media Report\" />");
 	out.println("</li>");
 	out.println("</form>");

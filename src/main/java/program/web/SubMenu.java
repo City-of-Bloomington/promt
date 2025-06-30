@@ -165,28 +165,26 @@ public class SubMenu extends TopServlet{
 	out.println("</head><body><center>");
 	Helper.writeTopMenu(out, url);
 	out.println("<h3> "+title+" </h3>");
-	out.println("<table border=\"1\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");				
 	if(choice.equals("report")){
-	    //
-	    // vol table
-	    out.println("<table border=\"0\"><tr><td align=\"center\">");
-	    out.println("</td></tr><tr><td align=center>");
-	    out.println("Select the year and season then click on Next");
-
 	    out.println("<form name=\"myForm\" action=\""+url+"ReportMenu\" "+
 			"onSubmit=\"return validateForm();\">");
 	    out.println("<input type=\"hidden\" name=\"choice\" value=\""+choice + "\" />");
+	    //
+	    // vol table
+	    out.println("<table><caption>Report Options</caption>");
+	    out.println("<tr><td align=\"center\">");
+	    out.println("</td></tr><tr><td align=center>");
+	    out.println("Select the year and season then click on Next");
 	    if(year.equals("") && season.equals("")){
-		out.println("<tr><td align=\"center\"><strong>Year: </strong>");
-		out.println("<select name=\"year\">");
+		out.println("<tr><td align=\"center\"><label for=\"year\">Year: </label>");
+		out.println("<select name=\"year\" id=\"year\">");
 		out.println("<option value=\"\">Pick Year</option>");
 		for(int yy:years){
-		    out.println("<option>"+yy+"</option>");
+		    out.println("<option value=\""+yy+"\">"+yy+"</option>");
 		}				
 		out.println("</select>");
-		out.println("&nbsp;&nbsp;<strong>Season: </strong>");
-		out.println("<select name=\"season\">");
+		out.println("&nbsp;&nbsp;<label for=\"season\">Season: </label>");
+		out.println("<select name=\"season\" id=\"season\">");
 		out.println("<option value=\"\">Pick Season</option>\n");
 		out.println(Helper.allSeasons);
 		out.println("</select></td></tr>");
@@ -194,10 +192,9 @@ public class SubMenu extends TopServlet{
 	    out.println("<tr><td align=\"right\"> ");
 	    out.println("<input type=\"submit\" value=\"Next\" />");
 	    out.println("</td></tr>");
+	    out.println("</table>");	    
 	    out.println("</form>");
-	    out.println("</td></tr></table>");
-	    out.println("</td></tr>"); // end of middle
-	    //
+
 	}
 	else if(choice.equals("toPublish")){
 	    List<WebPublish> publishes = null;
@@ -205,37 +202,37 @@ public class SubMenu extends TopServlet{
 	    String back = wpl.find();
 	    if(back.equals("")){
 		publishes = wpl.getPublishes();
-	    }						
-	    //
-	    // vol table
-	    out.println("<table border=\"0\"><tr><td align=\"center\">");
-	    out.println("</td></tr><tr><td align=\"center\">");
-	    out.println("Select the year and season then click on Next");
+	    }
 	    out.println("<form name=\"myForm\" action=\""+url+"ToPublish.do\" "+
 			"onSubmit=\"return validateForm()\">");
 	    out.println("<input type=\"hidden\" name=\"choice\" value=\"" + 
-			choice + "\" />");
-	    out.println("<tr><td align=\"center\"><strong>Year: </strong>");
-	    out.println("<select name=\"year\">");
+			choice + "\" />");	    
+	    //
+	    // table
+	    out.println("<table><caption>Publish Options</caption>");
+	    out.println("<tr><td align=\"center\">");
+	    out.println("</td></tr><tr><td align=\"center\">");
+	    out.println("Select the year and season then click on Next");
+
+	    out.println("<tr><td align=\"center\"><label for=\"year\">Year: </label>");
+	    out.println("<select name=\"year\" id=\"year\" >");
 	    out.println("<option value=\"\">Pick Year</option>");
 	    for(int yy:years){
 		out.println("<option>"+yy+"</option>");
 	    }				
 	    out.println("</select>");
-	    out.println("&nbsp;&nbsp;<strong>Season: </strong>");
-	    out.println("<select name=\"season\">");
+	    out.println("&nbsp;&nbsp;<label for=\"season\">Season: </label>");
+	    out.println("<select name=\"season\" id=\"season\">");
 	    out.println("<option value=\"\">Pick Season</option>\n");
 	    out.println(Helper.allSeasons);
 	    out.println("</select></td></tr>");
 	    out.println("<tr><td align=\"right\"> ");
 	    out.println("<input type=\"submit\" value=\"Next\" />");
-	    out.println("</td></tr>");
-	    out.println("</form>");
 	    out.println("</td></tr></table>");
-	    out.println("</td></tr>"); // end of middle
+	    out.println("</form>");
 	    if(publishes != null && publishes.size() > 0){
-		out.println("<tr><td>");
-		out.println("<table width=\"80%\"><caption>Most recent Publishing Approvals</caption>");
+
+		out.println("<table><caption>Most recent Publishing Approvals</caption>");
 		out.println("<tr><td>ID</td><td>Date</td><td>Approved by</td></tr>");
 		for(WebPublish one:publishes){
 		    out.println("<tr><td><a href=\""+url+"UnPublish.do?id="+one.getId()+"\">"+one.getId()+"</a></td>");
@@ -243,41 +240,37 @@ public class SubMenu extends TopServlet{
 		    out.println("<td>"+one.getUser()+"</td></tr>");
 		}
 		out.println("</table>");
-		out.println("</td></tr>");
 	    }						
 	    //
 	}
 	else if(choice.equals("unPublish")){
 	    //
-	    // vol table
-	    out.println("<table border=\"0\"><tr><td align=\"center\">");
-	    out.println("</td></tr><tr><td align=\"center\">");
-	    out.println("Select the year and season then click on Next");
 	    out.println("<form name=\"myForm\" action=\""+url+"UnPublish.do\" "+
 			"onSubmit=\"return validateForm()\">");
 	    out.println("<input type=\"hidden\" name=\"choice\" value=\"" + 
 			choice + "\" />");
-	    out.println("<tr><td align=\"center\"><strong>Year: </strong>");
-	    out.println("<select name=\"year\">");
+	    out.println("<table><caption>Unpublish Options</caption><tr><td align=\"center\">");
+	    out.println("</td></tr><tr><td align=\"center\">");
+	    out.println("Select the year and season then click on Next");
+
+	    out.println("<tr><td align=\"center\"><label for=\"year\">Year: </label>");
+	    out.println("<select name=\"year\" id=\"year\">");
 	    out.println("<option value=\"\">Pick Year</option>");
 	    for(int yy:years){
 		out.println("<option>"+yy+"</option>");
 	    }				
 	    out.println("</select>");
-	    out.println("&nbsp;&nbsp;<strong>Season: </strong>");
-	    out.println("<select name=\"season\">");
+	    out.println("&nbsp;&nbsp;<label for=\"season\">Season: </label>");
+	    out.println("<select name=\"season\" id=\"season\">");
 	    out.println("<option value=\"\">Pick Season</option>\n");
 	    out.println(Helper.allSeasons);
 	    out.println("</select></td></tr>");
 	    out.println("<tr><td align=\"right\"> ");
 	    out.println("<input type=\"submit\" value=\"Next\" />");
 	    out.println("</td></tr>");
+	    out.println("</table>");	    
 	    out.println("</form>");
-	    out.println("</td></tr></table>");
-	    out.println("</td></tr>"); // end of middle
-	    //
-	}										
-	else if(choice.equals("code")){
+	}										else if(choice.equals("code")){
 	    // Code
 	    //
 	    GregorianCalendar cal = new GregorianCalendar();
@@ -286,17 +279,16 @@ public class SubMenu extends TopServlet{
 	    out.println("<form name=\"myForm\" method=\"post\" action=\""+url +
 			"CodeResult\""+
 			" onSubmit=\"return validateForm()\">");			
-	    out.println("<table border=0><tr><td align=\"center\">"); 
-	    out.println("<font color=\"#000099\" size=\"+2\">Code Entry"+
-			"</font></td></tr>");
-	    out.println("<tr><td><font color=\"green\"> Use this option to add "+
-			"codes to programs and sessions that need codes.<br>");
-	    out.println("Select the year and season then click on the "+
-			"Submit button</font>");
+	    out.println("<table><caption>Code Needed Programs Options</caption>"); 
+
+	    out.println("<tr><td> Use this option to add "+
+			"codes to programs and sessions that need codes.<br />");
+	    out.println("Select the year and season then click on "+
+			"Submit button.");
 
 	    out.println("</td></tr><tr><td align=\"center\">");
-	    out.println("<b>Year: </b>");
-	    out.println("<select name=\"year\">");
+	    out.println("<label for=\"year\">Year: </label>");
+	    out.println("<select name=\"year\" id=\"year\">");
 	    if(year.equals("")) year = year2;
 	    int[] years2 = Helper.getFutureYears();
 	    for(int yy:years2){
@@ -307,17 +299,16 @@ public class SubMenu extends TopServlet{
 		out.println("<option "+selected+">"+yy+"</option>");
 	    }					
 	    out.println("</select>");
-	    out.println("&nbsp;&nbsp;&nbsp;<b>Season: </b>");
-	    out.println("<select name=\"season\">");
+	    out.println("&nbsp;&nbsp;&nbsp;<label for=\"season\">Season: </label>");
+	    out.println("<select name=\"season\"  id=\"season\">");
 	    out.println("<option selected=\"selected\">"+season+"\n");
 	    out.println(Helper.allSeasons);
 	    out.println("</select></td></tr>");
 	    out.println("<tr><td align=\"right\">");
 	    out.println("<input type=\"submit\" name=\"action\" value=\"Submit\" "+
 			" />");
-	    out.println("</td></tr></form>");
-	    out.println("</td></tr></table>");
-	    out.println("</td></tr>"); // end of code
+	    out.println("</td></tr></table>");	    
+	    out.println("</form>");
 	    //
 	}
 	else if(choice.equals("calendar")){
@@ -325,15 +316,13 @@ public class SubMenu extends TopServlet{
 	    GregorianCalendar cal = new GregorianCalendar();
 	    String year2 =  "" + cal.get(Calendar.YEAR);  
 	    int month2 = cal.get(Calendar.MONTH) + 1;
-	    
-	    out.println("<table border=0><tr><td align=center colspan=2>"); // 
-	    out.println("<FONT color=#000099 size=+2>Calendar "+
-			"</FONT>");
-	    out.println("<form name=calForm method=post action="+
-			url + "Agenda?>");
-	    out.println("</td></tr><tr><td align=center colspan=2>");
-	    out.println("<b>Year: </b>");
-	    out.println("<select name=\"year\">");
+	    out.println("<form name=\"calForm\" method=\"post\" action=\""+
+			url + "Agenda\">");	    
+	    out.println("<table><caption>Calendar Options</caption>"); // 
+
+	    out.println("<tr><td>");
+	    out.println("<label for=\"year\">Year: </label>");
+	    out.println("<select name=\"year\" id=\"year\">");
 	    if(year.equals("")) year = year2;
 	    for(int yy:years){
 		String selected = "";
@@ -343,16 +332,16 @@ public class SubMenu extends TopServlet{
 		out.println("<option "+selected+">"+yy+"</option>");
 	    }					
 	    out.println("</select>");
-	    out.println("&nbsp;&nbsp;&nbsp;<b>Month: </b>");
-	    out.println("<select name=\"month\">");
+	    out.println("&nbsp;&nbsp;&nbsp;<label for=\"month\">Month: </label>");
+	    out.println("<select name=\"month\" id=\"month\">");
 	    if(month == 0) month = month2;
 	    out.println("<option selected value="+month+">"+
 			Months[month]+"\n");
 	    out.println(allMonths);
 	    out.println("</select></td></tr>");
 	    // Area
-	    out.println("<tr><td><b>Area: </b></td><td>");
-	    out.println("<select name=\"area_id\">");
+	    out.println("<tr><td><label for=\"area\">Area: </label></td><td>");
+	    out.println("<select name=\"area_id\" id=\"area\'>");
 	    out.println("<option value=\"\"></option>");
 	    if(areas != null){
 		for(Type one:areas){
@@ -362,8 +351,8 @@ public class SubMenu extends TopServlet{
 	    out.println("</select></td></tr>");
 	    //
 	    // Lead
-	    out.println("<tr><td><b>Lead: </b></td><td>");
-	    out.println("<select name=\"lead_id\">");
+	    out.println("<tr><td><label for=\"lead_id\">Lead: </label></td><td>");
+	    out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	    out.println("<option value=\"\"></option>");
 	    if(leads != null){
 		for(Type one:leads){
@@ -374,8 +363,8 @@ public class SubMenu extends TopServlet{
 	    out.println("</select></td></tr>");
 	    //
 	    // category
-	    out.println("<tr><td><b>Heading: </b></td><td>");
-	    out.println("<select name=\"category_id\">");
+	    out.println("<tr><td><label for=\"cat_id\">Heading: </label></td><td>");
+	    out.println("<select name=\"category_id\" id=\"cat_id\">");
 	    out.println("<option value=\"\"></option>");
 	    if(categories != null){
 		for(Type one:categories){
@@ -387,8 +376,8 @@ public class SubMenu extends TopServlet{
 	    out.println("</select></td></tr>");
 	    //
 	    // Location
-	    out.println("<tr><td><b>Location: </b></td><td>");
-	    out.println("<select name=\"location_id\">");
+	    out.println("<tr><td><label for=\"loc_id\">Location: </label></td><td>");
+	    out.println("<select name=\"location_id\" id=\"loc_id\">");
 	    out.println("<option value=\"\"></option>");			
 	    if(locations != null){
 		for(Type one:locations){
@@ -398,11 +387,9 @@ public class SubMenu extends TopServlet{
 	    }		
 	    out.println("</select></td></tr>");
 	    out.println("<tr><td align=right colspan=2>");
-	    out.println("<input type=submit value=Submit"+
-			"></input>");
+	    out.println("<input type=\"submit\" value=\"Submit\" />");
 	    out.println("</td></tr></table>");// end of calendar table
 	}
-	out.println("</td></tr></table>"); // end of overall
 	//
 	// log out section
 	//
@@ -411,7 +398,8 @@ public class SubMenu extends TopServlet{
 	out.println("</BODY></HTML>");
 	out.close();
 
-    }				   
+    }
+	
     /**
      * The main class method.
      *

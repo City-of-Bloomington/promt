@@ -1116,7 +1116,7 @@ public class ProgramServ extends TopServlet{
 	    out.println("<h2>Edit Program </h2>");
 	}
 	if(!message.equals("")){
-		out.println(message");
+		out.println(message);
 	    out.println("<br />");
 	}
 	out.println("</center>");
@@ -1645,7 +1645,7 @@ public class ProgramServ extends TopServlet{
 	out.println("</td></tr>");
 	out.println("<tr><td>");
 	out.println("<input type=\"checkbox\" name=\"inCityFee_c\" value=\"y\" "+
-		    inCityFee_c + " id=\"incity_c\"/><label for=\Incity_c\">In-City Fee</label>");
+		    inCityFee_c + " id=\"incity_c\"/><label for=\"Incity_c\">In-City Fee</label>");
 	out.println("</td><td>");
 	out.println("<input type=\"checkbox\" name=\"nonCityFee_c\" value=\"y\" "+
 		    nonCityFee_c + " id=\"noncity_c\"/><label for=\"noncity_c\">Non-City Fee</label>");

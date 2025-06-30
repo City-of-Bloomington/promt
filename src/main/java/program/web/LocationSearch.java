@@ -114,7 +114,7 @@ public class LocationSearch extends TopServlet{
 	Helper.writeTopMenu(out, url);		
 	out.println("<h2>Locations Search</h2>");
 	if(!message.equals("")){
-	    out.println(+message);
+	    out.println(message);
 	    out.println("<br />");
 	}
 	//

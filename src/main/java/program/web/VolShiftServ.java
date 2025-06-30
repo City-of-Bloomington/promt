@@ -229,7 +229,7 @@ public class VolShiftServ extends TopServlet{
 	    shift.setPid(pid);
 	    id = "";
 	}		
-	else if (action.equals("zoom") || !id.equals("")){
+	else if (!id.equals("")){
 	    String back = shift.doSelect();
 	    if(!back.equals("")){
 		message += " Could not retreive data "+shift.getMessage();
@@ -312,26 +312,20 @@ public class VolShiftServ extends TopServlet{
 	else 
 	    out.println("<h2>Edit Volunteer Shift "+id+"</h2>");
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=green>"+message+"</font><br>");
-	    else
-		out.println("<font color=red>"+message+"</font><br>");
+		out.println(message);
 	}		
 	out.println("<br />");
 	//
-	out.println("<form name=myForm method=post id=\"form_id\" "+
+	out.println("<form name=myForm method=\"post\" id=\"form_id\" "+
 		    "onSubmit=\"return validateForm()\">");
 	if(!pid.equals(""))
-	    out.println("<input type=hidden name=pid value=\"" + pid + "\" />");
+	    out.println("<input type=hidden name=\"pid\" value=\"" + pid + "\" />");
 	if(!id.equals(""))
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	if(!shift.getLead_id().equals("")){
 	    out.println("<input type=\"hidden\" name=\"lead_id\" value=\""+shift.getLead_id()+"\" />");
 	}
 	out.println("<table border=\"1\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<table>");
-
 	//
 	// fields of the train form
 	//
@@ -345,9 +339,9 @@ public class VolShiftServ extends TopServlet{
 	    out.println("<tr><td align=\"right\"><b>Lead</b></td><td>"+prog.getLead()+"</td></tr>");
 	}
 	else if(id.equals("")){
-	    out.println("<tr><td align=\"right\"><b>Lead:</b></td>");
+	    out.println("<tr><td align=\"right\"><label for=\"lead_id\">Lead:</label></td>");
 	    out.println("<td align=\"left\">");			
-	    out.println("<select name=\"lead_id\">");
+	    out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	    out.println("<option value=\"\">Pick One</option>");
 	    if(leads != null){
 		for(Lead one:leads){
@@ -363,53 +357,54 @@ public class VolShiftServ extends TopServlet{
 	    out.println("</td></tr>");
 	}
 	if(prog == null){
-	    out.println("<tr><td align=\"right\"><b>Title:</b></td>");
+	    out.println("<tr><td align=\"right\"><label for=\"sh_title\">Title:</label></td>");
 	    out.println("<td align=\"left\">");
-	    out.println("<input type=\"text\" name=\"title\" maxlength=\"70\" value=\""+shift.getTitle()+"\" size=\"70\" /></td></tr>");			
+	    out.println("<input type=\"text\" name=\"title\" maxlength=\"70\" value=\""+shift.getTitle()+"\" size=\"70\" id=\"sh_title\" /></td></tr>");			
 	}
 	//
 	// volCount
-	out.println("<tr><td align=\"right\"><strong># of Volunteers:");
-	out.println("</strong></td><td align=\"left\">");
-	out.println("<input type=\"text\" name=\"volCount\" maxlength=\"3\" value=\""+shift.getVolCount()+"\" size=\"3\" required=\"required\" />");
+	out.println("<tr><td align=\"right\"><label for=\"volCount\"># of Volunteers:");
+	out.println("</label></td><td align=\"left\">");
+	out.println("<input type=\"text\" name=\"volCount\" maxlength=\"3\" value=\""+shift.getVolCount()+"\" size=\"3\" required=\"required\" id=\"volCount\" />");
 	//
 	// Date
-	out.println(" <b>Date:</b>");
+	out.println(" <label for=\"date\">Date:</label>");
 	out.println("<input type=\"text\" name=\"date\" maxlength=\"10\" value=\""+shift.getDate()+"\" size=\"10\" id=\"date\" /></td></tr>");
 	out.println("<tr><td align=\"right\" valign=\"top\"><b>Day(s):");
-	out.println("</b></td><td><table width=\"100%\"><tr><td align=left>");
-	out.println("<input type=checkbox name=d_sun value=y "+
-		    d_sun+">Su");
+	out.println("</b></td><td><table width=\"100%\"><caption>Days</caption>");
+	out.println("<tr><td align=left>");
+	out.println("<input type=\"checkbox\" name=\"d_sun\" value=\"y\" "+
+		    d_sun+" id=\"d_sun\"/><label for=\"d_sun\"Su</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_mon value=y "+
-		    d_mon+">M");
+	out.println("<input type=\"checkbox\" name=\"d_mon\" value=\"y\" "+
+		    d_mon+" id=\"d_mon\"/><label for=\"d_mon\">M</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_tue value=y "+
-		    d_tue+">Tu");
+	out.println("<input type=\"checkbox\" name=\"d_tue\" value=\"y\" "+
+		    d_tue+" id=\"d_tue\"/><label for=\"d_tue\">Tu</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_wed value=y "+
-		    d_wed+">W");
+	out.println("<input type=\"checkbox\" name=\"d_wed\" value=\"y\" "+
+		    d_wed+" id=\"d_wed\"/><label for=\"d_wed\">W</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_thu value=y "+
-		    d_thu+">Th");
+	out.println("<input type=\"checkbox\" name=\"d_thu\" value=\"y\" "+
+		    d_thu+" id=\"d_thu\"/><label for=\"d_thu\">Th</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_fri value=y "+
-		    d_fri+">F");
+	out.println("<input type=\"checkbox\" name=\"d_fri\" value=\"y\" "+
+		    d_fri+" id=\"d_fri\"/><label for=\"d_fri\">F</label>");
 	out.println("</td></tr><tr><td align=left>");
-	out.println("<input type=checkbox name=d_sat value=y "+
-		    d_sat+">Sa");
+	out.println("<input type=\"checkbox\" name=\"d_sat\" value=\"y\" "+
+		    d_sat+" id=\"d_sat\"/><label for=\"d_sat\">Sa</label>");
 	out.println("</td><td> </td><td colspan=2 align=left>");
-	out.println("<input type=checkbox name=d_mon_fri value=y "+
-		    d_mon_fri+">M-F");
+	out.println("<input type=\"checkbox\" name=\"d_mon_fri\" value=\"y\" "+
+		    d_mon_fri+" id=\"d_mon_fri\" /><label for=\"d_mon_fri\">M-F</label>");
 	out.println("</td><td colspan=2 align=left>");
-	out.println("<input type=checkbox name=d_all value=y "+
-		    d_all+">M-Su");
+	out.println("<input type=\"checkbox\" name=\"d_all\" value=\"y\" "+
+		    d_all+" id=\"d_all\" /><label for=\"d_all\">M-Su</label>");
 	out.println("</td></tr></table></td></tr>");
 	//
 	// Start, End time
-	out.println("<tr><td align=\"right\"><strong>Start Time:");
-	out.println("</strong></td><td align=\"left\">");
-	out.println("<input type=button onClick=\""+
+	out.println("<tr><td align=\"right\"><label for=\"pic_time\">Start Time:");
+	out.println("</label></td><td align=\"left\">");
+	out.println("<input type=\"button\" id=\"pic_time\" onClick=\""+
 		    "window.open('"+url+"PickTime?id="+id+"&wtime=startTime&time="+java.net.URLEncoder.encode(shift.getStartTime())+"','Time',"+
 		    "'toolbar=0,location=0,"+
 		    "directories=0,status=0,menubar=0,"+
@@ -418,9 +413,9 @@ public class VolShiftServ extends TopServlet{
 		    " value=\"Start Shift\">");				
 	out.println("<input type=\"text\" name=\"startTime\" maxlength=\"20\" value=\""+shift.getStartTime()+"\" size=\"20\" readonly=\"readonly\" /> ");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\"><strong>End Time:");
-	out.println("</strong></td><td align=\"left\">");
-	out.println("<input type=button onClick=\""+
+	out.println("<tr><td align=\"right\"><label for=\"pic_end\">End Time:");
+	out.println("</label></td><td align=\"left\">");
+	out.println("<input type=\"button\" id=\"pic_end\" onClick=\""+
 		    "window.open('"+url+"PickTime?id="+id+"&wtime=endTime&time="+java.net.URLEncoder.encode(shift.getEndTime())+"','Time',"+
 		    "'toolbar=0,location=0,"+
 		    "directories=0,status=0,menubar=0,"+
@@ -431,24 +426,24 @@ public class VolShiftServ extends TopServlet{
 	out.println("</td></tr>");				
 	//
 	// Duties
-	out.println("<tr><td align=\"right\" valign=\"top\"><b>Duties:</b></td><td align=\"Left\">");
-	out.println("<textarea name=\"duties\" cols=\"50\" rows=\"5\">"+ shift.getDuties()+"</textarea>");
+	out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"duties\">Duties:</label></td><td align=\"Left\">");
+	out.println("<textarea name=\"duties\" cols=\"50\" rows=\"5\" id=\"dutiers\" >"+ shift.getDuties()+"</textarea>");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"top\"><b>Comments:</b>");
+	out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"notes\">Comments:</label>");
 	out.println("</td><td align=\"left\">");
-	out.print("<textarea name=\"notes\" rows=\"5\" wrap "+
+	out.print("<textarea name=\"notes\" rows=\"5\" wrap=\"wrap\" id=\"notes\" "+
 		  " cols=\"50\" >");
 	out.print(shift.getNotes());
 	out.println("</textarea></td></tr>");
 	//
 	onsite = shift.getOnsite().equals("")?"":"checked=\"checked\"";
-	out.print("<tr><td><td align=\"left\"><input type=\"radio\" name=\"training\" value=\"onsite\" "+
-		  onsite+" />On Site Training Provided, or</td></tr>");
+	out.print("<tr><td><td align=\"left\"><input type=\"radio\" name=\"training\" value=\"onsite\" id=\"onsite\" "+
+		  onsite+" /><label for=\"onsite\">On Site Training Provided, or</label></td></tr>");
 	pre_train = shift.getOnsite().equals("")?"checked=\"checked\"":"";
 	out.print("<tr><td><td align=\"left\"><input type=\"radio\" "+
 		  "name=\"training\" "+pre_train+
-		  " value=\"pre_train\" />Requires Advanced Training/Orientation.");
-	out.println("<font color=green size=-1>(if yes complete add training "+
+		  " value=\"pre_train\" id=\"pre_train\" /><label for=\"pre_train\">Requires Advanced Training/Orientation.</label>");
+	out.println("<font size=\"-1\">(if yes complete add training "+
 		    "details below)</font></td></tr>");
 	//
 	out.println("</table></td></tr>");

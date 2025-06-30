@@ -132,10 +132,9 @@ public class ToPublishServ extends TopServlet {
 	out.println("<input type=\"hidden\" name=\"season\" value=\""+season+"\" />");
 	out.println("<input type=\"hidden\" name=\"year\" value=\""+year+"\" />");				
 	out.println("<table border=\"1\" width=\"90%\">");
-	out.println("<tr><td><table width=\"100%\">");
 	out.println("<tr><td align=\"right\"><b>Year/Season:</b></td><td>"+year+"/"+season+"</td></tr>");
-	out.println("<tr><td align=\"right\"><b>Lead:</b></td>");
-	out.println("<td align=\"left\"><select name=\"lead_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"lead_id\">Lead:</label></td>");
+	out.println("<td align=\"left\"><select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">All</option>");
 	String selected = "";
 	if(leads != null && leads.size() > 0){
@@ -145,25 +144,25 @@ public class ToPublishServ extends TopServlet {
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("</table></td></tr>");
 	out.println("<tr><td align=\"center\"><input type=\"submit\" name=\"action\" value=\"Search\">");
 	out.println("</td></tr>");
+	out.println("</table>");
 	if(action.equals("")){
 	    if(publishes != null && publishes.size() > 0){
-		out.println("<tr><td><table width=\"80%\"><caption>Most recent Publishing Approvals</caption>");
+		out.println("<table width=\"80%\"><caption>Most recent Publishing Approvals</caption>");
 		out.println("<tr><td>ID</td><td>Date</td><td>Approved by</td></tr>");
 		for(WebPublish one:publishes){
 		    out.println("<tr><td><a href=\""+url+"UnPublish.do?id="+one.getId()+"\">"+one.getId()+"</a></td>");
 		    out.println("<td>"+one.getDate()+"</td>");
 		    out.println("<td>"+one.getUser()+"</td></tr>");
 		}
-		out.println("</table></td></tr>");
+		out.println("</table>");
 	    }
 	}
 	else if(!action.equals("")){
 	    if(pl.size() > 0){
-		out.println("<tr><td>Note: Check the programs that are ready to be published on the web and then hit 'Publish' button.<br /><br />");
-		out.println("<table width=\"100%\"><caption>Found "+pl.size()+" Programs</caption>");
+		out.println("<table><caption>Program Selection for Publishing</caption>");
+		out.println("<tr><td colspan=\"7\">Note: Check the programs that are ready to be published on the web and then hit 'Publish' button.<br /><br />");
 		out.println("<tr><td><b> <input type=\"checkbox\" onclick=\"selectAll(this)\" /> Select All </b></td><td><b>ID</b></td></td><td><b>Program</b></td><td><b>Guide Heading</b></td><td><b>Area</b></td><td><b>Lead</b></td></tr>");
 		for(Program one:pl){
 		    out.println("<tr><td><input type=\"checkbox\" name=\"prog_ids\" value=\""+one.getId()+"\" /></td><td>"+one.getId()+"</td>");
@@ -173,12 +172,12 @@ public class ToPublishServ extends TopServlet {
 		    out.println("<td>"+one.getLead()+"</td>");
 		    out.println("</tr>");
 		}
-		out.println("</table></td></tr>");
-		out.println("<tr><td align=\"center\">");
+		out.println("<tr><td colspan=\"7\" align=\"center\">");
 		out.println("<input type=\"submit\" name=\"action\" value=\"Publish\"></td></tr>");
+		out.println("</table>");		
 	    }
 	}
-	out.println("</table>");
+
 	out.println("<br />");
 	out.println("</form>");		
 	out.println("</center>");

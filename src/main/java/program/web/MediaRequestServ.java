@@ -381,7 +381,7 @@ public class MediaRequestServ extends TopServlet{
 	out.println("</td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"note\">Notes <br /> We will be contacting you if there are any questions or clarifications. Please include any helpful details here:</label></td></tr>");
 	out.println("<tr><td align=\"left\" colspan=\"2\">");
-	out.println("<textarea name=\"notes\" row=\"5\" cols=\"60\" wrap=\"wrap\" id=\"notes|">");
+	out.println("<textarea name=\"notes\" row=\"5\" cols=\"60\" wrap=\"wrap\" id=\"notes\">");
 	out.println(request.getNotes());
 	out.println("</textarea></td></tr>");
 	out.println("</td></tr>");	

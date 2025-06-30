@@ -150,7 +150,7 @@ public class SponsorServ extends TopServlet{
 		message += spon.getMessage();
 	    }
 	}
-	else if (action.equals("zoom")){
+	else if (!id.isEmpty()){
 	    String back = spon.doSelect();
 	    if(!back.equals("")){
 		message += " Could not save "+spon.getMessage();
@@ -211,13 +211,9 @@ public class SponsorServ extends TopServlet{
 	    out.println("<h2>Definition, Examples and Guidelines for "+
 			"<br />Requesting Sponsorship</h2>");
 	    if(!message.equals("")){
-		if(success)
-		    out.println("<font color=\"green\">"+message+"</font><br>");
-		else
-		    out.println("<font color=\"red\">"+message+
-				"</font><br>");
+		    out.println(message+"<br />");
 	    }
-	    out.println("<table><tr><td>");
+	    out.println("<table><caption>Definitions and Examples</caption><tr><td>");
 	    out.println("<p><b>Definition of Sponsorship:</b>Sponsorship is "+
 			"a paid effort from a business to tie its name to "+
 			"information, an event, or a venue that reinforces "+
@@ -233,31 +229,33 @@ public class SponsorServ extends TopServlet{
 			"advertisements. Ideally in the form of money, "+
 			"but can also be in-kind, service or a combination."+
 			"</p>");
-	    out.println("</td></tr>");
-	    out.println("<tr><td><table width=95%><tr><td><b>Programs</b></td>");
+	    out.println("</td></tr></table>");
+	    out.println("<table><caption> Things to consider</caption>");
+	    out.println("<tr><td><b>Programs</b></td>");
 	    out.println("<td><b>Things to consider</b></td>");
 	    out.println("<td><b>Something to consider</b></td></tr>");
-	    out.println("<tr><td valign=top>");
-	    out.println("<li>Youth Sports"+
-			"<li>Community Events"+
+	    out.println("<tr><td valign=\"top\">");
+	    out.println("<li>Youth Sports</li>"+
+			"<li>Community Events</li>"+
 			"<li>Facilities-Golf Course, Pools, Frank Southern, "+
-			"Ball Fields"+
-			"<li>Expos"+
-			"<li>Races"+
-			"<li>Tournments</td>");
-	    out.println("<td valign=top># of participants<br>"+
-			"History of Program<br>"+
-			"Media Exposure<br>"+
+			"Ball Fields</li>"+
+			"<li>Expos</li>"+
+			"<li>Races</li>"+
+			"<li>Tournments</li></td>");
+	    out.println("<td valign=\"top\"># of participants<br />"+
+			"History of Program<br />"+
+			"Media Exposure<br />"+
 			"Other Marketing Exposure</td>");
-	    out.println("<td valign=top>"+
-			"Your program, event or facility <br>"+
-			"may NOT NEED sponsorship dollars, <br>"+
-			"but may be attractive to sponsorship <br>"+
+	    out.println("<td valign=\"top\">"+
+			"Your program, event or facility"+
+			"may NOT NEED sponsorship dollars, "+
+			"but may be attractive to sponsorship "+
 			"opportunity for businesses. "+
 			"Think untagged $.</td></tr>");
-	    out.println("</table></td></tr>");
+	    out.println("</table>");
+	    out.println("<table>");
+	    out.println("<caption>Guidelines for Requesting Sponsorship</caption>");
 	    out.println("<tr><td>");
-	    out.println("<b>Guidelines for Requesting Sponsorships</b><br />");
 	    out.println("If this is a first time event/program, contact the Special Services Coordinator to discuss sponsorship prior to entering formal request.<br />");
 	    out.println("<ol>");
 	    out.println("<li><input type=checkbox onChange=\"checkNext()\" "+
@@ -275,11 +273,9 @@ public class SponsorServ extends TopServlet{
 	    out.println("This event/program continues to be in the upward slope of the program life cycle.</li>");
 	    out.println("</ol>");
 	    out.println("</td></tr>");
-	    out.println("<tr><td>");
-	    out.println("<table width=80%><tr><td align=right>");
-	    out.println("<input type=submit name=action "+
-			" disabled value=\"Continue\">");
-	    out.println("</td></tr></table>");
+	    out.println("<tr><td align=right>");
+	    out.println("<input type=\"submit\" name=\"action\" "+
+			" disabled=\"disable\" value=\"Continue\">");
 	    out.println("</td></tr></table>");
 	}
 	else{
@@ -289,11 +285,7 @@ public class SponsorServ extends TopServlet{
 	    else // Save, Update
 		out.println("<h2>View/Edit Sponsorship</h2>");
 	    if(!message.equals("")){
-		if(success)
-		    out.println("<font color=\"green\">"+message+"</font><br>");
-		else
-		    out.println("<font color=\"red\">"+message+
-				"</font><br>");
+		    out.println(message+"<br />");
 	    }
 	    if(!id.equals("")){
 		out.println("<input type=hidden name=\"id\" value=\""+id+"\" />");
@@ -302,8 +294,6 @@ public class SponsorServ extends TopServlet{
 		out.println("<input type=hidden name=\"attendCount\" value=\""+spon.getAttendCount()+"\" />");
 	    }			
 	    out.println("<table border=\"1\">");
-	    out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	    out.println("<table>");
 	    //
 	    // program, year, season
 	    out.println("<tr><td align=\"right\"><b>Program:");
@@ -325,75 +315,70 @@ public class SponsorServ extends TopServlet{
 	    // Market target
 	    if(market.equals("")) market = market2;
 	    out.println("<tr><td align=\"right\">");
-	    out.println("<b>Target Market: </b></td><td align=\"left\">");
+	    out.println("<label for=\"market\">Target Market: </label></td><td align=\"left\">");
 	    out.println("<input type=\"text\" name=\"market\" maxlength=\"80\" "+
-			"value=\""+spon.getMarket() + "\" size=\"70\"></td></tr>");
+			"value=\""+spon.getMarket() + "\" size=\"70\" id=\"market\" /></td></tr>");
 	    //
 	    out.println("</td></tr>");
 	    out.println("<tr><td align=\"right\"><b>Category");
 	    out.println("</b></td><td align=\"left\">");
 	    out.println("<input type=\"checkbox\" name=\"monetary\" value=\"y\" "+monetary+
-			" />Monetary, ");
+			" id=\"monetary\" /><label for=\"monetary\">Monetary</label>, ");
 	    out.println("<input type=\"checkbox\" name=\"tangible\" value=\"y\" "+tangible+
-			" />Tangible Goods, ");
+			" id=\"tangible\" /><label for=\"tangible\">Tangible Goods</label>, ");
 	    out.println("<input type=\"checkbox\" name=\"services\" value=\"y\" "+services+
-			" />Services ");
+			" id=\"service\" /><label for=\"service\">Services</label> ");
 	    out.println("</td></tr>");
 	    //
 	    //
 	    out.println("<tr><td align=\"right\"><b>Sponsor Benefits: </b>");
 	    out.println("</td><td align=\"left\">");
 	    out.println("<input type=\"checkbox\" name=\"signage\" value=\"y\" "+
-			signage+" />Signage at Event ");
+			signage+" id=\"signage\"/><label for=\"signage\">Signage at Event</lable> ");
 	    out.println("<input type=\"checkbox\" name=\"exhibitSpace\" value=\"y\""+
-			" "+exhibitSpace +" />Exhibitor Space ");
+			" "+exhibitSpace +" id=\"space\"/><label for=\"space\">Exhibitor Space</label> ");
 	    out.println("<input type=\"checkbox\" name=\"tshirt\" value=\"checked\" "+
-			tshirt +" />TShirt.</b>");
+			tshirt +" id=\"tshirt\" /><label for=\"tshirt\">TShirt.</label>");
 	    out.println("</td></tr>");
 	    //
 	    // Comments
-	    out.println("<tr><td align=\"right\" valign=\"top\"><b>Comments"+
-			" & Ideas</b>");
+	    out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"comm\">Comments"+
+			" & Ideas</label>");
 	    out.println("</td><td align=\"left\">");
 	    out.print("<textarea rows=\"7\" cols=\"50\" name=\"comments\" wrap "+
-		      ">"); 
+		      " id=\"comm\">"); 
 	    out.println(spon.getComments()+"</textarea>");
 	    out.println("</td></tr>");
 	    //
-	    out.println("</table></td></tr>");
-	    //
 	    if(id.equals("")){
 		if(user.canEdit()){
-		    out.println("<tr><td align=\"right\"><input type=\"submit\" "+
-				"name=\"action\" value=\"Save\">&nbsp;&nbsp;"+
+		    out.println("<tr><td align=\"right\"><input type=\"submit\"  name=\"action\" value=\"Save\" />&nbsp;&nbsp;"+
 				"</td></tr>");
 		}
 		out.println("</form>");
 	    }
 	    else{ // add zoom update
-		out.println("<tr><td align=right><table width=70%><tr>");
+		out.println("<tr>");
 		if(user.canEdit()){
-		    out.println("<td valign=top>"+
-				"<input type=submit "+
-				"name=action value=Update></td>");
+		    out.println("<td>"+
+				"<input type=\"submit\" "+
+				"name=\"action\" value=\"Update\"></td>");
 		}
 		out.println("</form>");
 		if(user.canDelete()){
-		    out.println("</td><td valign=top>");
+		    out.println("<td>");
 		    //
-		    out.println("<form name=myForm2 method=post "+
+		    out.println("<form name=\"myForm2\" method=\"post\" "+
 				"onSubmit=\"return validateDeleteForm()\">");
-		    out.println("<input type=hidden name=id value="+id+ ">");
-		    out.println("<input type=hidden name=pid value="+pid+ ">");
+		    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+ "\" />");
+		    out.println("<input type=\"hidden\" name=\"pid\" value=\""+pid+ "\" />");
 		
-		    out.println("&nbsp;&nbsp;<input type=submit name=action "+
-				"value=Delete>");
-		    out.println("</td></form>");
+		    out.println("&nbsp;&nbsp;<input type=\"submit\" name=\"action\" "+
+				"value=\"Delete\">");
+		    out.println("</form></td>");
 		}
 		out.println("</tr></table>");
-		out.println("</td></tr></form>");	
 	    }	    
-	    out.println("</table>");
 	    //
 	    // put all the old vol-sponsor stuff in one table
 	    //

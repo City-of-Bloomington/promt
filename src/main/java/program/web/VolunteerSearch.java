@@ -131,29 +131,24 @@ public class VolunteerSearch extends TopServlet{
 	Helper.writeTopMenu(out, url);
 	out.println("<h2>Volunteer Search  </h2>");
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=green>"+message+"</font><br>");
-	    else
-		out.println("<font color=red>"+message+"</font><br>");
+	    out.println(message);
 	}		
 	out.println("<br />");
 	//
-	out.println("<form name=myForm method=post id=\"form_id\" "+
+	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+
 		    "onSubmit=\"return validateForm()\">");
 	out.println("<table border=\"1\" width=\"70%\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<table width=\"100%\">");
 	//
 	// fields of the train form
 	//
 	// program, year, season
-	out.println("<tr><td align=\"right\"><b>Volunteer Shift ID:</b></td>");
-	out.println("<td align=\"left\"><input type=\"text\" name=\"id\" size=\"6\" value=\""+shifts.getId()+"\" /></td></tr>"); 		
-	out.println("<tr><td align=\"right\"><b>Program ID:</b></td>");
-	out.println("<td align=\"left\"><input type=\"text\" name=\"pid\" size=\"6\" value=\""+shifts.getPid()+"\" /></td></tr>"); 
-	out.println("<tr><td align=\"right\"><b>Category:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"id\">Volunteer Shift ID:</label></td>");
+	out.println("<td align=\"left\"><input type=\"text\" name=\"id\" size=\"6\" value=\""+shifts.getId()+"\" id=\"id\" /></td></tr>"); 		
+	out.println("<tr><td align=\"right\"><label for=\"prog_id\">Program ID:</label></td>");
+	out.println("<td align=\"left\"><input type=\"text\" name=\"pid\" size=\"6\" value=\""+shifts.getPid()+"\" id=\"prog_id\" /></td></tr>"); 
+	out.println("<tr><td align=\"right\"><label for=\"cat_id\">Category:</label></td>");
 	out.println("<td align=\"left\">");
-	out.println("<select name=\"category_id\">");
+	out.println("<select name=\"category_id\" id=\"cat_id\">");
 	out.println("<option value=\"\"></option>");
 	if(categories != null){
 	    for(Type one:categories){
@@ -162,9 +157,9 @@ public class VolunteerSearch extends TopServlet{
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Lead:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"lead_id\">Lead:</label></td>");
 	out.println("<td align=\"left\">");
-	out.println("<select name=\"lead_id\">");
+	out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\"></option>");
 	if(leads != null){
 	    for(Lead one:leads){
@@ -174,16 +169,16 @@ public class VolunteerSearch extends TopServlet{
 	}
 	out.println("</select></td></tr>");		
 	//
-	out.println("<tr><td align=\"right\"><b>Season:</b></td>");		
+	out.println("<tr><td align=\"right\"><label for=\"season\">Season:</label></td>");		
 	out.println("<td align=\"left\">");
-	out.println("<select name=\"season\"> ");
+	out.println("<select name=\"season\" id=\"season\"> ");
 	out.println("<option value=\"\">All</option>");		
 	if(!shifts.getSeason().equals(""))
 	    out.println("<option value=\""+shifts.getSeason()+"\" selected>"+shifts.getSeason()+"\n");
 	out.println(Helper.allSeasons);
 	out.println("</select>");
-	out.println("<b>Year</b>");
-	out.println("<select name=\"year\"> ");
+	out.println("<label for=\"year\">Year</label>");
+	out.println("<select name=\"year\" id=\"year\"> ");
 	int years[] = Helper.getPrevYears();
 	out.println("<option value=\"\">All\n");		
 	for(int one:years){
@@ -193,10 +188,10 @@ public class VolunteerSearch extends TopServlet{
 	out.println("</select>");
 	out.println("</td></tr>");		
 	// Date
-	out.println("<tr><td align=\"right\"><b>Date From:</b></td>");
+	out.println("<tr><td align=\"right\"><label for=\"dateFrom\">Date From:</label></td>");
 	out.println("<td align=\"left\">");
 	out.println("<input type=\"text\" name=\"dateFrom\" maxlength=\"10\" value=\""+shifts.getDateFrom()+"\" size=\"10\" id=\"dateFrom\" />");
-	out.println("<b> to: </b>");
+	out.println("<label for=\"dateTo\"> to: </label>");
 	out.println("<input type=\"text\" name=\"dateTo\" maxlength=\"10\" value=\""+shifts.getDateTo()+"\" size=\"10\" id=\"dateTo\" />");
 	out.println("</td></tr>");
 	//

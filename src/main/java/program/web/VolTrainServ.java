@@ -210,7 +210,7 @@ public class VolTrainServ extends TopServlet{
 	    train.setShift_id(shift_id);
 	    id = "";
 	}		
-	else if (action.equals("zoom") || !id.equals("")){
+	else if (!id.equals("")){
 	    String back = train.doSelect();
 	    if(!back.equals("")){
 		message += " Could not retreive data "+train.getMessage();
@@ -286,22 +286,16 @@ public class VolTrainServ extends TopServlet{
 	else 
 	    out.println("<h2>Edit Volunteer Training</h2>");
 	if(!message.equals("")){
-	    if(success)
-		out.println("<font color=green>"+message+"</font><br>");
-	    else
-		out.println("<font color=red>"+message+"</font><br>");
+	    out.println(message+"<br />");
 	}
-	out.println("<br />");
 	//
-	out.println("<form name=myForm method=post id=\"form_id\" "+
+	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+
 		    "onSubmit=\"return validateForm()\">");
 	out.println("<input type=\"hidden\" name=\"pid\" value=\"" + pid + "\" />");
 	out.println("<input type=\"hidden\" name=\"shift_id\" value=\""+shift_id+"\" />");
 	if(!id.equals(""))
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");				
 	out.println("<table border=\"1\">");
-	out.println("<tr bgcolor=\"#CDC9A3\"><td>");
-	out.println("<table>");
 	//
 	// fields of the train form
 	//
@@ -322,40 +316,42 @@ public class VolTrainServ extends TopServlet{
 	out.println("<tr><td align=\"right\"><b>Date:</b></td><td align=\"left\">");
 	out.println("<input type=\"text\" name=\"date\" maxlength=\"10\" value=\""+train.getDate()+"\" size=\"10\" id=\"date\" />");
 	out.println("</td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"top\"><b>Day(s):");
-	out.println("</b></td><td><table width=\"100%\"><tr><td align=left>");
-	out.println("<input type=checkbox name=d_sun value=y "+
-		    d_sun+">Su");
+	out.println("<tr><td align=\"right\" valign=\"top\">");
+	out.println("</td><td><table width=\"100%\"><caption>Days</caption>");
+	out.println("<tr><td align=\"left\">");
+	out.println("<tr><td align=left>");
+	out.println("<input type=\"checkbox\" name=\"d_sun\" value=\"y\" "+
+		    d_sun+" id=\"d_sun\"/><label for=\"d_sun\"Su</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_mon value=y "+
-		    d_mon+">M");
+	out.println("<input type=\"checkbox\" name=\"d_mon\" value=\"y\" "+
+		    d_mon+" id=\"d_mon\"/><label for=\"d_mon\">M</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_tue value=y "+
-		    d_tue+">Tu");
+	out.println("<input type=\"checkbox\" name=\"d_tue\" value=\"y\" "+
+		    d_tue+" id=\"d_tue\"/><label for=\"d_tue\">Tu</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_wed value=y "+
-		    d_wed+">W");
+	out.println("<input type=\"checkbox\" name=\"d_wed\" value=\"y\" "+
+		    d_wed+" id=\"d_wed\"/><label for=\"d_wed\">W</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_thu value=y "+
-		    d_thu+">Th");
+	out.println("<input type=\"checkbox\" name=\"d_thu\" value=\"y\" "+
+		    d_thu+" id=\"d_thu\"/><label for=\"d_thu\">Th</label>");
 	out.println("</td><td align=left>");
-	out.println("<input type=checkbox name=d_fri value=y "+
-		    d_fri+">F");
+	out.println("<input type=\"checkbox\" name=\"d_fri\" value=\"y\" "+
+		    d_fri+" id=\"d_fri\"/><label for=\"d_fri\">F</label>");
 	out.println("</td></tr><tr><td align=left>");
-	out.println("<input type=checkbox name=d_sat value=y "+
-		    d_sat+">Sa");
+	out.println("<input type=\"checkbox\" name=\"d_sat\" value=\"y\" "+
+		    d_sat+" id=\"d_sat\"/><label for=\"d_sat\">Sa</label>");
 	out.println("</td><td> </td><td colspan=2 align=left>");
-	out.println("<input type=checkbox name=d_mon_fri value=y "+
-		    d_mon_fri+">M-F");
+	out.println("<input type=\"checkbox\" name=\"d_mon_fri\" value=\"y\" "+
+		    d_mon_fri+" id=\"d_mon_fri\" /><label for=\"d_mon_fri\">M-F</label>");
 	out.println("</td><td colspan=2 align=left>");
-	out.println("<input type=checkbox name=d_all value=y "+
-		    d_all+">M-Su");
-	out.println("</td></tr></table></td></tr>");
+	out.println("<input type=\"checkbox\" name=\"d_all\" value=\"y\" "+
+		    d_all+" id=\"d_all\" /><label for=\"d_all\">M-Su</label>");
+	out.println("</td></tr></table></td></tr>");	
 	//
 	// Start, End time
-	out.println("<tr><td align=\"right\"><strong>Start, End Time:");
-	out.println("</strong></td><td align=\"left\">");
-	out.println("<input type=button onClick=\""+
+	out.println("<tr><td align=\"right\"><label for=\"start_pic\">Start, End Time:");
+	out.println("</label></td><td align=\"left\">");
+	out.println("<input type=\"button\" id=\"start_pic\" onClick=\""+
 		    "window.open('"+url+"PickTime?id="+id+"&wtime=startTime&time="+java.net.URLEncoder.encode(train.getStartTime())+"','Time',"+
 		    "'toolbar=0,location=0,"+
 		    "directories=0,status=0,menubar=0,"+
@@ -366,8 +362,8 @@ public class VolTrainServ extends TopServlet{
 	out.println("</td></tr>");
 	//
 	// Duties
-	out.println("<tr><td align=\"right\"><b>Location:</b></td><td align=\"Left\">");
-	out.println("<select name=\"location_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"loc_id\">Location:</label>></td><td align=\"Left\">");
+	out.println("<select name=\"location_id\" id=\"loc_id\">");
 	out.println("<option value=\"\"></option>");
 	if(locations != null){
 	    for(Type one:locations){
@@ -376,18 +372,17 @@ public class VolTrainServ extends TopServlet{
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><td align=\"right\"><b>Other:</b></td><td align=\"Left\">");
-	out.println("<input type=\"text\" name=\"other\" maxlength=\"50\" value=\""+ train.getOther()+"\" size=\"50\" />");
+	out.println("<tr><td align=\"right\"><label for=\"other\">Other:</label></td><td align=\"Left\">");
+	out.println("<input type=\"text\" name=\"other\" maxlength=\"50\" value=\""+ train.getOther()+"\" size=\"50\" id=\"other\" />");
 	out.println("</td></tr>");
 		
-	out.println("<tr><td align=\"right\" valign=\"top\"><b>Comments:</b>");
+	out.println("<tr><td align=\"right\" valign=\"top\"><label for=\"notes\">Comments:</label>");
 	out.println("</td><td align=\"left\">");
 	out.print("<textarea name=\"notes\" rows=\"5\" wrap "+
-		  " cols=\"50\" >");
+		  " cols=\"50\" id=\"notes\" >");
 	out.print(train.getNotes());
 	out.println("</textarea></td></tr>");
 	//
-	out.println("</table></td></tr>");
 	if(id.equals("")){
 	    if(user.canEdit()){
 		out.println("<tr><td align=\"right\"><input type=\"submit\" "+
@@ -395,8 +390,7 @@ public class VolTrainServ extends TopServlet{
 	    }
 	}
 	else{ // add zoom update
-	    out.println("<tr><td align=\"right\">"+
-			"<table width=\"70%\"><tr>");
+	    out.println("<tr><td align=\"right\">");
 	    if(user.canEdit()){
 		out.println("<td valign=\"top\"><input type=\"submit\" "+
 			    "name=\"action\" value=\"Update\"></td>");
@@ -406,13 +400,11 @@ public class VolTrainServ extends TopServlet{
 			"name=\"action\" value=\"New Training\"></td>");
 			
 	    if(user.canDelete()){
-		out.println("<td valign=\"top\">");
 		out.println("<input type=\"submit\" name=\"action\" "+
 			    "onclick=\"return validateDeleteForm()\" "+
 			    "value=\"Delete\">");
-		out.println("</td>");
 	    }
-	    out.println("</tr></table></td></tr>");
+	    out.println("</td></tr>");
 	}
 	out.println("</table>");
 	out.println("<br />");		

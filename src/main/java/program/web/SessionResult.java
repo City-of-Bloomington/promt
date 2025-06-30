@@ -583,8 +583,8 @@ public class SessionResult extends TopServlet{
      * @title the item title
      */
     void writeItem(PrintWriter os, String that, String title){
-	os.println("<tr><td align=right><strong>");
-	os.println(title+" :&nbsp;</strong></td><td align=left>");
+	os.println("<tr><td align=\"right\"><strong>");
+	os.println(title+" :&nbsp;</strong></td><td align=\"left\">");
 	os.println(that+"</td></tr>");
     }
 

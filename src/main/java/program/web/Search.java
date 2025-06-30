@@ -568,10 +568,10 @@ public class Search extends TopServlet{
 	    //
 	    // common fields with session
 	    //
-	    out.println("<tr><td align=\"right\"><label for=\inf_id\">In City Fee($): ");
+	    out.println("<tr><td align=\"right\"><label for=\"inf_id\">In City Fee($): ");
 	    out.println("</label></td><td align=\"left\">");
 	    out.println("<input type=\"text\" name=\"inCityFee\" maxlength=\"10\" value=\""+
-			inCityFee + "\" size=\"10\" id=\inf_id\" />");
+			inCityFee + "\" size=\"10\" id=\"inf_id\" />");
 	    out.println("<label for=\"nif_id\">Non-City Fee ($): ");
 	    out.println("</label>");
 	    out.println("<input type=\"text\" name=\"nonCityFee\" maxlength=\"10\" value=\""+
@@ -635,7 +635,7 @@ public class Search extends TopServlet{
 	    out.println("<input type=\"checkbox\" name=\"unVol\" value=\"y\" id=\"unvol\"/>");
 	    out.println("<label id=\"unvol\">Volunteer, </label>");
 	    out.println("</td></tr><tr><td>");
-	    out.println("<input type=\"checkbox\" name=\"unSpon\" value=\"y\" id=\unspon\"/>");
+	    out.println("<input type=\"checkbox\" name=\"unSpon\" value=\"y\" id=\"unspon\"/>");
 	    out.println("<label for=\"unspon\">Sponsorship </label>");
 	    out.println("</td><td>");
 	    out.println("<input type=\"checkbox\" name=\"unBudget\" value=\"y\"  id=\"unbudget\"/>");

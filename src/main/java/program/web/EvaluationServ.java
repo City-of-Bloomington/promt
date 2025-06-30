@@ -243,7 +243,7 @@ public class EvaluationServ extends TopServlet{
 	    out.println("<br>");
 	}
 	if(!message.equals("")){
-	    out.println(message+"<br />);
+	    out.println(message+"<br />");
 	}
 	//
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\" "+

@@ -96,8 +96,6 @@ public class UpdateProgramServ extends TopServlet {
 	}
 	out.println("<html><head><title>Change Program Season & Year</title>");
 	Helper.writeWebCss(out, url);
-	out.println("<script type='text/javascript'>");
-	out.println("</script> ");
 	out.println("</head><body>");
 	out.println("<center>");
 	Helper.writeTopMenu(out, url);
@@ -107,14 +105,12 @@ public class UpdateProgramServ extends TopServlet {
 	}
 	out.println("<form name=\"myForm\" method=\"post\" id=\"form_id\">");
 	out.println("<input type=\"hidden\" name=\"id\" value=\""+prog.getId()+"\" />");
-	out.println("<table border=\"1\" width=\"90%\">");
-	out.println("<tr><td>");
-	out.println("<table width=\"100%\">");
+	out.println("<table border=\"1\" width=\"90%\"><caption>Change Program Year/Season</caption>");
 	out.println("<tr><th>Program ID:</th><td align=\"left\"><a href=\""+url+"Program.do?id="+prog.getId()+"\">"+prog.getId()+"</td></tr>");
 	out.println("<tr><th>Program:</th><td align=\"left\"> "+prog.getTitle()+"</td></tr>");
 	int[] years = Helper.getFutureYears();
-	out.println("<tr><th>Program Year:</th><td align=\"left\">");
-	out.println("<select name=\"year\">");				
+	out.println("<tr><th><label for=\"year\">Program Year:</label></th><td align=\"left\">");
+	out.println("<select name=\"year\" id=\"year\">");				
 	for(int yy:years){
 	    String selected = "";
 	    if(prog.getYear().equals(""+yy))
@@ -122,8 +118,8 @@ public class UpdateProgramServ extends TopServlet {
 	    out.println("<option "+selected+" value=\""+yy+"\">"+yy+"</option>");
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><th>Season:</th><td align=\"left\">");
-	out.println("<select name=\"season\">");				
+	out.println("<tr><th><label for=\"searon\">Season:</label></th><td align=\"left\">");
+	out.println("<select name=\"season\" id=\"season\">");				
 	for(String str:Helper.seasonsArr){
 	    String selected = "";
 	    if(prog.getSeason().equals(str))
@@ -131,8 +127,8 @@ public class UpdateProgramServ extends TopServlet {
 	    out.println("<option "+selected+" value=\""+str+"\">"+str+"</option>");
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><th>Season 2:</th><td align=\"left\">");
-	out.println("<select name=\"season2\">");
+	out.println("<tr><th><label for=\"season2\">Season 2:</label></th><td align=\"left\">");
+	out.println("<select name=\"season2\" id=\"season2\">");
 	out.println("<option value=\"\">&nbsp;</option>");
 	for(String str:Helper.seasonsArr){
 	    String selected = "";

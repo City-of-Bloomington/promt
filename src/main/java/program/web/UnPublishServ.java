@@ -160,15 +160,15 @@ public class UnPublishServ extends TopServlet {
 	out.println("<input type=\"hidden\" name=\"season\" value=\""+season+"\" />");
 	out.println("<input type=\"hidden\" name=\"year\" value=\""+year+"\" />");				
 	out.println("<table border=\"1\" width=\"90%\">");
-	out.println("<tr><td><table width=\"100%\">");
+	out.println("<caption>Programs Selection</caption>");
 	if(!season.isEmpty()){
 	    out.println("<tr><td align=\"right\"><b>Year/Season:</b></td><td>"+year+"/"+season+"</td></tr>");
 	}
 	else{
 	    out.println("<tr><td align=\"right\"><b>Year:</b></td><td>"+year+"</td></tr>");
 	}
-	out.println("<tr><td align=\"right\"><b>Lead:</b></td>");
-	out.println("<td align=\"left\"><select name=\"lead_id\">");
+	out.println("<tr><td align=\"right\"><label for=\"lead_id\">Lead:</label></td>");
+	out.println("<td align=\"left\"><select name=\"lead_id\" id=\"lead_id\">");
 	out.println("<option value=\"\">All</option>");
 	String selected = "";
 	if(leads != null && leads.size() > 0){
@@ -178,14 +178,14 @@ public class UnPublishServ extends TopServlet {
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("</table></td></tr>");
 	out.println("<tr><td align=\"center\"><input type=\"submit\" name=\"action\" value=\"Search\">");
 	out.println("</td></tr>");
+	out.println("</table>");
 	if(!action.equals("")){
 	    if(pl.size() > 0  || pl2.size() > 0){
 		if(pl.size() > 0){
-		    out.println("<tr><td>Note: Check the programs that need to be removed from publishing on the City website and then hit 'Unpublish' button.<br /><br />");
-		    out.println("<table width=\"100%\"><caption>Found "+pl.size()+" Programs</caption>");
+		    out.println("<table width=\"100%\"><caption>Found "+pl.size()+" Programs</caption>");		    
+		    out.println("<tr><td colspan=\"6\">Note: Check the programs that need to be removed from publishing on the City website and then hit 'Unpublish' button.<br /><br /></td></tr>");
 		    out.println("<tr><td><b> <input type=\"checkbox\" onclick=\"selectAll(this)\" /> Select All </b></td><td><b>ID</b></td></td><td><b>Program</b></td><td><b>Guide Heading</b></td><td><b>Area</b></td><td><b>Lead</b></td></tr>");
 		    for(Program one:pl){
 			out.println("<tr><td><input type=\"checkbox\" name=\"prog_ids\" value=\""+one.getId()+"\" /></td><td>"+one.getId()+"</td>");
@@ -195,11 +195,11 @@ public class UnPublishServ extends TopServlet {
 			out.println("<td>"+one.getLead()+"</td>");
 			out.println("</tr>");
 		    }
-		    out.println("</table></td></tr>");
+		    out.println("</table>");
 		}
 		if(pl2.size() > 0){
-		    out.println("<tr><td>Note: Check the programs that need to be removed from publishing on the City website and then hit 'Unpublish' button.<br /><br />");
-		    out.println("<table width=\"100%\"><caption>Found "+pl2.size()+" Programs</caption>");
+		    out.println("<table width=\"100%\"><caption>Found "+pl2.size()+" Programs</caption>");		    
+		    out.println("<tr><td colspan=\"6\">Note: Check the programs that need to be removed from publishing on the City website and then hit 'Unpublish' button.<br /><br /></td></tr>");
 		    out.println("<tr><td><b> <input type=\"checkbox\" onclick=\"selectAll2(this)\" /> Select All </b></td><td><b>ID</b></td></td><td><b>Program</b></td><td><b>Guide Heading</b></td><td><b>Area</b></td><td><b>Lead</b></td></tr>");
 		    for(Program one:pl2){
 			out.println("<tr><td><input type=\"checkbox\" name=\"prog_web_ids\" value=\""+one.getId()+"\" /></td><td>"+one.getId()+"</td>");
@@ -209,16 +209,14 @@ public class UnPublishServ extends TopServlet {
 			out.println("<td>"+one.getLead()+"</td>");
 			out.println("</tr>");
 		    }
-		    out.println("</table></td></tr>");
+		    out.println("</table>");
 		}
-		out.println("<tr><td align=\"center\">");
-		out.println("<input type=\"submit\" name=\"action\" value=\"Unpublish\"></td></tr>");
+		out.println("<input type=\"submit\" name=\"action\" value=\"Unpublish\">");
 	    }
 	    else{
-		out.println("<tr><td align=\"center\">No match found</td></tr>");
+		out.println("No match found <br />");
 	    }
 	}
-	out.println("</table>");
 	out.println("<br />");
 				
 	out.println("</form>");		
