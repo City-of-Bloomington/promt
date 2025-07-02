@@ -12,7 +12,7 @@ import program.util.*;
  *
  */
 
-public class ContactList extends ArrayList<Contact>{
+public class ContactList {
 
     boolean debug = false;
     static Logger logger = LogManager.getLogger(ContactList.class);
@@ -21,7 +21,7 @@ public class ContactList extends ArrayList<Contact>{
 		
     List<String> errors = null;
     String message = "";
-	
+    List<Contact> contacts = null;
     public ContactList(boolean val){
 	debug = val;
     }
@@ -70,6 +70,10 @@ public class ContactList extends ArrayList<Contact>{
 	    errors = new ArrayList<String>();
 	errors.add(val);
     }
+    public List<Contact> getContacts(){
+	return contacts;
+    }
+	
 	
     public String find(){
 		
@@ -113,6 +117,7 @@ public class ContactList extends ArrayList<Contact>{
 	    if(!qw.equals("")){
 		qq += qf+" where "+qw;
 	    }
+	    qq += " order by c.name ";
 	    if(debug){
 		logger.debug(qq);
 	    }
@@ -151,8 +156,10 @@ public class ContactList extends ArrayList<Contact>{
 				rs.getString(6),
 				rs.getString(7)
 				);
-		if(!this.contains(one))
-		    this.add(one);
+		if(contacts == null)
+		    contacts = new ArrayList<>();
+		if(!contacts.contains(one))
+		    contacts.add(one);
 	    }
 	}
 	catch(Exception ex){

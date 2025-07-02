@@ -235,9 +235,10 @@ public class Plan extends CommonInc{
     }
     public List<Contact> getInstructors(){
 	if(instructors == null && !id.equals("")){
-	    ContactList ones = new ContactList(debug, id);
-	    String back = ones.find();
-	    if(back.equals("") && ones.size() > 0){
+	    ContactList cl = new ContactList(debug, id);
+	    String back = cl.find();
+	    List<Contact> ones = cl.getContacts();
+	    if(ones != null && ones.size() > 0){
 		instructors = ones;
 	    }
 	}
@@ -1134,9 +1135,6 @@ public class Plan extends CommonInc{
 			
 	}
 	if(instructor != null){
-	    if(instructor.isNew()){
-		back += instructor.doSave();
-	    }
 	    if(instructor.hasInfo()){
 		back += addInstructorToPlan();
 	    }

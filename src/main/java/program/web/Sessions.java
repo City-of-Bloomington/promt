@@ -72,17 +72,23 @@ public class Sessions extends TopServlet{
 	
 	boolean classCountShow=false, instructorShow=false;
 	boolean newSession = true;
+	List<Location> locations = null;
 	//
 	allPrograms = "";
 	pyear=""; season=""; 
 	String [] vals;
-	LocationList locations = null;
-	locations = new LocationList(debug);
+	LocationList locs = new LocationList(debug);
 	if(true){
-	    String back = locations.find();
+	    String back = locs.find();
 	    if(!back.equals("")){
 		message += back;
 		success = false;
+	    }
+	    else{
+		List<Location> ones = locs.getLocations();
+		if(ones != null && ones.size() > 0){
+		    locations = ones;
+		}
 	    }
 	}
 	Session se = new Session(debug);
@@ -742,12 +748,23 @@ public class Sessions extends TopServlet{
 	// location
 	if(sopt.showLocation()){
 	    out.println("<tr><td align=\"right\">&nbsp;</td><td>");
-	    out.println("<font size=\"-1\"><i>To add/Edit a location start typing the location name then pick from the list </i></font></td></tr>");
 	    out.println("<tr><td align=\"right\"><label for=\"locationName\">Location</label>");
 	    out.println("</td><td align=\"left\">");
-	    out.println("<input name=\"locationName\" id=\"locationName\" maxlength=\"80\" size=\"40\""+
-			" value=\""+se.getLocationName()+"\" />");
-	    out.println("</td></tr>");
+	    out.println("<select name=\"locationName\" id=\"locationName\">");	    
+	    String locName = se.getLocationName();
+	    if(locations != null){
+		for(Location one:locations){
+		    if(one.getName().equals(locName)){
+			out.println("<option selected=\"selected\" value=\""+locName+"\">"+locName+"</option>");
+		    }
+		    else{
+			out.println("<option value=\""+one.getName()+"\">"+one.getName()+"</option>");
+		    }
+		}
+	    }	    
+	    out.println("</select></td></tr>");
+
+	    
 						
 	}
 	//

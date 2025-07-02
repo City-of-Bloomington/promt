@@ -65,10 +65,14 @@ public class LocationService extends TopServlet{
 	}
 	LocationList clist = new LocationList(debug);
 	if(term.length() > 1){
+	    List<Location> locations = null;
 	    clist.setName(term);
 	    String back = clist.find();
-	    if(clist.size() > 0){
-		String json = writeJson(clist);
+	    if(back.isEmpty()){
+		locations = clist.getLocations();
+	    }
+	    if(locations != null && locations.size() > 0){
+		String json = writeJson(locations);
 		out.println(json);
 	    }
 	}

@@ -1267,13 +1267,12 @@ public class ProgramServ extends TopServlet{
 	    out.println("<input type=\"text\" name=\"otherCategory\" size=\"50\" value=\"\" id=\"otherCat\" />This will add new heading to the heading list ");
 	    out.println("</td></tr>");
 	}
-
-	out.println("<tr><td colspan\"2\">");
-	out.println("<table width=\"100%\">");
-	out.println("<caption>Categories</caption>");
-	out.println("<tr><td><div id=\"current_tax\">"+pr.getTaxonomyInfo()+"</div></td>");
-	out.println("<td width=\"30%\"><button onclick=\"return clearTaxo();\">Clear All Categories</button></td>");
-	out.println("</tr></table></td></tr>");
+	
+	out.println("<tr><td  align=\"right\">Categories</td>");
+	out.println("<td><div id=\"current_tax\">"+pr.getTaxonomyInfo()+"</div>");
+	out.println("</td></tr>");
+	out.println("<tr><td>&nbsp;</td><td>");
+	out.println("<button onclick=\"return clearTaxo();\">Clear All Categories</button></td></tr>");
 	out.println("<tr><td align=\"right\"><label for=\"tax_id\">Category: **</label>");
 	out.println("</td><td>");
 	out.println("<select name=\"tax_id\" id=\"tax_id\" onchange=\"createSubList(this,'sub_tax_id');\">");
@@ -1352,7 +1351,7 @@ public class ProgramServ extends TopServlet{
 	out.println("<tr><td "+tdWidth+"></td><td align=\"left\">");
 	out.println("Up to 160 characters (3 lines max)</td></tr>");
 	out.println("<tr><td><td align=\"left\">");
-	out.println("<textarea rows=\"3\" cols=\"70\" wrap name=\"summary\" "+
+	out.println("<textarea rows=\"3\" cols=\"70\" wrap=\"soft\" name=\"summary\" "+
 		    "id=\"summary\" onkeyup=\"validateTextarea(this,160)\">"); 
 	out.println(pr.getSummary());
 	out.println("</textarea></td></tr>");
@@ -1361,10 +1360,10 @@ public class ProgramServ extends TopServlet{
 	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\" "+
 		    "><label for=\"broch\"><font color=\"white\">Brochure Statement</font></label>");
 	out.println("</td></tr>");
-	out.println("<tr></td><td align=\"left\">");
+	out.println("<tr><td></td><td align=\"left\">");
 	out.println("Up to 10,000 characters </td></tr>");
-	out.println("<tr><td><td align=\"left\">");
-	out.println("<textarea rows=\"15\" cols=\"70\" id=\"broch\" wrap name=\"statement\" "+
+	out.println("<tr><td></td><td align=\"left\">");
+	out.println("<textarea rows=\"15\" cols=\"70\" id=\"broch\" wrap=\"soft\" name=\"statement\" "+
 		    "onkeyup=\"validateTextarea(this,10000)\">"); 
 	out.println(pr.getStatement());
 	out.println("</textarea></td></tr>");
@@ -1377,7 +1376,7 @@ public class ProgramServ extends TopServlet{
 	out.println("Up to 4000 characters </td></tr>");
 		    
 	out.println("<tr><td></td><td align=\"left\">");
-	out.println("<textarea rows=\"15\" cols=\"70\" wrap name=\"oginfo\" "+
+	out.println("<textarea rows=\"15\" cols=\"70\" wrap=\"soft\" name=\"oginfo\" "+
 		    "id=\"oginfo\" onchange=\"validateTextarea(this, 4000)\">"); 
 	out.println(pr.getOginfo());
 	out.println("</textarea></td></tr>");
@@ -1488,7 +1487,7 @@ public class ProgramServ extends TopServlet{
 	out.println("<label for=\"endDate\">End Date:</label> ");
 	out.println("<input type=\"text\" name=\"endDate\" value=\""+
 		    pr.getEndDate() + "\" maxlength=\"10\" size=\"10\" "+
-		    " class=\"date\" id=\"endDate\" />");
+		    " class=\"date\" id=\"endDate\" />(mm/dd/yyyy)");
 	//
 	out.println("</td></tr>");
 	//
@@ -1570,7 +1569,7 @@ public class ProgramServ extends TopServlet{
 	out.println("</label></td><td align=\"left\">");
 	out.println("<input type=\"text\" name=\"regDeadLine\" maxlength=\"10\" "+
 		    "value=\""+pr.getRegDeadLine() + "\" size=\"10\" "+
-		    " class=\"date\" id=\"regDeadLine\" />");
+		    " class=\"date\" id=\"regDeadLine\" />(mm/dd/yyyy)");
 	out.println("</td></tr>");
 	//
 	out.println("</table></td></tr>");
@@ -1581,13 +1580,21 @@ public class ProgramServ extends TopServlet{
 	out.println("<caption>Location, Instructor and Description</caption>");
 	//
 	// location
-	// ToDo 
-	out.println("<tr><td align=\"right\" "+tdWidth+">&nbsp;"+
-		    "</td><td align=\"left\">To add/Edit a location start typing the location name then pick from the list, if no location specified choose 'Other'</td></tr>");						
 	out.println("<tr><td align=\"right\" "+tdWidth+"><label for=\"locationName\">Location:");
 	out.println("</label></td><td align=\"left\">");
-	out.println("<input name=\"locationName\" id=\"locationName\" value=\""+pr.getLocationName()+"\" size=\"60\" maxlength=\"120\" />"+star);
-	out.println("</td></tr>");
+	out.println("<select name=\"locationName\" id=\"locationName\">");
+	String locName = pr.getLocationName();
+	if(locations != null){
+	    for(Type one:locations){
+		if(one.getName().equals(locName)){
+		    out.println("<option selected=\"selected\" value=\""+locName+"\">"+locName+"</option>");
+		}
+		else{
+		    out.println("<option value=\""+one.getName()+"\">"+one.getName()+"</option>");
+		}
+	    }
+	}
+	out.println("</select></td></tr>");
 	out.println("<tr><td align=\"right\">");
 	out.println("<label for=\"loc_det\">Location Details:</label>");
 	out.println("</td><td align=\"left\">");
@@ -1607,7 +1614,7 @@ public class ProgramServ extends TopServlet{
 	out.println("</label></td><td align=\"left\">");
 	out.println("<textarea name=\"description\" rows=\"3\" cols=\"60\" "+
 		    "onchange=\"validateTextarea(this,160)\" id=\"descr\" "+
-		    "wrap>");
+		    "wrap=\"soft\">");
 	out.println(pr.getDescription());
 	out.println("</textarea>");
 	out.println("</td></tr>");
@@ -1944,15 +1951,6 @@ public class ProgramServ extends TopServlet{
 	out.println("}");
 	out.println("});");
 	// to do
-	out.println("	$(\"#locationName\").autocomplete({ ");
-	out.println("		source: '"+url+"LocationService?format=json', ");
-	out.println("		minLength: 2, ");
-	out.println("		select: function( event, ui ) { ");
-	out.println("			if(ui.item){ ");
-	out.println("				$(\"#location_id\").val(ui.item.id); ");
-	out.println("			} ");
-	out.println("		}  ");
-	out.println("	}); ");
 	out.println("</script>");	
 	out.print("</body></html>");
 	out.flush();

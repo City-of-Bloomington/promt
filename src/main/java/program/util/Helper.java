@@ -2345,16 +2345,20 @@ public class Helper{
     public final static void writeWebCss(PrintWriter out,
 					    String url
 					    ){
-	if(out != null && !url.isEmpty()){    
+	if(out != null && !url.isEmpty()){
+	    /**
 	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/jquery-ui.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n");
 	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/jquery.ui.theme.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n");
-	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/menu_style.css\" />");
-	    out.println("<style>");
+
+
 	    out.println(".ui-datepicker-prev .ui-icon, .ui-datepicker-next .ui-icon { ");
 	    out.println(" background-image: url(\"js/images/ui-icons_228ef1_256x240.png\");");
-	    out.println("} "); 
+	    out.println("} ");
+	    */
+	    out.println("<style>");	    
+	    out.println("<link rel=\"stylesheet\" href=\""+url+"css/menu_style.css\" />");	    
 	    out.println("</style>");
-	    
+
 	}
     }
     public final static void writeTopMenu(PrintWriter out,
@@ -2365,34 +2369,36 @@ public class Helper{
 	    out.println("<h3>Parks & Recreation Dept - Promt</h3>");	    	    
 	    out.println("<div id=\"div_top\">");
 	    out.println("<ul id=\"ul_top\">");
-	    out.println("<li><a href=\""+url+"ProgPlan\">New Plan</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"ProgPlan\">New Plan</a></li>");
 
-	    out.println("<li><a href=\""+url+"PlanSearch\">Plans</a></li>");
-	    out.println("<li><a href=\""+url+"Search\">Programs</a></li>");
-	    out.println("<li><a href=\""+url+"MarketSearch\">Marketings</a></li>");
-	    out.println("<li><a href=\""+url+"VolunteerSearch\">Volunteers</a></li>");
-	    out.println("<li><a href=\""+url+"GeneralSearch\">Gen. Listings</a></li>");
-	    out.println("<li><a href=\""+url+"SubMenu?choice=code\">Code Entry</a></li>");
-	    out.println("<li><a href=\""+url+"SubMenu?choice=toPublish\">Publishing</a></li>");
-	    out.println("<li><a href=\""+url+"SubMenu?choice=unPublish\">Unpublishing</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"PlanSearch\">Plans</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"Search\">Programs</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"MarketSearch\">Marketings</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"VolunteerSearch\">Volunteers</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"GeneralSearch\">Gen. Listings</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"SubMenu?choice=code\">Code Entry</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"SubMenu?choice=toPublish\">Publishing</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"SubMenu?choice=unPublish\">Unpublishing</a></li>");
 
-	    out.println("<li><a href=\""+url+"SubMenu?choice=report\">Reports</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"SubMenu?choice=report\">Reports</a></li>");
 	    
-	    out.println("<li><a href=\""+url+"SubMenu?choice=calendar\">Calendar</a></li>");
-	    out.println("<li><a href=\""+url+"ContactBrowse\">Instructors</a></li>");
-	    out.println("<li><a href=\""+url+"LocationSearch\">Locations</a></li>");
-	    out.println("<li><a href=\""+url+"FacilitySearch\">Facilities</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"SubMenu?choice=calendar\">Calendar</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"ContactBrowse\">Instructors</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"LocationSearch\">Locations</a></li>");
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"FacilitySearch\">Facilities</a></li>");
 
-	    out.println("<li><a href=\""+url+"logout\">Logout</a></li>");	    
+	    out.println("<li style=\"float:left;list-style-type:none;padding:4px;\"><a href=\""+url+"logout\">Logout</a></li>");	    
 	    out.println("</ul>");
 	    out.println("</div><br />");
-	    out.println("</center>");	    
+	    out.println("</center>");
+	    out.println("<br /><br />");
 	}
     }
     public final static void writeWebFooter(PrintWriter out,
 					    String url
 					    ){
 	if(out != null && !url.isEmpty()){
+	    /**
 	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery-3.6.1.min.js\"></script>");
 	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery-ui.min-1.13.2.js\"></script>");
 	    out.println("<script type=\"text/javascript\" src=\""+url+"js/jquery.easing.1.3.js\"></script>");
@@ -2406,6 +2412,7 @@ public class Helper{
 	    out.println("$('#form_id').areYouSure(); ");
 	    out.println("}); ");			
 	    out.println("</script>");
+	    */
 	}
     }
 }

@@ -65,13 +65,16 @@ public class ContactService extends TopServlet{
 	    }
 	}
 	ContactList clist = new ContactList(debug);
+	List<Contact> contacts = null;
 	if(term.length() > 1){
 	    clist.setName(term);
 	    String back = clist.find();
-	}
-	if(clist.size() > 0){
-	    String json = writeJson(clist);
-	    out.println(json);
+	    List<Contact> ones = clist.getContacts();
+	    if(ones != null && ones.size() > 0){
+		contacts = ones;
+		String json = writeJson(contacts);
+		out.println(json);
+	    }
 	}
 	out.flush();
 	out.close();

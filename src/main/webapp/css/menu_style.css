@@ -1,13 +1,13 @@
 <style>
 #div_top {
-    display: inline-block;
+    display: inline;
     background-color:#eeeeee;
     list-style:none;
     list-style-type:none;
     padding-left: 0em;
 }
 #ul_top li{
-    display: inline-block;
+    display: inline;
     float: left;
     background-color:lightblue;
     color:black;

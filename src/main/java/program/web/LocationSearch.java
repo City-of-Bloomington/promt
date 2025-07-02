@@ -71,6 +71,7 @@ public class LocationSearch extends TopServlet{
 	    return;
 	}
 	LocationList locs = new LocationList(debug);
+	List<Location> locations = null;
         String [] vals;
 	while (values.hasMoreElements()){
 	    name = ((String)values.nextElement()).trim();
@@ -102,6 +103,12 @@ public class LocationSearch extends TopServlet{
 	    if(!back.equals("")){
 		message += back;
 		success = false;
+	    }
+	    else{
+		List<Location> ones = locs.getLocations();
+		if(ones != null && ones.size() > 0){
+		    locations = ones;
+		}
 	    }
 	}
 	//
@@ -147,18 +154,18 @@ public class LocationSearch extends TopServlet{
 	out.println("<input type=\"button\" onclick=\"document.location='"+url+"Location.do';\" value=\"New Location\" /></td>");		
 	out.println("</tr></table>");
 	out.println("<p>*<font size=\"-1\"> Notice:you can enter partial name. </font></p>");
-	if(!action.equals("") && locs.size() == 0){
+	if(!action.equals("") && locations == null){
 	    out.println("<h3> No match found </h3>");
 	}
-	else if(locs.size() > 0){
-	    out.println("<b> Found "+locs.size()+" records </b>");
+	else if(locations.size() > 0){
+	    out.println("<b> Found "+locations.size()+" records </b>");
 	    out.println("<table border=\"1\"><caption>Search Results</caption>");
 	    out.println("<tr><th>ID</th>"+
 			"<th>Name</th>"+
 			"<th>Url</th>"+
 			"<th>Related Facility</th>"+
 			"<th>Active?</th></tr>");
-	    for(Location one:locs){
+	    for(Location one:locations){
 		out.println("<tr>");
 		out.println("<td><a href=\""+url+"Location.do?action=zoom&id="+one.getId()+"\">"+one.getId()+"</a></td>");
 		out.println("<td>"+one.getName()+"</td>");

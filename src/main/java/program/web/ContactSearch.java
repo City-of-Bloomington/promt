@@ -71,6 +71,7 @@ public class ContactSearch extends TopServlet{
 	    return;
 	}
 	ContactList clist = new ContactList(debug);
+	List<Contact> contacts = null;
         String [] vals;
 	while (values.hasMoreElements()){
 	    name = ((String)values.nextElement()).trim();
@@ -105,11 +106,17 @@ public class ContactSearch extends TopServlet{
 		message += back;
 		success = false;
 	    }
-	    if(clist.size() == 1){
-		Contact one = clist.get(0);
-		String str = url+"Contact.do?fromBrowse=y&action=zoom&id="+one.getId();
-		res.sendRedirect(str);
-		return;
+	    else{
+		List<Contact> ones = clist.getContacts();
+		if(ones != null && ones.size() > 0){
+		    contacts = ones;
+		    if(contacts.size() == 1){
+			Contact one = contacts.get(0);
+			String str = url+"Contact.do?fromBrowse=y&action=zoom&id="+one.getId();
+			res.sendRedirect(str);
+			return;
+		    }
+		}
 	    }
 	}
 	//
@@ -154,14 +161,14 @@ public class ContactSearch extends TopServlet{
 		    "name=\"action\" value=\"Search\" />");
 	out.println("<input type=\"button\" onclick=\"document.location='"+url+"Contact.do';\" value=\"New Instructor\" /></td>");		
 	out.println("<p>*<font color=\"green\" size=\"-1\"> Notice:you can enter partial name, word or number. </font></p>");
-	if(!action.equals("") && clist.size() == 0){
+	if(!action.equals("") && contacts == null){
 	    out.println("<h3> No match found </h3>");
 	}
-	else if(clist.size() > 0){
-	    out.println("<h3> Found "+clist.size()+" records </h3>");
+	else if(contacts != null && contacts.size() > 0){
+	    out.println("<h3> Found "+contacts.size()+" records </h3>");
 	    out.println("<table border=\"1\"><caption>Search Results</caption>");
 	    out.println("<tr><th>ID</th><th>Name</th><th>Address</th><th>Email</th><th>Phones</th></tr>");
-	    for(Contact one:clist){
+	    for(Contact one:contacts){
 		out.println("<tr>");
 		out.println("<td><a href=\""+url+"Contact.do?fromBrowse=y&action=zoom&id="+one.getId()+"\">Edit</a></td>");
 		out.println("<td>"+one.getName()+"</td>");				

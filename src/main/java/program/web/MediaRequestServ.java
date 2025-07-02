@@ -55,7 +55,8 @@ public class MediaRequestServ extends TopServlet{
 	    return;
 	}
 	LeadList leads = null;
-	LocationList locations = null;
+	LocationList locs = null;
+	List<Location> locations = null;
 	MediaRequest request = new MediaRequest(debug);
         String [] vals;
 	while (values.hasMoreElements()){
@@ -210,13 +211,19 @@ public class MediaRequestServ extends TopServlet{
 		message += back;
 		success = false;
 	    }
-	    locations = new LocationList(debug);
-	    locations.setActiveOnly();
-	    back = locations.find();
+	    locs = new LocationList(debug);
+	    locs.setActiveOnly();
+	    back = locs.find();
 	    if(!back.equals("")){
 		message += back;
 		success = false;
-	    }	    
+	    }
+	    else{
+		List<Location> ones = locs.getLocations();
+		if(ones != null && ones.size() > 0){
+		    locations = ones;
+		}
+	    }
 	}
 	//
 	// This script validates textareas and facility

@@ -58,7 +58,7 @@ public class ProgPlan extends TopServlet{
 	// reinitialize to blank
 	//
 	String message = "", finalMessage="";
-
+	out.println("<!DOCTYPE html>");
 	out.println("<html><head><title>City of Bloomington Parks and "+
 		    "Recreation</title>"); 
 	boolean actionSet = false, success=true;
@@ -72,6 +72,7 @@ public class ProgPlan extends TopServlet{
 	Plan pp = new Plan(debug);
 	PrePlan prePlan = null;
 	Contact instructor = new Contact(debug);
+	List<Contact> instructors = null;
         String [] vals;
 	while (values.hasMoreElements()){
 	    name = ((String)values.nextElement()).trim();
@@ -102,19 +103,8 @@ public class ProgPlan extends TopServlet{
 	    }
 	    else if(name.equals("cont_id")){
 		instructor.setId(value);
+		pp.setInstructor(instructor);
 	    }			
-	    else if(name.equals("instructor")){
-		instructor.setName(value);
-	    }
-	    else if(name.equals("phone_h")){
-		instructor.setPhone_h(value);
-	    }
-	    else if(name.equals("phone_c")){
-		instructor.setPhone_c(value);
-	    }			
-	    else if(name.equals("phone_w")){
-		instructor.setPhone_w(value);
-	    }
 	    else if(name.equals("attendCount")){
 		pp.setAttendCount (value);
 	    }
@@ -209,6 +199,14 @@ public class ProgPlan extends TopServlet{
 		message += back;
 		success = false;
 	    }
+	    ContactList cont = new ContactList(debug);
+	    back = cont.find();
+	    if(back.isEmpty()){
+		List<Contact> ones = cont.getContacts();
+		if(ones != null && ones.size() > 0){
+		    instructors = ones;
+		}
+	    }
 	}
 	//
        	if(action.equals("Delete")){
@@ -272,6 +270,9 @@ public class ProgPlan extends TopServlet{
 	else if(action.equals("Save")){
 	    //
 	    if(user.canEdit()){
+		if(!instructor.isEmpty()){
+		    instructor.doSaveOrUpdate();
+		}
 		pp.setInstructor(instructor);
 		String back = pp.doSave();
 		if(back.equals("")){
@@ -345,8 +346,8 @@ public class ProgPlan extends TopServlet{
 	out.println("	</script>                            ");   
 	out.println("</head><body>");
 	//
-	out.println("<center>");
 	Helper.writeTopMenu(out, url);
+	out.println("<center>");
 	String tdWidth=" width=\"20%\" ";
 	if(pp.isNew()){
 	    out.println("<h2>Add New Plan</h2>");
@@ -354,12 +355,13 @@ public class ProgPlan extends TopServlet{
 	else{
 	    out.println("<h2>Edit Plan "+id+"</h2>");
 	}
+	out.println("</center>");
 	if(!message.equals("")){
 	    out.println(message);
 	    out.println("<br />");
 	}
 	//
-	out.println("<form name=\"myForm\" id=\"form_id\" method=\"post\" onsubmit=\"return validateForm()\" id=\"form_id\" >");
+	out.println("<form name=\"myForm\" id=\"form_id\" method=\"post\" onsubmit=\"return validateForm()\" >");
 	if(!id.equals("")){
 	    out.println("<input type=\"hidden\" name=\"id\" value=\""+id+"\" />");
 	    out.println("<input type=\"hidden\" name=\"action2\" id=\"action2\" value=\"\" />");
@@ -367,7 +369,7 @@ public class ProgPlan extends TopServlet{
 	//
 	// we need this for auto_complete
 	//
-	out.println("<input type=\"hidden\" id=\"cont_id\" name=\"cont_id\" value=\"\" />");
+	
 	// Plan
 	out.println("* indicates a required field.<br />");	
 	out.println("<table width=\"90%\" border=\"1\">");
@@ -436,44 +438,32 @@ public class ProgPlan extends TopServlet{
 		out.println("</table></td></tr>");
 	    }
 	}
+	
 	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Add New Instructor</b></td></tr>");
-	out.println("<tr><td colspan=\"2\">If the instructor info is already in the system, type the first few letters of the name in the name field below to select from the list.</td></tr>");
-	out.println("<tr><td "+tdWidth+" align=\"right\"><label for=\"instr_n\">Name: </label></td><td>");
-	out.println("<input type=\"text\" name=\"instructor\" id=\"instructor\" "+
-		    "value=\"\" maxlength=\"60\" size=\"30\" id=\"instr_n\"/></td></tr>"); 
-	out.println("<tr><td align=\"right\"><label for=\"phone_w\">Work Phone:</label></td><td>");
-	out.println("<input type=\"text\" name=\"phone_w\" id=\"phone_w\" "+
-		    "value=\"\" maxlength=\"12\" size=\"12\" /><label for=\"phone_c\">Cell:</label>");
-	out.println("<input type=\"text\" name=\"phone_c\" id=\"phone_c\" "+
-		    "value=\"\" maxlength=\"12\" size=\"12\" />");
-	out.println(" <label for=\"phone_h\">Home:</label>");
-	out.println("<input type=\"text\" name=\"phone_h\" id=\"phone_h\" "+
-		    "value=\"\" maxlength=\"12\" size=\"12\" /></td></tr>");
-	out.println("<tr><td align=\"right\"><label for=\"email\">Email:</label></td><td>");
-	out.println("<input type=\"text\" name=\"email\" id=\"email\" "+
-		    "value=\"\" maxlength=\"50\" size=\"50\" /></td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"address\">Address:</label></td><td>");
-	out.print("<textarea name=\"address\" id=\"address\" cols=\"50\" rows=\"4\" "+
-		  " onchange='checkTextLen(this,200)' wrap>");
-	out.println("</textarea></td></tr>");
-	out.println("</table></td></tr>");
+	out.println("<tr><td "+tdWidth+" align=\"right\"><label for=\"cont_id\">Name: </label></td><td>");
+	out.println("<select name=\"cont_id\" id=\"cont_id\">");
+	if(instructors != null){
+	    for(Contact one:instructors){
+		out.println("<option value=\""+one.getId()+"\">"+one.getInfo()+"</option>");
+	    }
+	}
+	out.println("</select></td></tr></table>");
 		
 	//
-	// Plan Objectives 
-	out.println("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"navy\">");
-	out.println("<h3><font color=\"white\">Plan Objectives</font>"+
-		    "</h3></td></tr>");
+	// Plan Objectives
+	out.println("<table border=\"1\" width=\"90%\">");
+	out.println("<caption>Program Ideas & Goals</caption>");
 	//
 	out.println("<tr><td valign=\"top\" "+tdWidth+" align=\"right\"><label for=\"obj\">Ideas to Program: </label></td><td>");
 	out.println("<textarea name=\"ideas\" cols=\"50\" rows=\"4\" id=\"obj\""+
-		    " onchange='checkTextLen(this,2000)' wrap>");
+		    " onchange='checkTextLen(this,2000)' wrap=\"soft\">");
 	out.println(pp.getIdeas());
 	out.println("</textarea></td></tr>");
 	//
 	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"goals\">*Program Goals: </label></td><td>");
-	out.println("goal is defined as one that is specific, measurable, achievable, results-focused, and time-bound 'S.M.A.R.T.'<br />");
+	out.println("goal is defined as one that is specific, measurable, achievable, results-focused, and time-bound 'S.M.A.R.T.");
 	out.println("<textarea name=\"goals\" cols=\"50\" rows=\"4\" "+
-		    " onChange=\"checkTextLen(this,1000)\" wrap=\"wrap\" required=\"required\" id=\"goals\">");
+		    " onChange=\"checkTextLen(this,1000)\" wrap=\"soft\" required=\"required\" id=\"goals\">");
 	out.println(pp.getGoals());
 	out.println("</textarea></td></tr>");
 	out.println("<tr><td valign=\"top\" colspan=\"2\" align=\"center\"><b>*Program Objectives </b></td></tr>");
@@ -484,23 +474,24 @@ public class ProgPlan extends TopServlet{
 	    for(Objective one:objectives){
 		out.println("<tr><td>"+(jj++)+" - <input type=\"checkbox\" name=\"del_obj\" value=\""+one.getId()+"\" id=\"obj"+one.getId()+"\"/></td><td><label for=\"obj"+one.getId()+"\">"+one+"</label></td></tr>");
 	    }
-	    out.println("</table></td></tr>");
+	    // out.println("</table>");
 	}
 	out.println("<tr><td valign=\"top\" align=\"right\"><b>New Objectives:</b></td><td>");
 	out.println("<table>");
 	for(int i=0;i<3;i++){
 	    out.println("<tr><td valign=top>"+(jj++)+" - </td><td>");
 	    out.print("<textarea name=\"objective\" cols=\"50\" rows=\"4\" "+
-		      " onchange=\"checkTextLen(this,1000)\" wrap>");
+		      " onchange=\"checkTextLen(this,1000)\" wrap=\"soft\">");
 	    out.println("</textarea></td></tr>");
 	}
 	out.println("</table></td></tr>");
 	//
 	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"prof\">Profit Objective: </label></td><td>");
 	out.println("<textarea name=\"profit_obj\" cols=\"50\" rows=\"4\" "+
-		    " onChange=\"checkTextLen(this,200)\" wrap id=\"prof\">");
+		    " onChange=\"checkTextLen(this,200)\" wrap=\"soft\" id=\"prof\">");
 	out.println(pp.getProfit_obj());
 	out.println("</textarea></td></tr>");
+	out.println("<tr><td>&nbsp;</td></tr>");
 	//
 	// partner
 	out.println("<tr><td align=\"right\"><label for=\"part\">Potential Partnership:</label></td><td>");
@@ -520,9 +511,9 @@ public class ProgPlan extends TopServlet{
 	// frequency
 	out.println("<tr><td align=\"right\"><label for=\"freq\">Intended Frequency:</label></td><td>");
 	out.println("<select name=\"frequency\" id=\"freq\">");
-	out.println("<option selected>"+pp.getFrequency()+"\n");
+	out.println("<option selected value=\""+pp.getFrequency()+"\">"+pp.getFrequency()+"</option>\n");
 	for(int i=0;i<allFreqArr.length;i++){
-	    out.println("<option>"+allFreqArr[i]+"\n");
+	    out.println("<option value=\""+allFreqArr[i]+"\">"+allFreqArr[i]+"</option>\n");
 	}
 	out.println("</select>&nbsp;&nbsp;");
 	out.println("</td></tr>");
@@ -541,7 +532,7 @@ public class ProgPlan extends TopServlet{
 	// Event time
 	out.println("<tr><td align=\"right\"><label for=\"pdate\">Program Date:</label></td><td>");
 	out.println("<input type=\"text\" name=\"program_date\" id=\"pdate\" "+
-		    "value=\""+pp.getProgram_date()+"\" maxlength=\"10\" size=\"10\" class=\"date\" /></td></tr>");
+		    "value=\""+pp.getProgram_date()+"\" maxlength=\"10\" size=\"10\" class=\"date\" />(mm/dd/yyyy)</td></tr>");
 	out.println("<tr><td align=\"right\"><label for=\"ptime\">Program Time:</label></td><td>");
 	out.println("<input type=\"text\" name=\"event_time\" id=\"ptime\" "+
 		    "value=\""+pp.getEvent_time()+"\" maxlength=\"20\" size=\"20\" />&nbsp;");
@@ -596,7 +587,7 @@ public class ProgPlan extends TopServlet{
 	out.println("No more than 10,000 characters</td></tr>");
 	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"hist\">Event History: </label></td><td>");
 	out.println("<textarea name=\"history\" rows=\"20\" cols=\"70\" "+
-		    " onchange=\"checkTextLen(this,10000)\" id=\"hist\" wrap>");
+		    " onchange=\"checkTextLen(this,10000)\" id=\"hist\" wrap=\"soft\">");
 	out.println(pp.getHistory());
 	out.println("</textarea></td></tr>");
 	if(!(id.equals("") || pp.getHistory().equals(""))){
@@ -612,7 +603,7 @@ public class ProgPlan extends TopServlet{
 	out.println("No more than 5,000 characters</td></tr>");
 	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"supp\">Supplies: </label></td><td>");				
 	out.println("<textarea name=\"supply\" rows=\"10\" cols=\"70\" "+
-		    " onChange=\"checkTextLen(this,5000)\" id=\"supp\" wrap>");
+		    " onChange=\"checkTextLen(this,5000)\" id=\"supp\" wrap=\"soft\">");
 	out.println(pp.getSupply());
 	out.println("</textarea></td></tr>");
 	if(!(id.equals("") || pp.getSupply().equals(""))){
@@ -626,10 +617,10 @@ public class ProgPlan extends TopServlet{
 	// timeline
 	out.println("<tr><td></td><td>");
 	out.println("No more than 5,000 characters</td></tr>");
-	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\tline\">Timeline:</label></td>");				
+	out.println("<tr><td valign=\"top\" align=\"right\"><label for=\"tline\">Timeline:</label></td>");				
 	out.println("<td>");
 	out.println("<textarea name=\"timeline\" rows=\"10\" cols=\"70\" "+
-		    " onChange=\"checkTextLen(this,5000)\" id=\"tline\" wrap>");
+		    " onchange=\"checkTextLen(this,5000)\" id=\"tline\" wrap=\"soft\">");
 	out.println(pp.getTimeline());
 	out.println("</textarea></td></tr>");
 	if(!(id.equals("") || pp.getTimeline().equals(""))){
@@ -694,23 +685,7 @@ public class ProgPlan extends TopServlet{
 	}			
 	//
 	out.println("<hr />");
-	Helper.writeWebFooter(out, url);
-	out.println("<script>");		
-	out.println("	$(\"#instructor\").autocomplete({ ");
-	out.println("		source: '"+url+"ContactService?format=json', ");
-	out.println("		minLength: 2, ");
-	out.println("		select: function( event, ui ) { ");
-	out.println("			if(ui.item){ ");
-	out.println("				$(\"#cont_id\").val(ui.item.id); ");
-	out.println("				$(\"#email\").val(ui.item.email); ");
-	out.println("				$(\"#address\").val(ui.item.address); ");
-	out.println("				$(\"#phone_w\").val(ui.item.phone_w); ");
-	out.println("				$(\"#phone_c\").val(ui.item.phone_c); ");
-	out.println("				$(\"#phone_h\").val(ui.item.phone_h); ");
-	out.println("			} ");
-	out.println("		}  ");
-	out.println("	}); ");
-	out.println("</script> ");		
+	// Helper.writeWebFooter(out, url);
 	out.print("</center></body></html>");
 	out.close();
     }

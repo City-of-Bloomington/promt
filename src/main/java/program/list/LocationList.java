@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import program.model.*;
 import program.util.*;
 
-public class LocationList extends ArrayList<Location>{
+public class LocationList{
 
     boolean debug = false;
     static Logger logger = LogManager.getLogger(LocationList.class);
@@ -20,7 +20,7 @@ public class LocationList extends ArrayList<Location>{
     String effective_date = "";
     List<String> errors = null;
     boolean active_only = false, currentOnly = false;
-		
+    List<Location> locations = null;
     String activeStatus = "All";
     String message = "";
 	
@@ -93,6 +93,9 @@ public class LocationList extends ArrayList<Location>{
 	if(errors == null)
 	    errors = new ArrayList<String>();
 	errors.add(val);
+    }
+    public List<Location> getLocations(){
+	return locations ;
     }
 	
     public String find(){
@@ -174,8 +177,11 @@ public class LocationList extends ArrayList<Location>{
 				 rs.getString(10),
 				 rs.getString(11),
 				 rs.getString(12));
-		if(!this.contains(one))
-		    this.add(one);
+		if(locations == null){
+		    locations = new ArrayList<>();
+		}
+		if(!locations.contains(one))
+		    locations.add(one);
 	    }
 	}
 	catch(Exception ex){

@@ -731,14 +731,6 @@ public class Search extends TopServlet{
 	    out.println("<input type=\"hidden\" name=\"unSpon\" value=\"\" />");
 	    out.println("<input type=\"hidden\" name=\"unBudget\" value=\"\" />");
 	    out.println("<input type=\"hidden\"  name=\"unEval\" value=\"\" />");
-	    out.println("<table border=\"1\" width=\"90%\">");
-	    out.println("<tr bgcolor=\"#CDC9A3\">");							
-	    out.println("<td align=\"right\">");
-	    out.println("To display the results in the left panel"+
-			" click this ");
-	    out.println("<input type=\"submit\" value=\"Show Programs Links Only\" "+
-			" /></td></tr>");
-	    out.println("</table><br />");				
 	    out.println("</form>");
 	    Helper.writeWebFooter(out, url);
 	}

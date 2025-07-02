@@ -137,11 +137,14 @@ public class PromtService extends TopServlet{
 		else{
 		    llist.setEffective_date(effective_date);										
 		}
-		llist.find();
-		if(llist.size() > 0){
-		    jArr = prepLocationList(llist);
+		String back = llist.find();
+		if(back.isEmpty()){
+		    List<Location> locations = llist.getLocations();
+		    if(locations != null && locations.size() > 0){
+			jArr = prepLocationList(locations);
+			out.println(jArr);			
+		    }
 		}
-		out.println(jArr);
 	    }
 	    else if(list_type.startsWith("categories")){
 		TaxonomyList tlist = new TaxonomyList(debug);

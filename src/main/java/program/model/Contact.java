@@ -143,10 +143,16 @@ public class Contact extends CommonInc{
 	return name;
     }
     public boolean hasInfo(){
-	return (!id.equals("") && !name.equals(""));
+	return (!id.equals(""));
     }
     public boolean isNew(){
 	return id.equals("");
+    }
+    public boolean isEmpty(){
+	return name.isEmpty() && id.isEmpty();
+    }
+    public String getInfo(){
+	return name;
     }
     public boolean hasPlans(){
 	if(plans == null){
@@ -164,6 +170,14 @@ public class Contact extends CommonInc{
 	    }
 	}
 	return plans;
+    }
+    public String doSaveOrUpdate(){
+	if(id.isEmpty()){
+	    return doSave();
+	}
+	else{
+	    return doUpdate();
+	}
     }
     //
     public String doDelete(){
