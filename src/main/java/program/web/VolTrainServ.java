@@ -321,7 +321,7 @@ public class VolTrainServ extends TopServlet{
 	out.println("<tr><td align=\"left\">");
 	out.println("<tr><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_sun\" value=\"y\" "+
-		    d_sun+" id=\"d_sun\"/><label for=\"d_sun\"Su</label>");
+		    d_sun+" id=\"d_sun\"/><label for=\"d_sun\">Su</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_mon\" value=\"y\" "+
 		    d_mon+" id=\"d_mon\"/><label for=\"d_mon\">M</label>");
@@ -362,7 +362,7 @@ public class VolTrainServ extends TopServlet{
 	out.println("</td></tr>");
 	//
 	// Duties
-	out.println("<tr><td align=\"right\"><label for=\"loc_id\">Location:</label>></td><td align=\"Left\">");
+	out.println("<tr><td align=\"right\"><label for=\"loc_id\">Location:</label></td><td align=\"Left\">");
 	out.println("<select name=\"location_id\" id=\"loc_id\">");
 	out.println("<option value=\"\"></option>");
 	if(locations != null){

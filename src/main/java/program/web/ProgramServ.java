@@ -1130,7 +1130,6 @@ public class ProgramServ extends TopServlet{
 		    "onSubmit=\"return validateForm()\">");
 	out.println("<input type=\"hidden\" name=\"action2\" value=\"\" />");
 	out.println("<input type=\"hidden\" name=\"prevAction\" value=\""+action+"\" />");
-	out.println("<input type=\"hidden\" name=\"location_id\" id=\"location_id\" value=\""+pr.getLocation_id()+"\" />");						
 	if(!pr.getId().equals("")){
 	    out.println("<input type=\"hidden\" name=\"id\" value=\"" + pr.getId()+"\" />");
 	}
@@ -1240,7 +1239,7 @@ public class ProgramServ extends TopServlet{
 	out.println("</select>");
 	if(user.isAdmin()){
 	    out.println("<label for=\"otherArea\">Other Area</label>");
-	    out.println("<input type=\"text\" name=\"otherArea\" size=\"70\" value=\"\" id=\"otherArea\" />");
+	    out.println("<input type=\"text\" name=\"otherArea\" size=\"35\" value=\"\" id=\"otherArea\" maxlength=\"70\" />");
 	}
 	out.println("</td></tr>");
 	//
@@ -1264,7 +1263,7 @@ public class ProgramServ extends TopServlet{
 	if(user.isAdmin()){
 	    out.println("<tr><td align=\"right\"><label for=\"otherCat\">New Guide Heading:</label>");
 	    out.println("</td><td>");
-	    out.println("<input type=\"text\" name=\"otherCategory\" size=\"50\" value=\"\" id=\"otherCat\" />This will add new heading to the heading list ");
+	    out.println("<input type=\"text\" name=\"otherCategory\" size=\"30\" value=\"\" id=\"otherCat\" maxlength=\"70\"/>This will add new heading to the heading list.");
 	    out.println("</td></tr>");
 	}
 	
@@ -1580,17 +1579,18 @@ public class ProgramServ extends TopServlet{
 	out.println("<caption>Location, Instructor and Description</caption>");
 	//
 	// location
-	out.println("<tr><td align=\"right\" "+tdWidth+"><label for=\"locationName\">Location:");
+	out.println("<tr><td align=\"right\" "+tdWidth+"><label for=\"location_id\">Location:");
 	out.println("</label></td><td align=\"left\">");
-	out.println("<select name=\"locationName\" id=\"locationName\">");
-	String locName = pr.getLocationName();
+	out.println("<select name=\"location_id\" id=\"location_id\">");
+	out.println("<option value=\"\"></option>");
+	String loc_id = pr.getLocation_id();
 	if(locations != null){
 	    for(Type one:locations){
-		if(one.getName().equals(locName)){
-		    out.println("<option selected=\"selected\" value=\""+locName+"\">"+locName+"</option>");
+		if(one.getId().equals(loc_id)){
+		    out.println("<option selected=\"selected\" value=\""+loc_id+"\">"+one.getName()+"</option>");
 		}
 		else{
-		    out.println("<option value=\""+one.getName()+"\">"+one.getName()+"</option>");
+		    out.println("<option value=\""+one.getId()+"\">"+one.getName()+"</option>");
 		}
 	    }
 	}
@@ -1950,7 +1950,6 @@ public class ProgramServ extends TopServlet{
 	out.println("   return 'You have unsaved changes. Are you sure you want to leave?';"); // For some browsers
 	out.println("}");
 	out.println("});");
-	// to do
 	out.println("</script>");	
 	out.print("</body></html>");
 	out.flush();

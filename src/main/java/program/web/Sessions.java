@@ -72,25 +72,11 @@ public class Sessions extends TopServlet{
 	
 	boolean classCountShow=false, instructorShow=false;
 	boolean newSession = true;
-	List<Location> locations = null;
 	//
 	allPrograms = "";
 	pyear=""; season=""; 
 	String [] vals;
-	LocationList locs = new LocationList(debug);
-	if(true){
-	    String back = locs.find();
-	    if(!back.equals("")){
-		message += back;
-		success = false;
-	    }
-	    else{
-		List<Location> ones = locs.getLocations();
-		if(ones != null && ones.size() > 0){
-		    locations = ones;
-		}
-	    }
-	}
+	TypeList locations = null;
 	Session se = new Session(debug);
 	while (values.hasMoreElements()){
 	    name = ((String)values.nextElement()).trim();
@@ -328,7 +314,6 @@ public class Sessions extends TopServlet{
 	    sopt.setSessionSort(sessionSort);
 	    sopt.doUpdate();
 	}
-	String query = "";
 	if(action.equals("Delete")){
 	    // 
 	    // key is code and year for each session
@@ -388,7 +373,7 @@ public class Sessions extends TopServlet{
 		}
 	    }
 	}
-	else if(action.equals("Update")){
+	else if(action.equals("Update") || action.startsWith("Submit")){
 	    if(user.canEdit()){
 		back = se.doUpdate();
 		if(!back.equals("")){
@@ -449,6 +434,12 @@ public class Sessions extends TopServlet{
 	    newSession = true;
 	    se.setCode("");
 	}
+	locations = new TypeList(debug, "locations");
+	back = locations.find();
+	if(!back.equals("")){
+	    message += back;
+	    success = false;
+	}	
 	//
 	// for each new record we want to update sid
 	//
@@ -556,12 +547,11 @@ public class Sessions extends TopServlet{
 	}
 
 	//box it in
-	out.println("<form name=myForm method=post id=\"form_id\" "+
+	out.println("<form name=\"myForm\" method=post id=\"myForm\" "+
 		    "onsubmit=\"return validateForm()\">");
 	out.println("<input type=\"hidden\" name=\"pid\" value=\"" + se.getId() + 
 		    "\" />");
 	out.println("<input type=\"hidden\" name=\"action2\" value=\"\" />");
-	out.println("<input type=\"hidden\" id=\"location_id\" name=\"location_id\" value=\"" + se.getLocation_id() + "\" />");					
 	out.println("<center><table border=\"1\">");
 	out.println("<caption>Session Info</caption>");
 	out.println("<tr><td align=right><strong>Program Title");
@@ -631,7 +621,7 @@ public class Sessions extends TopServlet{
 	    out.println("<label for=\"endDate\">End Date:</label>");
 	    out.println("<input type=\"text\" name=\"endDate\" value=\""+
 			se.getEndDate() + "\" maxlength=\"10\" size=\"10\" "+
-			" id=\"endDate\" />");
+			" id=\"endDate\" />(mm/dd/yyyy)");
 	    out.println("</td></left></tr>");
 	}
 	// Time 
@@ -695,7 +685,7 @@ public class Sessions extends TopServlet{
 	    out.println("<input type=\"text\" name=\"regDeadLine\" value=\""+ 
 			se.getRegDeadLine() + "\" maxlength=\"10\" size=\"10\" "+
 			" id=\"regDeadLine\" >");
-	    out.println("<font size=\"-1\">mm/dd/yyyy</font>");
+	    out.println("(mm/dd/yyyy)");
 
 	    out.println("</td></tr>");
 	}
@@ -748,24 +738,22 @@ public class Sessions extends TopServlet{
 	// location
 	if(sopt.showLocation()){
 	    out.println("<tr><td align=\"right\">&nbsp;</td><td>");
-	    out.println("<tr><td align=\"right\"><label for=\"locationName\">Location</label>");
+	    out.println("<tr><td align=\"right\"><label for=\"location_id\">Location</label>");
 	    out.println("</td><td align=\"left\">");
-	    out.println("<select name=\"locationName\" id=\"locationName\">");	    
-	    String locName = se.getLocationName();
+	    out.println("<select name=\"location_id\" id=\"location_id\">");
+	    out.println("<option value=\"\"></option>");
+	    String loc_id = se.getLocation_id();
 	    if(locations != null){
-		for(Location one:locations){
-		    if(one.getName().equals(locName)){
-			out.println("<option selected=\"selected\" value=\""+locName+"\">"+locName+"</option>");
+		for(Type one:locations){
+		    if(one.getId().equals(loc_id)){
+			out.println("<option selected=\"selected\" value=\""+loc_id+"\">"+one.getName()+"</option>");
 		    }
 		    else{
-			out.println("<option value=\""+one.getName()+"\">"+one.getName()+"</option>");
+			out.println("<option value=\""+one.getId()+"\">"+one.getName()+"</option>");
 		    }
 		}
-	    }	    
-	    out.println("</select></td></tr>");
-
-	    
-						
+		out.println("</select></td></tr>");
+	    }
 	}
 	//
 	// age group
@@ -841,19 +829,6 @@ public class Sessions extends TopServlet{
 			" value=\""+se.getInstructor()+"\" id=\"instructor\'/>");
 	    out.println("</td></tr>");
 	}
-	out.println("<tr><td align=\"right\"><label for=\"sortBy\">Sort Sessions by:</label></td><td colspan=\"2\">");
-	out.println("<select name=\"sessionSort\" id=\"sortBy\">");
-	for(int i=0;i<Helper.sessionSortOpt.length;i++){
-	    if(sessionSort.equals(Helper.sessionSortOpt[i]))
-		out.println("<option selected=\"selected\" value=\""+
-			    Helper.sessionSortOpt[i]+"\">"+
-			    Helper.sessionSortArr[i]);
-	    else
-		out.println("<option value=\""+
-			    Helper.sessionSortOpt[i]+"\">"+
-			    Helper.sessionSortArr[i]);
-	}
-	out.println("</select></td></tr>");
 	//
 	if(action.equals("") || action.startsWith("Start") || 
 	   action.equals("Delete")){
@@ -868,19 +843,32 @@ public class Sessions extends TopServlet{
 	}
 	else{
 	    out.println("<tr>");
-	    if(user.canEdit()){
-		out.println("<td><input type=\"submit\" "+
-			    "name=\"action\' value=\"Update\" /> "+
-			    "</td>");
-	    }
 	    out.println("<td><input type=\"submit\" "+
-			"name=action value=\"Start New\" />");
+			"name=\"action\' value=\"Update\" /> "+
+			"</td>");
+	    out.println("<td><input type=\"submit\" "+
+			"name=\"action\" value=\"Start New\" />");
 	    //
 	    if(user.canDelete()){
 		out.println("<button onclick=\"return validateDelete();\">Delete</button>");
 	    }
 	    out.println("</td></tr>");
 	}
+	out.println("<tr><td colspan=\"2\">&nbsp;</td></tr>");
+	out.println("<tr><td align=\"right\"><label for=\"sortBy\">Sort Sessions by:</label></td><td colspan=\"2\">");
+	out.println("<select name=\"sessionSort\" id=\"sortBy\">");
+	for(int i=0;i<Helper.sessionSortOpt.length;i++){
+	    if(sessionSort.equals(Helper.sessionSortOpt[i]))
+		out.println("<option selected=\"selected\" value=\""+
+			    Helper.sessionSortOpt[i]+"\">"+
+			    Helper.sessionSortArr[i]);
+	    else
+		out.println("<option value=\""+
+			    Helper.sessionSortOpt[i]+"\">"+
+			    Helper.sessionSortArr[i]);
+	}
+	out.println("</select></td></tr>");
+	
 	out.println("</table></center>");
 	out.println("</form>");
 	//
@@ -899,28 +887,6 @@ public class Sessions extends TopServlet{
 		    "Program.do?id="+se.getId()+
 		    "&action=zoom\">Go to the Related Program </a></li>");
 	Helper.writeWebFooter(out, url);
-	String dateStr = "{ nextText: \"Next\",prevText:\"Prev\", buttonText: \"Pick Date\", showOn: \"both\", navigationAsDateFormat: true, buttonImage: \""+url+"js/calendar.gif\"}";
-	out.println("<script>");
-	if(sopt.showStartDate()){		
-	    out.println("  $( \"#startDate\" ).datepicker("+dateStr+"); ");
-	    out.println("  $( \"#endDate\" ).datepicker("+dateStr+"); ");
-	}
-	if(sopt.showRegDeadLine()){
-	    out.println("  $( \"#regDeadLine\" ).datepicker("+dateStr+"); ");
-	}
-	out.println("	$(\"#locationName\").autocomplete({ ");
-	out.println("		source: '"+url+"LocationService?format=json', ");
-	out.println("		minLength: 2, ");
-	out.println("		select: function( event, ui ) { ");
-	out.println("			if(ui.item){ ");
-	out.println("				$(\"#location_id\").val(ui.item.id); ");
-	out.println("			} ");
-	out.println("		}  ");
-	out.println("	}); ");
-	out.println("$(function() { ");
-	out.println("$('#form_id').areYouSure(); ");
-	out.println("}); ");							
-	out.println("</script>");			
 	out.print("</body></html>");
 	out.close();
 

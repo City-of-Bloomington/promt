@@ -374,7 +374,7 @@ public class VolShiftServ extends TopServlet{
 	out.println("</b></td><td><table width=\"100%\"><caption>Days</caption>");
 	out.println("<tr><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_sun\" value=\"y\" "+
-		    d_sun+" id=\"d_sun\"/><label for=\"d_sun\"Su</label>");
+		    d_sun+" id=\"d_sun\"/><label for=\"d_sun\">Su</label>");
 	out.println("</td><td align=left>");
 	out.println("<input type=\"checkbox\" name=\"d_mon\" value=\"y\" "+
 		    d_mon+" id=\"d_mon\"/><label for=\"d_mon\">M</label>");

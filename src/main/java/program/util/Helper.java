@@ -728,9 +728,7 @@ public class Helper{
 				   boolean showTrans, //no need for marketing
 				   String url){
 	out.println("<table width=\"100%\">");
-	out.println("<tr><td colspan=\"2\" align=\"center\">");
-	out.println("<b><font size=+2>"+prog.getTitle()+"</font></b>");
-	out.println("</td></tr>");
+	out.println("<caption>"+prog.getTitle()+"</caption>");
 	String str = "", str2="";
 	str = prog.getId();
 	str2 = "<a href=\""+url+"Program.do?id="+str+"&action=zoom\">"+str+"</a>";
@@ -1041,8 +1039,8 @@ public class Helper{
 	out.println("<center><h3>Sponsorships</h3></center>");
 	for(Sponsor spon:slist){
 	    out.println("<table width=\"100%\">");
-	    out.println("<tr><td align=\"right\" width=\"30%\"><b>Sponsorship ID:</b> "+
-			"</td><td align=\"left\"><a href=\""+url+"Sponsor.do?id="+spon.getId()+"&action=zoom\">"+spon.getId()+"</a></td></tr>");
+	    out.println("<caption>Sponsorship: "+
+			"<a href=\""+url+"Sponsor.do?id="+spon.getId()+"&action=zoom\">"+spon.getId()+"</a></caption>");
 	    out.println("<tr><td align=\"right\"><b>Program ID:</b> "+
 			"</td><td align=\"left\"><a href=\""+url+"Program.do?action=zoom&id="+spon.getPid()+"\">"+spon.getPid()+"</a></td></tr>");			
 	    out.println("<tr><td align=\"right\"><b>Attendance:</b> "+
@@ -1084,7 +1082,7 @@ public class Helper{
 	String sign= "<li>I want a sign Language Interpreter.</li>";
 	String prov_sign = "<li>I need to know if I should provide a sign language interpreter.</li>";
 	//
-	out.println("<table border=1>"); 
+	out.println("<table>"); 
 	out.println("<caption>Inclusive Recreation </caption>");
 	out.println("<tr><td>Inclusive Page:");
 	out.println("<a href="+url+
@@ -1352,15 +1350,13 @@ public class Helper{
 	    goals = plan.getGoals();
 	}
 	out.println("<center>");
-	out.println("<h3>Evaluation</h3>");
+	out.println("<table width=90% border>");	
+	out.println("<caption>");
 	if(prog != null){
-	    out.println("<h2>"+prog.getTitle()+" ("+prog.getSeasons()+" /"+prog.getYear()+")</h2>");
+	    out.println(prog.getTitle()+" ("+prog.getSeasons()+" /"+prog.getYear());
 	}
+	out.println("</caption>");
 	//
-	//the real table
-	out.println("<table width=90% border>");
-	out.println("<tr><td align=\"center\">");
-	out.println("<table width=\"100%\" border=\"1\">");		
 	out.println("<tr><td colspan=2 align=center "+
 		    "><h3>"+
 		    "Program Objectives </h3></td></tr>");
@@ -1380,8 +1376,6 @@ public class Helper{
 		}
 	    }
 	}
-	out.println("</table></td></tr>");
-	out.println("<tr><td><table width=\"100%\">");				
 	out.println("<tr><td colspan=\"2\">&nbsp;</td></tr>");
 	//
 	// Profit Objective
@@ -1402,8 +1396,6 @@ public class Helper{
 	}
 	out.println("<tr><td colspan=\"2\">&nbsp;</td></tr>");
 	//
-	out.println("<tr><td>&nbsp;</td><td align=\"left\">");
-	out.println("<table border width=\"50%\">");		
 	out.println("<tr><td></td><td>"+
 		    "Planned Min/Max</td><td>Actual #</td></tr>");
 	out.println("<tr><td>Attendance</td><td>&nbsp; ");
@@ -1422,16 +1414,10 @@ public class Helper{
 	    out.println("<tr><td align=\"right\" valign=\"top\"><b>Life Cycle Comments:</b></td><td>"+str);
 	    out.println("</td></tr>");
 	}
-	out.println("</table></td></tr>");
+	out.println("</table>");
 	//
-	out.println("<tr><td align=\"center\">");
-	out.println("<table width=\"100%\">");
-	// 
 	// staff consideration
-	out.println("<tr><td colspan=2 align=center "+
-		    "><h3>"+
-		    "Staff Consideration </h3></td></tr>");
-	out.println("<tr><td colspan=2 align=center><table border width=\"50%\">"); 
+	out.println("<table><caption>Staff Consideration </caption>");
 	out.println("<tr><th>Staff</th><th>Planned </th><th>"+
 		    "Actual</th></tr>");
 	if(eval.hasRecord()){
@@ -1446,82 +1432,65 @@ public class Helper{
 		}
 	    }
 	}
-	out.println("</table></td></tr>");
-	out.println("</table></td></tr>");
-	out.println("<tr><td><table width=\"100%\">");		
+	out.println("</table>");
+
 	//
 	// staff assignments
 	if(!eval.getAssignment().equals("")){
-	    out.println("<tr><td align=right><b>Staff Assignments:");
-	    out.println("</b></td><td align=\"left\">");
+	    out.println("<b>Staff Assignments:</b>");
 	    out.print(eval.getAssignment());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// partnerships
 	if(!eval.getPartnership().equals("")){
-	    out.println("<tr><td align=right><b>Partnerships:<b>");
-	    out.println("</td><td align=\"left\">");
+	    out.println("<b>Partnerships:<b>");
 	    out.print(eval.getPartnership());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// sponsors
 	if(!eval.getSponsorship().equals("")){
-	    out.println("<tr><td align=right><b>Sponsorships:<b>");
-	    out.println("</td><td align=\"left\">");
+	    out.println("<b>Sponsorships:<b>");
 	    out.print(eval.getSponsorship());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	if(!eval.getRecommend().equals("")){
-	    out.println("<tr><td align=right><b>General&nbsp"+
-			"Recommendations: ");
-	    out.println("</b></td><td align=\"left\">");
+	    out.println("<b>General&nbsp"+
+			"Recommendations:</b>");
 	    out.print(eval.getRecommend());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	if(!eval.getFlier_points().equals("")){
-	    out.println("<tr><td align=right><b>Flyer "+
-			"Distribution Points: ");
-	    out.println("</b></td><td align=\"left\">");
+	    out.println("<b>Flyer "+
+			"Distribution Points:</b> ");
 	    out.print(eval.getFlier_points());
-	    out.println("</left></td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// Other
 	if(!eval.getOther().equals("")){
-	    out.println("<tr><td align=right><b>Other:");
-	    out.println("</b></td><td align=\"left\">");
+	    out.println("<b>Other:</b>");
 	    out.print(eval.getOther());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
-	out.println("</table>");
-	out.println("</td></tr>");
 	if(market != null){
-	    out.println("<tr><td>");
 	    writeMarket(out, market, null);
-	    out.println("</td></tr>");
 	}
 	else{
-	    out.println("<tr><td>No Marketing Info Available</td></tr>");
+	    out.println("<b>No Marketing Info Available<b>");
 	}
-		
-	out.println("<tr><td>");
 	Budget budget = new Budget(debug, prog.getId());
 	budget.doSelect();
 	if(budget.hasRecord()){
 	    writeEvalBudget(out, budget);
 	}
-	out.println("</td></tr>");
-	out.println("<tr><td><table width=\"50%\"><tr><td>"); 
 	out.println("<b>Evaluation Prepared by:</b>");
 	out.println(eval.getWby());
-	out.println("</td><td><b> Date:</b>");
+	out.println(" on <b> Date:</b>");
 	out.println(eval.getDate());
-	out.println("</td></tr></table>"); 
-	out.println("</td></tr></table>"); 
-
+	out.println("<br /><br />"); 
 
     }
     public final static void writeEvalBudget(PrintWriter out, Budget budget){
@@ -1535,6 +1504,7 @@ public class Helper{
 	Plan plan = prog.getPlan();
 	//
 	out.println("<table width=\"100%\" border=\"1\">");
+	out.println("<caption>Budget Evaluation</caption>");
 	//
 	// actual Revenue
 	out.println("<tr><td colspan=\"7\" align=\"center\">"+
@@ -1693,9 +1663,6 @@ public class Helper{
     }
     public final static void writeMarket(PrintWriter out, Market market, String url){
 	//
-	out.println("<table width=\"100%\">");
-		
-	//
 	String str = market.getId(); 
 	if(url != null)
 	    str = "<a href=\""+url+"Market.do?id="+market.getId()+"&action=zoom\">"+market.getId()+"</a>";
@@ -1704,7 +1671,7 @@ public class Helper{
 	if(!season.equals("")){
 	    str += " ("+season+"/"+year+")";
 	}
-	out.println("<tr><th colspan=\"2\" align=\"center\">Marketing "+str+"</th></tr>");
+	out.println("<center><h3>Marketing "+str+"</h3></center>");
 	//
 	// Program Ad
 	//
@@ -1713,8 +1680,7 @@ public class Helper{
 	List<MarketAd> ads = market.getAds();
 	Set<String> adSet = new HashSet<String>();
 	if(ads != null && ads.size() > 0){
-	    out.println("<tr><td align=\"right\" valign=\"top\" width=\"30%\"><b>Advertisements:</b></td><td align=\"left\">");			
-	    out.println("<table border=\"1\" width=\"90%\">");
+	    out.println("<table border=\"1\"><caption>Advertisements</caption>");
 	    out.println("<tr><th>&nbsp;</th><th>Ad type</th><th>Expenses $</th><th>Account Type</th><th>Due Date</th><th>Details</th></tr>");
 	    for(MarketAd one:ads){
 		out.println("<tr><td>"+(j++)+"</td>");
@@ -1732,11 +1698,11 @@ public class Helper{
 		out.println("<td>&nbsp;"+one.getDetails()+"</td>");				
 		out.println("</tr>");
 	    }
-	    out.println("</table></td></tr>");
+	    out.println("</table>");
 	}
 	if(!market.getOther_ad().isEmpty()){
-	    out.println("<tr><td align=\"right\"><b>Other Ad:</b></td><td align=\"left\">");
-	    out.println(market.getOther_ad()+"</td></tr>");
+	    out.println("<b>Other Ad:</b>");
+	    out.println(market.getOther_ad()+"<br />");
 	}
 	//
 	//
@@ -1746,10 +1712,8 @@ public class Helper{
 	Set<String> hashSet = new HashSet<String>();
 	if(items != null && items.size() > 0){
 	    // marketing items
-	    out.println("<tr><td align=\"right\" valign=\"top\"><b>Marketing Pieces:<b>");
-	    out.println("</td><td align=\"left\">");
-			
-	    out.println("<table border=\"1\" width=\"90%\"><tr><th>&nbsp;</th><th>Type</th><th>Quantity</th>"+
+	    out.println("<table border=\"1\"><caption>Marketing Pieces:</caption>");
+	    out.println("<tr><th>&nbsp;</th><th>Type</th><th>Quantity</th>"+
 			"<th>Expenses</th><th>Direct</td><th>Indirect</th>"+
 			"<th>Due Date</th><th>Details</th></tr>");
 			
@@ -1774,19 +1738,18 @@ public class Helper{
 	    if(totalDirect > 0 || totalIndirect > 0){
 		out.println("<tr><td colspan=\"4\" align=\"right\"><b>Total Expenses:</b>(<font color=\"green\" size=\"-1\">(These will be carried on to evaluation page)</font></td><td align=\"right\">$"+totalDirect+"</td><td align=\"right\">$"+totalIndirect+"</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 	    }
-	    out.println("</table></td></tr>");				
+	    out.println("</table>");				
 	}
 	//
 	if(!market.getClass_list().isEmpty()){
-	    out.println("<tr><td align=\"right\" valign=\"top\">");
-	    out.println("<b>Does the marketing piece <br />combine classes or programs?</td><td colspan='2' valign=\"top\">");
+	    out.println("<b>Does the marketing piece combine classes or programs?</b>");
 	    out.print(market.getClass_list());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	if(!market.getOther_market().isEmpty()){
-	    out.println("<tr><td valign='top' align=\"right\"><b>Other Marketing</b></td><td>");
+	    out.println("<b>Other Marketing:</b>");
 	    out.print(market.getOther_market());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// Announcement
@@ -1794,31 +1757,27 @@ public class Helper{
 	List<Type> announces = market.getAnnounces();
 	j=1;
 	if(announces != null && announces.size() > 0){
-	    out.println("<tr><td align=\"right\" valign=\"top\"><b>Announcements:</b>");			
-	    out.println("<td align=\"left\">");
+	    out.println("<b>Announcements:</b>");			
 	    boolean inn = false;
 	    for(Type one:announces){
 		if(inn) out.print(", ");
 		out.print((j++)+" - "+one);
 		inn = true;
 	    }
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//		
 	// Special Instruction
 	if(!market.getSpInstructions().isEmpty()){
-	    out.println("<tr><td valign=\"top\" align=\"right\">");
-	    out.println("<b>Special Instructions</b></td><td>");
+	    out.println("<b>Special Instructions:</b>");
 	    out.println(market.getSpInstructions());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	if(!market.getSignBoard().isEmpty()){
-	    out.println("<tr><td align=\"right\">");
-	    out.println("<b>Digital Sign Board is Needed: Yes </b></td><td>");
-	    out.println("<tr><td align=\"right\">");
-	    out.println("<b>Needed Date </b>"+market.getSignBoardDate()+"</td><td>");	    
+	    out.println("<b>Digital Sign Board is Needed: Yes, </b>");
+	    out.println("<b>Needed Date </b>"+market.getSignBoardDate()+"<br />");	    
 	}
-	out.println("</table>");
+	out.println("<br />");
 
     }
     public static String cleanText2(String str){
@@ -1898,47 +1857,9 @@ public class Helper{
 		jj++;		
 	    }
 	}
-	/**
-	jj=1;
-	if(!market.getOther_market().isEmpty()){
-	    line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
-	    line += "Other Market\",\"\",\"\",\"";
-	    line += cleanText2(market.getOther_market())+"\"\n";
-	    all += line;
-	}
-	*/
 	//
 	// Announcement
 	//
-	/**
-	List<Type> announces = market.getAnnounces();
-	jj=1;
-	if(announces != null && announces.size() > 0){
-	    boolean inn = false;
-	    line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
-	    line += "Announcements\",\"\",\"\",\"";	    
-	    for(Type one:announces){
-		if(inn) line += " ";
-		line += one;
-		inn = true;
-	    }
-	    line += "\"\n";
-	    all += line;
-	    jj++;
-	}
-	*/
-	
-	//		
-	// Special Instruction
-	/**
-	if(!market.getSpInstructions().equals("")){
-	    jj=1;
-	    line = type+",\""+name+"\",\""+lead+"\",\""+jj+"\",\"";
-	    line += "Special instruction\",\"\",\"\",\"";	    	    
-	    line += cleanText2(market.getSpInstructions())+"\"\n";
-	    all += line;
-	}
-	*/
 	return all;
     }    
     public final static void writeFacilities(PrintWriter out, List<Facility> ones, String url){
@@ -1949,7 +1870,7 @@ public class Helper{
 	    "Closings",
 	    "Other"};		
 	out.println("<table width=\"100%\">");
-	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Facilities</b></td></tr>");
+	out.println("<caption>Facilities</caption>");
 	for(Facility one:ones){
 	    out.println("<tr><td align=\"right\" width=\"30%\"><strong>ID:");
 	    out.println("</strong></td><td align=\"left\">");
@@ -1989,9 +1910,8 @@ public class Helper{
 	out.println("</table>");
     }
     public final static void writePlan(PrintWriter out, Plan pp){
-	out.println("<table border=\"1\">");
-	out.println("<tr><td><table>");
-	out.println("<tr><td colspan=\"2\" align=\"center\"><b>Program Plan</b></td></tr>");
+	out.println("<table>");
+	out.println("<caption>Program Plan</caption>");
 	out.println("<tr><td><b>Program: </b></td><td>");
 	out.println(pp.getProgram_title()+"</td></tr>");
 	
@@ -2017,120 +1937,119 @@ public class Helper{
 		out.print(instructor.getAddress());
 		out.println("</td></tr>");
 	    }
-	    out.println("</table></td></tr>");
+	    out.println("</table>");
 	}
 	//
 	// Plan Objectives
 	if(!pp.getIdeas().equals("")){
-	    out.println("<tr><td valign=top><b>Ideas to Program: </b></td><td>");
+	    out.println("<b>Ideas to Program: </b>");
 	    out.println(pp.getIdeas());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	if(!pp.getGoals().equals("")){
-	    out.println("<tr><td valign=top><b>Program Goals: </b></td><td>");
+	    out.println("<b>Program Goals: </b>");
 	    out.println(pp.getGoals());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	List<Objective> objectives = pp.getObjectives();
 	int jj=1;
 	if(objectives != null && objectives.size() > 0){
-	    out.println("<tr><td valign=top><b> Objectives:</b></td><td>");
+	    out.println("<b> Objectives:</b>");
 	    for(Objective one:objectives){
 		if(jj > 1) out.print(", ");
 		out.print((jj++)+"-"+ one);
 	    }
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	if(!pp.getProfit_obj().equals("")){
-	    out.println("<tr><td valign=top><b>Profit Objective: </b></td><td>");
+	    out.println("<b>Profit Objective: </b>");
 	    out.println(pp.getProfit_obj());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// partner
 	if(!pp.getPartner().equals("")){
-	    out.println("<tr><td><b>Potential Partnership:</b></td><td>");
-	    out.println(pp.getPartner()+"</td></tr>");
+	    out.println("<b>Potential Partnership:</b>");
+	    out.println(pp.getPartner()+"<br />");
 	}
 	//
 	// sponsor
 	if(!pp.getSponsor().equals("")){		
-	    out.println("<tr><td><b>Potential Sponsorship:</b></td><td>");
-	    out.println(pp.getSponsor()+"</td></tr>");
+	    out.println("<b>Potential Sponsorship:</b>");
+	    out.println(pp.getSponsor()+"<br />");
 	}
 	//
 	// market
 	if(!pp.getMarket().equals("")){
-	    out.println("<tr><td><b>Target Market:</b></td><td>");
-	    out.println(pp.getMarket()+"</td></tr>");
+	    out.println("<b>Target Market:</b>");
+	    out.println(pp.getMarket()+"<br />");
 	}
 	//
 	// frequency
 	if(!pp.getFrequency().equals("")){
-	    out.println("<tr><td><b>Intended Frequency:</b></td><td>");
+	    out.println("<b>Intended Frequency:</b>");
 	    out.print(pp.getFrequency());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// # attendance
-	out.println("<tr><td><b>Estimated # Attendance:</b></td><td>");
+	out.println("<b>Estimated # Attendance:</b>");
 	out.println(pp.getAttendCount());
 	out.println("&nbsp;&nbsp;or <b> Min/Max: </b>");
-	out.println(pp.getMin_max()+"</td></tr>");
+	out.println(pp.getMin_max()+"<br />");
 	//
 	// Event time
 	if(!pp.getEvent_time().equals("")){
-	    out.println("<tr><td><b>Program Time:</b></td><td>");
-	    out.print(pp.getEvent_time()+"</td></tr>"); 
+	    out.println("<b>Program Time:</b>");
+	    out.print(pp.getEvent_time()+"<br />"); 
 	}
 	//
 	// duration
 	if(!pp.getP_duration().equals("")){		
-	    out.println("<tr><td><b>Program Duration:</b></td><td>");
-	    out.println(pp.getP_duration()+"</td></tr>");
+	    out.println("<b>Program Duration:</b>");
+	    out.println(pp.getP_duration()+"<br />");
 	}
 	if(!pp.getEst_time().equals("")){						
-	    out.println("<tr><td><b>Total Estimated Time:</b></td><td>");
-	    out.println(pp.getEst_time()+"</td></tr>");
+	    out.println("<b>Total Estimated Time:</b>");
+	    out.println(pp.getEst_time()+"<br />");
 	}
 	//
 
 	List<Staff> staffs = pp.getStaffs();
 	jj=1;
 	if(staffs != null && staffs.size() > 0){
-	    out.println("<tr><td colspan=\"2\" align=\"center\"><table width=\"40%\" border=\"1\">");
+	    out.println("<table width=\"40%\" border=\"1\">");
 	    out.println("<caption>Staff Consideration</caption>");
 	    out.println("<tr><td>Staff </td><td> Number </td></tr>");			
 	    for(Staff one:staffs){
 		out.println("<tr><td align=\"left\">"+(jj++)+" - "+one.getStaff_type()+"</td><td align=\"left\">"+one.getQuantity()+"</td></tr>");
 	    }
-	    out.println("</table></td></tr>");			
+	    out.println("</table>");			
 	}
 	//
 	// Event history
 	if(!pp.getHistory().equals("")){
-	    out.println("<tr><td><b>Event History:</b>");
-	    out.println("</td><td>");
+	    out.println("<b>Event History:</b>");
 	    out.println(pp.getHistory());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// Supplies
 	if(!pp.getHistory().equals("")){
-	    out.println("<tr><td><b>Supplies:</b></td><td>");
+	    out.println("<b>Supplies:</b>");
 	    out.println(pp.getSupply());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
 	//
 	// timeline
 	if(!pp.getHistory().equals("")){
-	    out.println("<tr><td><b>Timeline:</b></td><td>");
+	    out.println("<b>Timeline:</b>");
 	    out.println(pp.getTimeline());
-	    out.println("</td></tr>");
+	    out.println("<br />");
 	}
-	out.println("</table></td></tr></table>");
+	out.println("<br /><br />");
     }
     public final static void writeGenerals(PrintWriter out,
 				    List<General> gens,
@@ -2138,7 +2057,7 @@ public class Helper{
 				    String title,
 				    boolean forBrochure){
 	if(gens == null || gens.size() == 0) return;		
-	out.println("<table width=\"100%\"><tr><td colspan=\"2\" align=\"center\"><h3>"+title+"</h3></td></tr>");
+	out.println("<table width=\"100%\"><caption>"+title+"</caption>>");
 	for(General one:gens){
 	    String str = "<a href=\""+url+"General.do?action=zoom&id="+one.getId()+"\">"+one.getId()+"</a>";
 	    writeItem(out, str, "Listing ID");
@@ -2192,7 +2111,7 @@ public class Helper{
 				     String url,
 				     String title){
 	if(trains == null || trains.size() == 0) return;
-	out.println("<table><tr><td colspan=\"2\" align=\"center\"><h3>"+title+"</h3></td></tr>");
+	out.println("<table><caption>"+title+"</caption>");
 	for(VolTrain one:trains){
 	    String str = "<a href=\""+url+"VolTrain.do?action=zoom&id="+one.getId()+"&pid="+one.getPid()+"&shift_id="+one.getShift_id()+"\">"+one.getId()+"</a>";
 	    writeItem(out, str, "Training ID");
@@ -2225,8 +2144,8 @@ public class Helper{
 				     String title,
 				     boolean includeProgramTitle){
 	if(shifts == null || shifts.size() == 0) return;
-	out.println("<center><table border=\"1\" width=\"70%\"><tr><td>");
-	out.println("<table><tr><td colspan=\"2\" align=\"center\"><h3>"+title+"</h3></td></tr>");	
+	out.println("<table border=\"1\" width=\"70%\">");
+	out.println("<caption>"+title+"</caption>");	
 	for(VolShift one:shifts){
 	    String str = "<a href=\""+url+"VolShift.do?action=zoom&id="+one.getId()+"&pid="+one.getPid()+"\">"+one.getId()+"</a>";
 	    writeItem(out, str, "Shift ID");
@@ -2276,7 +2195,7 @@ public class Helper{
 	    }
 	    out.println("<tr><td colspan=\"2\" align=\"center\"><hr width=\"75%\" /></td></tr>");				
 	}
-	out.println("</table></td></tr></table></center>");
+	out.println("</table>");
     }
     /**
      * Finds out the starting day of a given month.

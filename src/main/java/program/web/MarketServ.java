@@ -672,8 +672,8 @@ public class MarketServ extends TopServlet{
 	if(!market.getSignBoard().isEmpty()){
 	    checked="checked=\"checked\"";
 	}
-	out.println("<input type=\"checkbox\" name=\"signBoard\" value=\"y\" "+checked+" id=\"signb\" /><label for=\"signb\">Reserve the digital signboard.</label>,<label for=\"board_date\"> Date digital sign needed </label>");
-	out.println("<input type=\"text\" name=\"signBoardDate\" value=\""+market.getSignBoardDate()+"\" size=\"10\" id=\"board_date\" />");
+	out.println("<input type=\"checkbox\" name=\"signBoard\" value=\"y\" "+checked+" id=\"signb\" /><label for=\"signb\">Reserve the digital signboard.</label></td><td align=\"left\"><label for=\"board_date\"> Date digital sign needed </label>");
+	out.println("<input type=\"text\" name=\"signBoardDate\" value=\""+market.getSignBoardDate()+"\" size=\"10\" id=\"board_date\" />(mm/dd/yyyy)");
 	out.println("</td></tr>");
 	out.println("</table></td></tr>");
 	//
