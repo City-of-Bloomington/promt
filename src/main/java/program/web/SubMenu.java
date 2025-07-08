@@ -320,8 +320,8 @@ public class SubMenu extends TopServlet{
 			url + "Agenda\">");	    
 	    out.println("<table><caption>Calendar Options</caption>"); // 
 
-	    out.println("<tr><td>");
-	    out.println("<label for=\"year\">Year: </label>");
+	    out.println("<tr><td align=\"right\">");
+	    out.println("<label for=\"year\">Year: </label></td><td>");
 	    out.println("<select name=\"year\" id=\"year\">");
 	    if(year.equals("")) year = year2;
 	    for(int yy:years){
@@ -332,7 +332,7 @@ public class SubMenu extends TopServlet{
 		out.println("<option "+selected+">"+yy+"</option>");
 	    }					
 	    out.println("</select>");
-	    out.println("&nbsp;&nbsp;&nbsp;<label for=\"month\">Month: </label>");
+	    out.println("<label for=\"month\">Month: </label>");
 	    out.println("<select name=\"month\" id=\"month\">");
 	    if(month == 0) month = month2;
 	    out.println("<option selected value="+month+">"+
@@ -340,7 +340,7 @@ public class SubMenu extends TopServlet{
 	    out.println(allMonths);
 	    out.println("</select></td></tr>");
 	    // Area
-	    out.println("<tr><td><label for=\"area\">Area: </label></td><td>");
+	    out.println("<tr><td align=\"right\"><label for=\"area\">Area: </label></td><td>");
 	    out.println("<select name=\"area_id\" id=\"area\'>");
 	    out.println("<option value=\"\"></option>");
 	    if(areas != null){
@@ -351,7 +351,7 @@ public class SubMenu extends TopServlet{
 	    out.println("</select></td></tr>");
 	    //
 	    // Lead
-	    out.println("<tr><td><label for=\"lead_id\">Lead: </label></td><td>");
+	    out.println("<tr><td align=\"right\"><label for=\"lead_id\">Lead: </label></td><td>");
 	    out.println("<select name=\"lead_id\" id=\"lead_id\">");
 	    out.println("<option value=\"\"></option>");
 	    if(leads != null){
@@ -363,7 +363,7 @@ public class SubMenu extends TopServlet{
 	    out.println("</select></td></tr>");
 	    //
 	    // category
-	    out.println("<tr><td><label for=\"cat_id\">Heading: </label></td><td>");
+	    out.println("<tr><td align=\"right\"><label for=\"cat_id\">Heading: </label></td><td>");
 	    out.println("<select name=\"category_id\" id=\"cat_id\">");
 	    out.println("<option value=\"\"></option>");
 	    if(categories != null){
@@ -376,7 +376,7 @@ public class SubMenu extends TopServlet{
 	    out.println("</select></td></tr>");
 	    //
 	    // Location
-	    out.println("<tr><td><label for=\"loc_id\">Location: </label></td><td>");
+	    out.println("<tr><td align=\"right\"><label for=\"loc_id\">Location: </label></td><td>");
 	    out.println("<select name=\"location_id\" id=\"loc_id\">");
 	    out.println("<option value=\"\"></option>");			
 	    if(locations != null){
@@ -386,7 +386,7 @@ public class SubMenu extends TopServlet{
 		}
 	    }		
 	    out.println("</select></td></tr>");
-	    out.println("<tr><td align=right colspan=2>");
+	    out.println("<tr><td align=\"center\" colspan=\"2\">");
 	    out.println("<input type=\"submit\" value=\"Submit\" />");
 	    out.println("</td></tr></table>");// end of calendar table
 	}

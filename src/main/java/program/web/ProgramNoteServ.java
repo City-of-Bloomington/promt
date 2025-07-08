@@ -225,9 +225,9 @@ public class ProgramNoteServ extends TopServlet{
 	    out.println(pnote.getDate_time());
 	    out.println("</td></tr>");
 	}	
-	out.println("<tr><td align=\"left\" colspan=\"2\"><label for=\"notes\">Notes </label></td></tr>");	
-	out.println("<tr><td align=\"left\" colspan=\"2\">");	
-	out.println("<textarea name=\"notes\" rows=\"10\" cols=\"50\" id=\"notes\" >");
+	out.println("<tr><td align=\"center\" colspan=\"2\"><label for=\"notes\">Notes </label></td></tr>");	
+	out.println("<tr><td align=\"center\" colspan=\"2\">");	
+	out.println("<textarea name=\"notes\" rows=\"10\" cols=\"70\" id=\"notes\" >");
 	out.println(pnote.getNotes());
 	out.println("</textarea></td</tr>");
 	out.println("<tr>");

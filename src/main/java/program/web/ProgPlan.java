@@ -470,9 +470,8 @@ public class ProgPlan extends TopServlet{
 	List<Objective> objectives = pp.getObjectives();
 	int jj=1;
 	if(objectives != null && objectives.size() > 0){
-	    out.println("<tr><td valign=\"top\" align=\"right\"><b>Current Objectives:</b></td><td>");
 	    for(Objective one:objectives){
-		out.println("<tr><td>"+(jj++)+" - <input type=\"checkbox\" name=\"del_obj\" value=\""+one.getId()+"\" id=\"obj"+one.getId()+"\"/></td><td><label for=\"obj"+one.getId()+"\">"+one+"</label></td></tr>");
+		out.println("<tr><td align=\"right\">"+(jj++)+" - <input type=\"checkbox\" name=\"del_obj\" value=\""+one.getId()+"\" id=\"obj"+one.getId()+"\"/></td><td align=\"left\"><label for=\"obj"+one.getId()+"\">"+one+"</label></td></tr>");
 	    }
 	    // out.println("</table>");
 	}

@@ -156,7 +156,7 @@ public class MarketAdServ extends TopServlet {
 	out.println("<textarea name=\"details\" rows=\"5\" cols=\"40\" id=\"det\" />");
 	out.println(ad.getDetails());
 	out.println("</textarea></td></tr>");		
-	out.println("<tr><td>");
+	out.println("<tr><td align=\"center\" colspan=\"2\">");
 	out.println("<input type=\"submit\" name=\"action\" value=\"Update\">");
 	out.println("</td></tr>");
 	out.println("</table>");

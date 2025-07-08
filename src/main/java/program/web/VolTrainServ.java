@@ -392,18 +392,18 @@ public class VolTrainServ extends TopServlet{
 	else{ // add zoom update
 	    out.println("<tr><td align=\"right\">");
 	    if(user.canEdit()){
-		out.println("<td valign=\"top\"><input type=\"submit\" "+
-			    "name=\"action\" value=\"Update\"></td>");
+		out.println("<input type=\"submit\" "+
+			    "name=\"action\" value=\"Update\">");
 	    }
-	    out.println("<td valign=\"top\">");
-	    out.println("<input type=\"submit\" "+
-			"name=\"action\" value=\"New Training\"></td>");
-			
+	    out.println("</td><td valign=\"top\">");
 	    if(user.canDelete()){
 		out.println("<input type=\"submit\" name=\"action\" "+
 			    "onclick=\"return validateDeleteForm()\" "+
 			    "value=\"Delete\">");
 	    }
+	    out.println("<input type=\"submit\" "+
+			"name=\"action\" value=\"New Training\">");
+			
 	    out.println("</td></tr>");
 	}
 	out.println("</table>");

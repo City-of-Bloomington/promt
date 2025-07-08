@@ -774,11 +774,11 @@ public class Session{
 	    " code,"+ 
 	    " date_format(startDate,'%m/%d/%Y'),"+ // 16
 	    " date_format(endDate,'%m/%d/%Y'),"+  // 17
-	    " ageFrom,ageTo, "+ 
-	    " wParent,"+
-	    " otherAge, "+ // 20
-	    " memberFee,nonMemberFee "+// 22
-	    " from sessions where id=? and sid=? "; 
+	    " ageFrom,ageTo, "+ // 18,19
+	    " wParent,"+ // 20
+	    " otherAge, "+ // 21
+	    " memberFee,nonMemberFee "+// 22,23
+	    " from sessions where id=? and sid=? "; // 24
 	if(debug){
 	    logger.debug(qq);
 	}

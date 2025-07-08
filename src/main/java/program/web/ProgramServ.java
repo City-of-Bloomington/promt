@@ -1696,16 +1696,16 @@ public class ProgramServ extends TopServlet{
 	out.println("</td><td>&nbsp;");
 	out.println("</td><td>&nbsp;");
 	out.println("</td></tr>");		
-	out.println("<tr><td><label for=\"sortby\">Sort Sessions by:</label></td><td colspan=2>");
+	out.println("<tr><td align=\"right\"><label for=\"sortby\">Sort Sessions by:</label></td><td colspan=2>");
 	out.println("<select name=\"sessionSort\" id=\"sortby\">");
 	for(int i=0;i<Helper.sessionSortOpt.length;i++){
 	    if(sessionSort.equals(Helper.sessionSortOpt[i]))
-		out.println("<option selected value='"+
-			    Helper.sessionSortOpt[i]+"'>"+
+		out.println("<option selected value=\""+
+			    Helper.sessionSortOpt[i]+"\">"+
 			    Helper.sessionSortArr[i]);
 	    else
-		out.println("<option value='"+
-			    Helper.sessionSortOpt[i]+"'>"+
+		out.println("<option value=\""+
+			    Helper.sessionSortOpt[i]+"\">"+
 			    Helper.sessionSortArr[i]);
 	}
 	out.println("</select></td></tr>");
@@ -1935,20 +1935,26 @@ public class ProgramServ extends TopServlet{
 	//
 	out.println("<script>");
 	out.println("let hasUnsavedChanges = false;");
+	out.println("let hasSubmitClicked = false;");	
 	// Example for a form:
-	out.println("const myForm = document.getElementById('myForm');");
+	out.println("const myForm = document.getElementById('form_id');");
 	out.println("if (myForm) { ");
         out.println(" myForm.addEventListener('input', () => { ");
 	out.println(" hasUnsavedChanges = true; ");
 	out.println("});");
+        out.println(" myForm.addEventListener('submit', () => { ");
+	out.println(" hasSubmitClicked = true; ");
+	out.println("});");	
 	out.println("} ");
 	out.println("window.addEventListener('beforeunload', (event) => { ");
         out.println("if (hasUnsavedChanges) { ");
+	out.println("if (!hasSubmitClicked){ ");
 	// Standard way to prompt the user
         out.println("    event.preventDefault();"); // For modern browsers
 	out.println("event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';"); // For older browsers
 	out.println("   return 'You have unsaved changes. Are you sure you want to leave?';"); // For some browsers
 	out.println("}");
+	out.println("}");	
 	out.println("});");
 	out.println("</script>");	
 	out.print("</body></html>");

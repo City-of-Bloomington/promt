@@ -2111,7 +2111,7 @@ public class Helper{
 				     String url,
 				     String title){
 	if(trains == null || trains.size() == 0) return;
-	out.println("<table><caption>"+title+"</caption>");
+	out.println("<table border=\"1\"><caption>"+title+"</caption>");
 	for(VolTrain one:trains){
 	    String str = "<a href=\""+url+"VolTrain.do?action=zoom&id="+one.getId()+"&pid="+one.getPid()+"&shift_id="+one.getShift_id()+"\">"+one.getId()+"</a>";
 	    writeItem(out, str, "Training ID");

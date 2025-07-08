@@ -253,7 +253,7 @@ public class Inclusive extends TopServlet{
 	// program, year, season
        	out.println("<table border=\"1\">");
 	out.println("<caption>Inclusive Items</caption>");
-	out.println("<tr><td align=\"right\"><b>Program:</b></td><td>");
+	out.println("<tr><td><b>Program:</b>");
 	out.println("<a href=\""+url+"Program.do?action=zoom&id="+id+"\">");
 	out.println(prog.getTitle()+" ("+prog.getSeasons()+"/"+prog.getYear()+")");
 	out.println("</a></td></tr>");

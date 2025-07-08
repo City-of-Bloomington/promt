@@ -446,7 +446,6 @@ public class VolShiftServ extends TopServlet{
 	out.println("<font size=\"-1\">(if yes complete add training "+
 		    "details below)</font></td></tr>");
 	//
-	out.println("</table></td></tr>");
 	if(id.equals("")){
 	    if(user.canEdit()){
 		out.println("<tr><td align=\"right\"><input type=\"submit\" "+
@@ -454,37 +453,31 @@ public class VolShiftServ extends TopServlet{
 	    }
 	}
 	else{ // add zoom update
-	    out.println("<tr><td align=\"right\">"+
-			"<table width=\"70%\"><tr>");
+	    out.println("<tr><td align=\"right\">");
 	    if(user.canEdit()){
-		out.println("<td valign=\"top\"><input type=\"submit\" "+
-			    "name=\"action\" value=\"Update\"></td>");
+		out.println("<input type=\"submit\" "+
+			    "name=\"action\" value=\"Update\">");
 	    }
-	    out.println("<td valign=\"top\">");
+	    out.println("<td valign=\"top\" align=\"left\">");
 	    out.println("<input type=\"submit\" "+
-			"name=\"action\" value=\"New Shift\"></td>");
+			"name=\"action\" value=\"New Shift\">");
 			
-	    out.println("<td valign=\"top\">");
 	    out.println("<input type=button value=\"New Training\" "+
 			" onclick=\"document.location='"+url+
 			"VolTrain.do?pid="+pid+"&shift_id="+id+ 
 			"';\" />");			
 	    if(user.canDelete()){
-		out.println("<td valign=\"top\">");
 		out.println("<input type=\"submit\" name=\"action\" "+
 			    "onclick=\"return validateDeleteForm()\" "+
 			    "value=\"Delete\">");
-		out.println("</td>");
 	    }
-	    out.println("</tr></table></td></tr>");
+	    out.println("</td></tr>");
 	}
 	out.println("</table>");
 	out.println("<br />");
 	if(shift.hasTraining()){
 	    List<VolTrain> trains = shift.getTrains();
-	    out.println("<table border=\"1\"><tr><td>");
 	    Helper.writeVolTrains(out,trains,url, "Training for this shift");
-	    out.println("</td></tr></table>");
 	}
 	if(prog != null && prog.hasShifts()){
 	    List<VolShift> shifts = prog.getShifts();

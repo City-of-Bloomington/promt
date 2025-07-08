@@ -167,13 +167,14 @@ public class MarketItemServ extends TopServlet {
 	out.println("<textarea name=\"details\" rows=\"5\" cols=\"40\" id=\"det\">");
 	out.println(item.getDetails());
 	out.println("</textarea></td></tr>");			
-	out.println("<tr><td align=\"right\">");
+	out.println("<tr><td colspan=\"2\" align=\"center\">");
 	out.println("<input type=\"submit\" name=\"action\" value=\"Update\">");
 	out.println("</td></tr>");
 	out.println("</table>");
 	out.println("</form>");		
 	out.println("<br />");
 	Helper.writeWebFooter(out, url);
+	out.println("<a href=javascript:window.close();>Close</a><br />");
 	out.println("</center>");
 		
 	out.println("</body></html>");

@@ -461,7 +461,7 @@ public class Sessions extends TopServlet{
 	//        
 	out.println("<html><head><title>Sessions</title>");
 	Helper.writeWebCss(out, url);
-	out.println("<script type='text/javascript'>");
+	out.println("<script type=\"text/javascript\">");
 	out.println("/*<![CDATA[*/");					
 	out.println(" function showStatus(){      ");
 	// display it in the status line 
@@ -524,7 +524,7 @@ public class Sessions extends TopServlet{
 	out.println("  var x = false ;                  ");
 	out.println("   x = window.confirm(\"Are you sure you want to delete\"); ");
 	out.println("   if(x){  ");
-	out.println(" document.myForm.action2.value='Delete'; ");
+	out.println(" document.myForm.action2.value=\"Delete\"; ");
 	out.println(" document.myForm.submit;         ");
 	out.println("  }	                                ");						
 	out.println("   return x;                       ");
@@ -547,7 +547,7 @@ public class Sessions extends TopServlet{
 	}
 
 	//box it in
-	out.println("<form name=\"myForm\" method=post id=\"myForm\" "+
+	out.println("<form name=\"myForm\" method=\"post\" id=\"myForm\" "+
 		    "onsubmit=\"return validateForm()\">");
 	out.println("<input type=\"hidden\" name=\"pid\" value=\"" + se.getId() + 
 		    "\" />");
@@ -590,10 +590,10 @@ public class Sessions extends TopServlet{
 	    out.println("<input type=\"checkbox\" name=\"d_wed\" value=\"y\" "+
 			d_wed+"/>W");
 	    out.println("</td><td align=left>");
-	    out.println("<input type=\"checkbox\" name=\'d_thu\" value=\"y\" "+
+	    out.println("<input type=\"checkbox\" name=\"d_thu\" value=\"y\" "+
 			d_thu+">Th");
 	    out.println("</td><td align=left>");
-	    out.println("<input type=\"checkbox\" name=\'d_fri\" value=\"y\" "+
+	    out.println("<input type=\"checkbox\" name=\"d_fri\" value=\"y\" "+
 			d_fri+">F");
 	    out.println("</td></tr><tr><td align=left>");
 	    out.println("<input type=\"checkbox\" name=\"d_sat\" value=\"y\" "+
@@ -602,7 +602,7 @@ public class Sessions extends TopServlet{
 	    out.println("<input type=\"checkbox\" name=\"d_mon_fri\" value=\"y\" "+
 			d_mon_fri+">M-F");
 	    out.println("</td><td colspan=2 align=left>");
-	    out.println("<input type=\"checkbox\" name=\"d_all\' value=\"y\" "+
+	    out.println("<input type=\"checkbox\" name=\"d_all\" value=\"y\" "+
 			d_all+">M-Su");
 	    out.println("</td></tr></table></td></tr>");
 	    out.println("</td></tr>");
@@ -728,7 +728,7 @@ public class Sessions extends TopServlet{
 	}
 	if(sopt.showNonMemberFee()){
 	    out.println("<tr><td align=\"right\">");
-	    out.println("<label for=\'nonMemberFee\">Non Member Fee $</label>");
+	    out.println("<label for=\"nonMemberFee\">Non Member Fee $</label>");
 	    out.println("</td><td><left>");
 	    out.println("<input type=\"text\" name=\"nonMemberFee\" maxlength=\"20\" size=\"20\" id=\"nonMemberFee\" "+
 			" value=\""+se.getNonMemberFee()+"\">");
@@ -765,16 +765,16 @@ public class Sessions extends TopServlet{
 			"value=\""+se.getAgeFrom()+"\" />"); 
 	    out.println("<label for=\"ageTo\"> To:"+
 			"</label>");
-	    out.println("<input type=\"text\" name=\"ageTo\" maxlength=\"3\" size=\'3\" "+
+	    out.println("<input type=\"text\" name=\"ageTo\" maxlength=\"3\" size=\"3\" "+
 			"value=\""+se.getAgeTo()+"\" id=\"ageTo\" /> or "); 
 	    out.println("<input type=\"checkbox\" name=\"allAge\" value=\"y\" "+
-			allAge +" id=\"allAge\" /> <label for=\"allAge\">All Ages welcome </label> &nbsp;&nbsp;");
+			allAge +" id=\"allAge\" /> <label for=\"allAge\">All Ages welcome </label></td></tr>");
+	    out.println("<tr><td align=\"right\">");	    
 	    out.println("<input type=\"checkbox\" name=\"wParent\" value=\"y\" "+
-			wParent +" id=\"wParent\" /> <label for=\"wParent\">w/Parent</b>");
-	    out.println("</td></tr>");
-	    out.println("<tr><td align=\"right\"><label for=\"otherAge\">Other age:</label>");
-	    out.println("</td><td>");
-	    out.println("<input type=\"text\" name=\"otherAge\' maxlength=\"30\" size=\"20\" "+
+			wParent +" id=\"wParent\" /> <label for=\"wParent\">w/Parent</label>");
+	    out.println("</td>");
+	    out.println("<td><label for=\"otherAge\">Other age:</label>");
+	    out.println("<input type=\"text\" name=\"otherAge\" maxlength=\"30\" size=\"20\" "+
 			"value=\""+se.getOtherAge()+"\" id=\"otherAge\" />"); 
 	    out.println("</td></tr>");
 	}
@@ -814,7 +814,7 @@ public class Sessions extends TopServlet{
 	    out.println("<tr><td align=\"right\"><label for=\"descr\">Description</label>");
 	    out.println("</td><td>Not more than 1000 characters<br />");
 	    out.println("<textarea name=\"description\" wrap rows=\"10\" "+
-			"cols=\"80\' id=\"descr\">");
+			"cols=\"80\" id=\"descr\">");
 	    out.println(se.getDescription());
 	    out.println("</textarea>");
 	    out.println("</td></tr>");
@@ -826,27 +826,27 @@ public class Sessions extends TopServlet{
 	    out.println("</td><td>");
 	    out.println("<input type=\"text\" name=\"instructor\" "+
 			"maxlength=\"120\" size=\"50\""+
-			" value=\""+se.getInstructor()+"\" id=\"instructor\'/>");
+			" value=\""+se.getInstructor()+"\" id=\"instructor\"/>");
 	    out.println("</td></tr>");
 	}
 	//
 	if(action.equals("") || action.startsWith("Start") || 
 	   action.equals("Delete")){
-	    out.println("<tr><td colspan=2 align=\"right\">");
+	    out.println("<tr><td align=\"right\">");
 	    if(user.canEdit()){
 		out.println("<input type=\"submit\" "+
 			    "name=\"action\" value=\"Save\">");
 	    }
-	    out.println("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+	    out.println("</td><td align=\"left\">" +
 			"&nbsp;&nbsp;&nbsp;<input type=\"reset\" "+
 			" value=\"Clear\"></td></tr>"); 
 	}
 	else{
 	    out.println("<tr>");
-	    out.println("<td><input type=\"submit\" "+
-			"name=\"action\' value=\"Update\" /> "+
+	    out.println("<td align=\"right\"><input type=\"submit\" "+
+			"name=\"action\" value=\"Update\" /> "+
 			"</td>");
-	    out.println("<td><input type=\"submit\" "+
+	    out.println("<td align=\"left\"><input type=\"submit\" "+
 			"name=\"action\" value=\"Start New\" />");
 	    //
 	    if(user.canDelete()){
@@ -887,6 +887,30 @@ public class Sessions extends TopServlet{
 		    "Program.do?id="+se.getId()+
 		    "&action=zoom\">Go to the Related Program </a></li>");
 	Helper.writeWebFooter(out, url);
+	out.println("<script>");
+	out.println("let hasUnsavedChanges = false;");
+	out.println("let hasSubmitClicked = false;");	
+	// Example for a form:
+	out.println("const myForm = document.getElementById('myForm');");
+	out.println("if (myForm) { ");
+        out.println(" myForm.addEventListener('input', () => { ");
+	out.println(" hasUnsavedChanges = true; ");
+	out.println("});");
+        out.println(" myForm.addEventListener('submit', () => { ");
+	out.println(" hasSubmitClicked = true; ");
+	out.println("});");	
+	out.println("} ");
+	out.println("window.addEventListener('beforeunload', (event) => { ");
+        out.println("if (hasUnsavedChanges) { ");
+	out.println("if (!hasSubmitClicked){ ");
+	// Standard way to prompt the user
+        out.println("    event.preventDefault();"); // For modern browsers
+	out.println("event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';"); // For older browsers
+	out.println("   return 'You have unsaved changes. Are you sure you want to leave?';"); // For some browsers
+	out.println("}");
+	out.println("}");	
+	out.println("});");
+	out.println("</script>");	
 	out.print("</body></html>");
 	out.close();
 

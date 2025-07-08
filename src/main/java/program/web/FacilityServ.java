@@ -302,7 +302,6 @@ public class FacilityServ extends TopServlet{
 		  " onkeyup=\"validateTextarea3(this)\" id=\"sched\">");
 	out.print(fc.getSchedule()); /* The pre-existing comment, if any */
 	out.println("</textarea>");
-	out.println("</td></tr></table>");
 	out.println("</td></tr>");
 	//
 	// closings
@@ -346,7 +345,11 @@ public class FacilityServ extends TopServlet{
 			"';\"></input>");			
 	    out.println("<input type=\"submit\" "+
 			"name=\"action\" value=\"Start New\">" +
-			"&nbsp;&nbsp;"); 
+			"&nbsp;&nbsp;");
+	    out.println("<input type=\"button\" value=\"Add Attachments\""+
+			" onclick=\"document.location='"+url+
+			"PromtFile.do?type=Facility&related_id="+fc.getId()+
+			"';\" />");
 	    out.println("</form>");
 	    //
 	    // delete
@@ -359,11 +362,6 @@ public class FacilityServ extends TopServlet{
 			    "&nbsp;");
 		out.println("</form>");
 	    }
-	    out.println("<input type=\"button\" value=\"Add Attachments\""+
-			" onclick=\"document.location='"+url+
-			"PromtFile.do?type=Facility&related_id="+fc.getId()+
-			"';\" />");
-						
 	}
 	else { // Save
 	    out.println("<input type=\"submit\" "+
