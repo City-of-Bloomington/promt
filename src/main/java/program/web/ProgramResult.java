@@ -384,7 +384,7 @@ public class ProgramResult extends TopServlet{
 		if(row >= minRecords && row <= maxRecords){
 		    Program pr = pl.get(row);
 		    os.println("<table width=\"90%\">");
-		    os.println("<caption"+pr.getTitle()+"</caption>");
+		    os.println("<caption>"+pr.getTitle()+"</caption>");
 		    os.println("</td></tr>");
 		    os.println("<tr><td align=\"right\" width=\"20%\"><strong>ID:");
 		    os.println("</strong></right></td><td align=\"left\">");
